@@ -22,6 +22,7 @@ import org.mcsg.bot.skype.commands.ProcIn;
 import org.mcsg.bot.skype.commands.RandomNumber;
 import org.mcsg.bot.skype.commands.Shell;
 import org.mcsg.bot.skype.commands.ShellWrite;
+import org.mcsg.bot.skype.commands.Source;
 import org.mcsg.bot.skype.commands.Stop;
 import org.mcsg.bot.skype.commands.StopNuke;
 import org.mcsg.bot.skype.commands.SubCommand;
@@ -74,6 +75,7 @@ public class Bot {
 		commands.put("killproc", new KillProc());
 		commands.put("procin", new ProcIn());
 		commands.put("stop", new Stop());
+		commands.put("src", new Source());
 
 
 
