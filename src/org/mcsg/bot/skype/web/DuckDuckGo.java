@@ -1,4 +1,4 @@
-package org.mcsg.bot.skype.search;
+package org.mcsg.bot.skype.web;
 
 import org.mcsg.bot.skype.util.WebClient;
 

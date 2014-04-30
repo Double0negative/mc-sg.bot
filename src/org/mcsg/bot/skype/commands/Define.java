@@ -1,9 +1,9 @@
 package org.mcsg.bot.skype.commands;
 
-import org.mcsg.bot.skype.search.DuckDuckGo;
-import org.mcsg.bot.skype.search.DuckDuckGo.DuckDuckResult;
 import org.mcsg.bot.skype.util.ChatManager;
 import org.mcsg.bot.skype.util.StringUtils;
+import org.mcsg.bot.skype.web.DuckDuckGo;
+import org.mcsg.bot.skype.web.DuckDuckGo.DuckDuckResult;
 
 import com.skype.Chat;
 import com.skype.SkypeException;

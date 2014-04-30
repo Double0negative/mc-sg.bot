@@ -1,5 +1,6 @@
 package org.mcsg.bot.skype.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class StringUtils {
 	}
 	
 	public static String implode(int start, String ... strs){
-		List<String> list = Arrays.asList(strs);
+		List<String> list = new ArrayList<String>(Arrays.asList(strs));
 		for(int a = 0; a < start; a++){
 			list.remove(0);
 		}

@@ -10,11 +10,10 @@ import org.mcsg.bot.skype.web.Google.GoogleResult;
 import com.skype.Chat;
 import com.skype.User;
 
-public class ImageSearch implements SubCommand{
+public class VideoSearch implements SubCommand{
 
 	@Override
-	public void execute(Chat chat, User sender, String[] args)
-			throws Exception {
+	public void execute(Chat chat, User sender, String[] args) throws Exception {
 		String search = "";
 		int start = 0;
 		if(args[0].equals("-rand")){
@@ -26,15 +25,15 @@ public class ImageSearch implements SubCommand{
 		}else {
 			search = StringUtils.implode(args);
 		}
-		GoogleResult result = Google.search("images", search, start);
+		GoogleResult result = Google.search("video", search, start);
 		org.mcsg.bot.skype.web.Google.Results[] results = result.responseData.results;
 		if(results != null && results.length > 0){
-			ChatManager.chat(chat, start+1+". "+results[0].unescapedUrl);
+			ChatManager.chat(chat, start+1+". "+results[0].url);
 			ChatManager.chat(chat, results[0].titleNoFormatting);
 		} else {
 			ChatManager.chat(chat, "No results for "+StringUtils.implode(args));
 		}
-
+		
 	}
 
 	@Override

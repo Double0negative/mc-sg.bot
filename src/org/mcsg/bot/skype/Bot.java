@@ -2,12 +2,8 @@ package org.mcsg.bot.skype;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -19,6 +15,7 @@ import org.mcsg.bot.skype.commands.HostCall;
 import org.mcsg.bot.skype.commands.ImageSearch;
 import org.mcsg.bot.skype.commands.Kick;
 import org.mcsg.bot.skype.commands.KillProc;
+import org.mcsg.bot.skype.commands.Leave;
 import org.mcsg.bot.skype.commands.ManageChat;
 import org.mcsg.bot.skype.commands.MinecraftPingCommand;
 import org.mcsg.bot.skype.commands.Nuke;
@@ -32,22 +29,22 @@ import org.mcsg.bot.skype.commands.Source;
 import org.mcsg.bot.skype.commands.Stop;
 import org.mcsg.bot.skype.commands.StopNuke;
 import org.mcsg.bot.skype.commands.SubCommand;
+import org.mcsg.bot.skype.commands.VideoSearch;
 import org.mcsg.bot.skype.commands.WebAbstract;
 import org.mcsg.bot.skype.commands.WebSearch;
-import org.mcsg.bot.skype.commands.Wikipedia;
+import org.mcsg.bot.skype.commands.WikipediaSearchCommand;
 import org.mcsg.bot.skype.util.ChatManager;
 
 import com.skype.Chat;
 import com.skype.ChatMessage;
 import com.skype.ChatMessageAdapter;
-import com.skype.ChatMessageEditListener;
 import com.skype.Skype;
 import com.skype.SkypeException;
 import com.skype.User;
 
 public class Bot {
 
-	public static final String version ="1.16";
+	public static final String version ="1.17";
 
 	private HashMap<String, SubCommand> commands = 
 			new HashMap<String, SubCommand>();
@@ -107,11 +104,18 @@ public class Bot {
 		commands.put("stop", new Stop());
 		commands.put("src", new Source());
 		commands.put("setchat", new ManageChat());
-		commands.put("wiki", new Wikipedia());
+		commands.put("wiki", new WikipediaSearchCommand());
 		commands.put("search", new WebSearch());
 		commands.put("abstract", new WebAbstract());
 		commands.put("define", new Define());
 		commands.put("img", new ImageSearch());
+		commands.put("g", new WebSearch());
+		commands.put("video", new VideoSearch());
+		commands.put("v", new VideoSearch());
+		commands.put("vid", new VideoSearch());
+		commands.put("youtube", new VideoSearch());
+		commands.put("yt", new VideoSearch());
+		commands.put("leave", new Leave());
 
 
 		Skype.addChatMessageListener(new ChatMessageAdapter() {
