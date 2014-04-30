@@ -1,12 +1,15 @@
 package org.mcsg.bot.skype;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-
-import javax.sound.sampled.ReverbType;
+import java.util.Scanner;
 
 import org.mcsg.bot.skype.commands.GetUsers;
 import org.mcsg.bot.skype.commands.Heart;
@@ -14,6 +17,7 @@ import org.mcsg.bot.skype.commands.Hi;
 import org.mcsg.bot.skype.commands.HostCall;
 import org.mcsg.bot.skype.commands.Kick;
 import org.mcsg.bot.skype.commands.KillProc;
+import org.mcsg.bot.skype.commands.ManageChat;
 import org.mcsg.bot.skype.commands.MinecraftPingCommand;
 import org.mcsg.bot.skype.commands.Nuke;
 import org.mcsg.bot.skype.commands.Perm;
@@ -26,6 +30,7 @@ import org.mcsg.bot.skype.commands.Source;
 import org.mcsg.bot.skype.commands.Stop;
 import org.mcsg.bot.skype.commands.StopNuke;
 import org.mcsg.bot.skype.commands.SubCommand;
+import org.mcsg.bot.skype.util.ChatManager;
 
 import com.skype.Chat;
 import com.skype.ChatMessage;
@@ -37,27 +42,47 @@ import com.skype.User;
 
 public class Bot {
 
-	public static final String version ="1.10";
+	public static final String version ="1.13";
 
 	private HashMap<String, SubCommand> commands = 
 			new HashMap<String, SubCommand>();
 
 	public static boolean killnuke = false;
 
+	public static final String LAST_FILE  = "lastchat";
 
 
 	public static void main(String[] args) {
 		System.out.println("Starting MC-SG.BOT version "+version);
 		Skype.setDaemon(false); // to prevent exiting from this program
 		try {
+			
+			File f = new File(LAST_FILE);
+			if(f.exists()){
+				Scanner scanner = new Scanner(f);
+				String chatid = scanner.nextLine();
+				for(Chat chat : Skype.getAllChats()){
+					if(chat.getId().equals(chatid)){
+						chat.send("Starting MC-SG.BOT version "+version);
+					}
+				scanner.close();
+				f.delete();
+				}
+			}
+			
 			new Bot().start();
-		} catch (SkypeException e) {
+			
+
+			
+		} catch (SkypeException | FileNotFoundException e) {
 			System.exit(1);
 		}
 	}
 
 	public void start() throws SkypeException{
-
+		
+		ChatManager.start();
+		
 		commands.put("ping", new Ping());
 		commands.put("mcping", new MinecraftPingCommand());
 		commands.put("nuke", new Nuke());
@@ -76,6 +101,7 @@ public class Bot {
 		commands.put("procin", new ProcIn());
 		commands.put("stop", new Stop());
 		commands.put("src", new Source());
+		commands.put("setchat", new ManageChat());
 
 
 
@@ -115,11 +141,11 @@ public class Bot {
 						received.getChat().send(sb.toString());
 					}
 
-						SubCommand sub = commands.get(command);
-						if(sub != null){
-							executeAsync(sub, received.getChat(), received.getSender(),  args);
-						}
-					
+					SubCommand sub = commands.get(command);
+					if(sub != null){
+						executeAsync(sub, received.getChat(), received.getSender(),  args);
+					}
+
 				}
 				//received.getChat().get
 			}

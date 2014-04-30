@@ -2,6 +2,7 @@ package org.mcsg.bot.skype.commands;
 
 import java.net.InetSocketAddress;
 
+import org.mcsg.bot.skype.util.ChatManager;
 import org.mcsg.bot.skype.util.ServerListPing17;
 import org.mcsg.bot.skype.util.ServerListPing17.StatusResponse;
 
@@ -23,9 +24,10 @@ public class MinecraftPingCommand implements SubCommand{
 				ServerListPing17 pinger = new ServerListPing17();
 				pinger.setAddress(new InetSocketAddress(server[0], ((server.length > 1) ? 25565 : Integer.parseInt(server[1]))));
 				StatusResponse response = pinger.fetchData();
-				chat.send("(" + args[0] + ") " + response.getDescription() + " - " + response.getVersion().getName() + " - " + response.getPlayers().getOnline() + "/" + response.getPlayers().getMax() + " players. Ping: "+ (System.currentTimeMillis() - time)+"ms");
+				ChatManager.chat(chat,"(" + args[0] + ") " + response.getDescription() + " - " + response.getVersion().getName() + " - " + response.getPlayers().getOnline() + "/" + response.getPlayers().getMax() + " players. Ping: "+ (System.currentTimeMillis() - time)+"ms");
 			} catch (Exception e){
-				chat.send(args[0]+" is not online or is not a Minecraft server.");
+				e.printStackTrace();
+				ChatManager.chat(chat, args[0]+" is not online or is not a Minecraft server.");
 			}
 		}
 	}

@@ -1,26 +1,26 @@
 package org.mcsg.bot.skype.commands;
 
+import org.mcsg.bot.skype.util.ChatManager;
 import org.mcsg.bot.skype.util.Permissions;
-import org.mcsg.bot.skype.util.ShellCommand;
 
 import com.skype.Chat;
 import com.skype.SkypeException;
 import com.skype.User;
 
-public class Shell implements SubCommand{
+public class ManageChat implements SubCommand {
 
 	@Override
 	public void execute(Chat chat, User sender, String[] args)
 			throws SkypeException {
-		if(Permissions.hasPermission(sender, chat, "sh")){
-			StringBuilder sb = new StringBuilder();
-			for(String arg : args){
-				sb.append(arg).append(" ");
+		if(Permissions.hasPermission(sender, chat, "chatmanage")){
+			if(args[0].equalsIgnoreCase("sec") || args[0].equalsIgnoreCase("seconds")){
+				ChatManager.setSeconds(Integer.parseInt(args[1]));
+			} else if (args[0].equalsIgnoreCase("paste")){
+				ChatManager.setPaste(Integer.parseInt(args[1]));
 			}
-			ShellCommand.exec(chat, sb.toString());
-			//ShellCommand.exec(chat, args);
+			chat.send("Set settings");
 		} else {
-			chat.send("No permissions to execute command");
+			chat.send("No permission");
 		}
 	}
 
@@ -36,8 +36,4 @@ public class Shell implements SubCommand{
 		return null;
 	}
 
-	
-	
-	
-	
 }

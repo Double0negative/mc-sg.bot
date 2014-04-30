@@ -18,7 +18,7 @@ public class KillProc implements SubCommand{
 			} else {
 				ShellCommand.kill(chat, Integer.parseInt(args[0]));
 			}
-			chat.send("Killed");
+			chat.send("Killed proc "+args[0]);
 		}
 		
 	}

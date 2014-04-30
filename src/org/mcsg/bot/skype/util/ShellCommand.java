@@ -32,7 +32,7 @@ public class ShellCommand {
 			PrintWriter pw = new PrintWriter(new FileWriter(file));
 			pw.println(args);
 			pw.flush();
-			chat.send("Running command: \""+ args +"\" ID: "+id);
+			ChatManager.chat(chat, "Running command: \""+ args +"\" ID: "+id);
 			final Process proc = Runtime.getRuntime().exec("bash "+name);
 
 			procs.put(id, proc);
@@ -84,7 +84,7 @@ public class ShellCommand {
 							new InputStreamReader(input));
 					while ((line = in.readLine()) != null) {
 						for(Chat chat : chats.get(id)){
-							chat.send(prefix+line);
+							ChatManager.chat(chat, prefix+line);
 						}
 					}
 					in.close();
