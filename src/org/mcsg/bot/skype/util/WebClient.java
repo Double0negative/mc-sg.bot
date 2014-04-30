@@ -10,7 +10,7 @@ public class WebClient {
 		StringBuilder sb = new StringBuilder();
 
 		try{
-			URL url = new URL(urls);
+			URL url = new URL(urls.replace(" ", "%20"));
 
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					url.openStream()));

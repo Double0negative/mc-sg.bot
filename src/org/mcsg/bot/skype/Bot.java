@@ -11,10 +11,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import org.mcsg.bot.skype.commands.Define;
 import org.mcsg.bot.skype.commands.GetUsers;
 import org.mcsg.bot.skype.commands.Heart;
 import org.mcsg.bot.skype.commands.Hi;
 import org.mcsg.bot.skype.commands.HostCall;
+import org.mcsg.bot.skype.commands.ImageSearch;
 import org.mcsg.bot.skype.commands.Kick;
 import org.mcsg.bot.skype.commands.KillProc;
 import org.mcsg.bot.skype.commands.ManageChat;
@@ -30,6 +32,8 @@ import org.mcsg.bot.skype.commands.Source;
 import org.mcsg.bot.skype.commands.Stop;
 import org.mcsg.bot.skype.commands.StopNuke;
 import org.mcsg.bot.skype.commands.SubCommand;
+import org.mcsg.bot.skype.commands.WebAbstract;
+import org.mcsg.bot.skype.commands.WebSearch;
 import org.mcsg.bot.skype.commands.Wikipedia;
 import org.mcsg.bot.skype.util.ChatManager;
 
@@ -43,7 +47,7 @@ import com.skype.User;
 
 public class Bot {
 
-	public static final String version ="1.14";
+	public static final String version ="1.16";
 
 	private HashMap<String, SubCommand> commands = 
 			new HashMap<String, SubCommand>();
@@ -104,22 +108,11 @@ public class Bot {
 		commands.put("src", new Source());
 		commands.put("setchat", new ManageChat());
 		commands.put("wiki", new Wikipedia());
+		commands.put("search", new WebSearch());
+		commands.put("abstract", new WebAbstract());
+		commands.put("define", new Define());
+		commands.put("img", new ImageSearch());
 
-
-
-		Skype.addChatMessageEditListener(new ChatMessageEditListener() {
-
-			@Override
-			public void chatMessageEdited(ChatMessage arg0, Date arg1, User arg2) {
-				try {
-					System.out.println(arg2.getDisplayName()+" edited a message " + arg0.getContent());
-				} catch (SkypeException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
-
-			}
-		});
 
 		Skype.addChatMessageListener(new ChatMessageAdapter() {
 			public void chatMessageReceived(ChatMessage received) throws SkypeException {
@@ -163,9 +156,8 @@ public class Bot {
 			public void run(){
 				try {
 					sub.execute(chat, sender, args);
-				} catch (SkypeException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (Exception e) {
+					ChatManager.printThrowable(chat, e);
 				}
 			}
 		}.start();

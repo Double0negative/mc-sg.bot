@@ -1,27 +1,26 @@
 package org.mcsg.bot.skype.commands;
 
-
-import java.util.Random;
-
 import org.mcsg.bot.skype.search.Google;
 import org.mcsg.bot.skype.search.Google.GoogleResult;
-import org.mcsg.bot.skype.search.Google.Results;
 import org.mcsg.bot.skype.util.ChatManager;
+import org.mcsg.bot.skype.util.StringUtils;
 
 import com.skype.Chat;
-import com.skype.SkypeException;
 import com.skype.User;
 
-public class Heart implements SubCommand{
+public class ImageSearch implements SubCommand{
 
 	@Override
 	public void execute(Chat chat, User sender, String[] args)
-			throws SkypeException {
-		GoogleResult result = Google.search("image", "heart", new Random().nextInt(60));
-		Results[] results = result.responseData.results;
+			throws Exception {
+		GoogleResult result = Google.search("images", StringUtils.implode(args), 0);
+		org.mcsg.bot.skype.search.Google.Results[] results = result.responseData.results;
 		if(results != null && results.length > 0){
 			ChatManager.chat(chat, results[0].url);
-		} 
+		} else {
+			ChatManager.chat(chat, "No results for "+StringUtils.implode(args));
+		}
+		
 	}
 
 	@Override
@@ -36,7 +35,4 @@ public class Heart implements SubCommand{
 		return null;
 	}
 
-	
-	
-	
 }

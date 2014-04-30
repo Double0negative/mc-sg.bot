@@ -26,16 +26,7 @@ public class MinecraftPingCommand implements SubCommand{
 				pinger.setAddress(new InetSocketAddress(server[0], ((server.length > 1) ? Integer.parseInt(server[1]) : 25565 )));
 				StatusResponse response = pinger.fetchData();
 				ChatManager.chat(chat,"(" + args[0] + ") " + response.getDescription().replaceAll("(\u00A7([a-fk-or0-9]))", "").trim() + " - " + response.getVersion().getName() + " - " + response.getPlayers().getOnline() + "/" + response.getPlayers().getMax() + " players. Ping: "+ (System.currentTimeMillis() - time)+"ms");
-				ChatManager.chat(chat, pinger.getJson());
-				ChatManager.chat(chat, "");
-				ChatManager.chat(chat, "");
-				ChatManager.chat(chat, "");
-				ChatManager.chat(chat, "");
-				ChatManager.chat(chat, "");
-				ChatManager.chat(chat, "");
-				ChatManager.chat(chat, "");
-				ChatManager.chat(chat, "");
-				
+				//ChatManager.chat(chat, pinger.getJson());
 			} catch (Exception e){
 				ChatManager.chat(chat, pinger.getJson());
 				ChatManager.printThrowable(chat, e);
