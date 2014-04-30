@@ -19,6 +19,12 @@ public class ServerListPing17 {
 	private InetSocketAddress host;
 	private int timeout = 7000;
 	private Gson gson = new Gson();
+	private String json;
+	
+	public String getJson(){
+		return json;
+	}
+	
 	public void setAddress(InetSocketAddress host) {
 		this.host = host;
 	}
@@ -105,7 +111,7 @@ public class ServerListPing17 {
 		}
 		byte[] in = new byte[length];
 		dataInputStream.readFully(in); //read json string
-		String json = new String(in);
+		json = new String(in);
 		long now = System.currentTimeMillis();
 		dataOutputStream.writeByte(0x09); //size of packet
 		dataOutputStream.writeByte(0x01); //0x01 for ping

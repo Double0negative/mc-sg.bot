@@ -18,16 +18,29 @@ public class MinecraftPingCommand implements SubCommand{
 			chat.send(".mcping <server>");
 		}
 		else{
+			ServerListPing17 pinger = new ServerListPing17();
+
 			try{
 				String server[] = args[0].split(":");
 				long time = System.currentTimeMillis();
-				ServerListPing17 pinger = new ServerListPing17();
-				pinger.setAddress(new InetSocketAddress(server[0], ((server.length > 1) ? 25565 : Integer.parseInt(server[1]))));
+				pinger.setAddress(new InetSocketAddress(server[0], ((server.length > 1) ? Integer.parseInt(server[1]) : 25565 )));
 				StatusResponse response = pinger.fetchData();
-				ChatManager.chat(chat,"(" + args[0] + ") " + response.getDescription() + " - " + response.getVersion().getName() + " - " + response.getPlayers().getOnline() + "/" + response.getPlayers().getMax() + " players. Ping: "+ (System.currentTimeMillis() - time)+"ms");
+				ChatManager.chat(chat,"(" + args[0] + ") " + response.getDescription().replaceAll("(\u00A7([a-fk-or0-9]))", "").trim() + " - " + response.getVersion().getName() + " - " + response.getPlayers().getOnline() + "/" + response.getPlayers().getMax() + " players. Ping: "+ (System.currentTimeMillis() - time)+"ms");
+				ChatManager.chat(chat, pinger.getJson());
+				ChatManager.chat(chat, "");
+				ChatManager.chat(chat, "");
+				ChatManager.chat(chat, "");
+				ChatManager.chat(chat, "");
+				ChatManager.chat(chat, "");
+				ChatManager.chat(chat, "");
+				ChatManager.chat(chat, "");
+				ChatManager.chat(chat, "");
+				
 			} catch (Exception e){
-				e.printStackTrace();
-				ChatManager.chat(chat, args[0]+" is not online or is not a Minecraft server.");
+				ChatManager.chat(chat, pinger.getJson());
+				ChatManager.printThrowable(chat, e);
+
+				ChatManager.chat(chat,"\"" + args[0]+"\" is not online or is not a Minecraft server.");
 			}
 		}
 	}

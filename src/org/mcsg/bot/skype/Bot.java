@@ -30,6 +30,7 @@ import org.mcsg.bot.skype.commands.Source;
 import org.mcsg.bot.skype.commands.Stop;
 import org.mcsg.bot.skype.commands.StopNuke;
 import org.mcsg.bot.skype.commands.SubCommand;
+import org.mcsg.bot.skype.commands.Wikipedia;
 import org.mcsg.bot.skype.util.ChatManager;
 
 import com.skype.Chat;
@@ -42,7 +43,7 @@ import com.skype.User;
 
 public class Bot {
 
-	public static final String version ="1.13";
+	public static final String version ="1.14";
 
 	private HashMap<String, SubCommand> commands = 
 			new HashMap<String, SubCommand>();
@@ -102,6 +103,7 @@ public class Bot {
 		commands.put("stop", new Stop());
 		commands.put("src", new Source());
 		commands.put("setchat", new ManageChat());
+		commands.put("wiki", new Wikipedia());
 
 
 

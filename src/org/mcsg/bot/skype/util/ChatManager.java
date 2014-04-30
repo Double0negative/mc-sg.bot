@@ -20,6 +20,24 @@ public class ChatManager {
 	private static int paste = 6;
 	private static int seconds = 5;
 
+	public static void printThrowable(Chat chat, Throwable t){
+		ChatManager.chat(chat, t.toString());
+		for(StackTraceElement el : t.getStackTrace())
+			ChatManager.chat(chat, "\t" + el.toString());
+		
+		Throwable e1 = t.getCause();
+		if(e1 != null){
+			ChatManager.chat(chat, e1.toString());
+			for(StackTraceElement el : e1.getStackTrace())
+				ChatManager.chat(chat, "\t" + el.toString());
+		}
+		
+		for(int a  = 0; a < paste ; a++){
+			chat(chat, "");
+		}
+	}
+	
+	
 	public static void chat(Chat chat, String msg){
 		ArrayList<String> msgs = chats.get(chat);
 		if(msgs == null){
@@ -38,7 +56,6 @@ public class ChatManager {
 						HashMap<Chat, ArrayList<String>> chats_copy = new HashMap<>(chats); //apparently chm doesn't have .keySet(); probs better way to do this
 						for(Chat chat : chats_copy.keySet()){
 							StringBuilder sb = new StringBuilder();
-							sb.append(" ");
 							for(String msg : chats.get(chat)){
 								sb.append(msg).append("\n");
 							}
