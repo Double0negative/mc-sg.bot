@@ -13,7 +13,7 @@ public class Perm implements SubCommand {
 			throws Exception {
 		if(sender.getId().equals("drew.foland")){
 			if(args[0].equals("add")){
-				Permissions.addPerm(args[1], chat, args[2]);
+				Permissions.addPerm(args[1], chat.getId(), args[2]);
 				chat.send("Adding permission");
 			} else 	if(args[0].equals("all")){
 				for(User user : chat.getAllMembers()){
@@ -21,7 +21,7 @@ public class Perm implements SubCommand {
 				}
 				chat.send("Adding permission");
 			}	else {
-				Permissions.removePerms(args[1], chat, args[2]);
+				Permissions.removePerms(args[1], chat.getId(), args[2]);
 				chat.send("Removing permission");
 			}
 		}

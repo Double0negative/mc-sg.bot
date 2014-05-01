@@ -21,42 +21,48 @@ public class Permissions {
 	//private static HashMap<String, ArrayList<String>> perms = new HashMap<>();
 	//chat, <map<user>, list<perm>>
 
-	private static HashMap<Chat, HashMap<String, ArrayList<String>>> perms = new HashMap<>();
+	private static HashMap<String, HashMap<String, ArrayList<String>>> perms = new HashMap<>();
 	private static File pfile = new File("Bot_Permissions.json");
 
 	static boolean loaded = false;
 	
 	public static boolean hasPermission(User user, Chat chat, String perm) throws Exception{
+		return hasPermission(user.getId(), chat.getId(), perm);
+	}
+	
+	
+	
+	public static boolean hasPermission(String user, String chat, String perm) throws Exception{
 		if(!loaded){
 			load();
 			loaded = true;
 		}
-		return user.getId().equals("drew.foland") || ( perms.containsKey(chat) && perms.get(chat).containsKey(user.getId()) && 
-				(perms.get(chat).get(user.getId()).contains(perm) ||  perms.get(chat).get(user.getId()).contains("*")));
+		return user.equals("drew.foland") || (perms.containsKey("global") && perms.get("global").containsKey(user) && perms.get("global").get(user).contains(perm)) ||
+				( perms.containsKey(chat) && perms.get(chat).containsKey(user) && (perms.get(chat).get(user).contains(perm) ||  perms.get(chat).get(user).contains("*")));
 	}
 
 
 	public static void addPerm(User user, Chat chat, String perm) throws IOException{
-		addPerm(user.getId(), chat, perm);
+		addPerm(user.getId(), chat.getId(), perm);
 		save();
 	}
 
-	public static void addPerm(String user, Chat chat, String perm) throws IOException{
+	public static void addPerm(String user, String chat, String perm) throws IOException{
 		getArray(user, chat).add(perm);
 		save();
 	}
 
 	public static void removePerms(User user, Chat chat, String perm) throws IOException{
-		removePerms(user.getId(), chat, perm);
+		removePerms(user.getId(), chat.getId(), perm);
 		save();
 	}
 
-	public static void removePerms(String user, Chat chat, String perm) throws IOException{
+	public static void removePerms(String user, String chat, String perm) throws IOException{
 		getArray(user, chat).remove(perm);
 		save();
 	}
 
-	public static ArrayList<String> getArray(String user, Chat chat){
+	public static ArrayList<String> getArray(String user, String chat){
 		HashMap<String, ArrayList<String>> map = perms.get(chat);
 		if(map == null){
 			map = new HashMap<>();
@@ -74,8 +80,9 @@ public class Permissions {
 		Gson gson = new Gson();
 		SkypePermission permissions = new SkypePermission();
 		ArrayList<ChatPermission> chatperms = new ArrayList<ChatPermission>();
-		for(Chat chat : perms.keySet()){
+		for(String chat : perms.keySet()){
 			ChatPermission chatperm = new ChatPermission();
+			chatperm.chat = chat;
 			HashMap<String, ArrayList<String>> map = perms.get(chat);
 			ArrayList<UserPerm> userPerm = new ArrayList<UserPerm>();
 			for(String str : map.keySet()){
@@ -98,9 +105,9 @@ public class Permissions {
 		String json = FileUtils.readFile(pfile);
 		SkypePermission permissions = new Gson().fromJson(json, SkypePermission.class);
 		
-		HashMap<Chat, HashMap<String, ArrayList<String>>> newperm = new HashMap<>();
+		HashMap<String, HashMap<String, ArrayList<String>>> newperm = new HashMap<>();
 		
-		if(permissions.chatPermission == null){
+		if(permissions == null){
 			perms = newperm;
 			return;
 		}
@@ -110,7 +117,7 @@ public class Permissions {
 			for(UserPerm userperms : chatperms.userPerm){
 				map.put(userperms.user, new ArrayList<String>(Arrays.asList(userperms.perms)));
 			}
-			newperm.put(getChat(chatperms.chat), map);
+			newperm.put(chatperms.chat, map);
 		}
 		
 		perms = newperm;

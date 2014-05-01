@@ -39,11 +39,11 @@ public class JavaCommand implements SubCommand {
 			int cindex = code.indexOf("class") + "class ".length();
 			String name = code.substring(cindex, code.indexOf(" ", cindex)).trim()+"";
 
-			File javaf = new File(name+".java");
-			File javac = new File(name+".class");
+			File javaf = new File("files/",name+".java");
+			File javac = new File("files/",name+".class");
 
 			FileUtils.writeFile(javaf, code);
-			int id = ShellCommand.exec(chat, "javac files/"+javaf.getName()+"; java files/"+name, 20000, false);
+			int id = ShellCommand.exec(chat, "cd files; javac -classpath \"../java_libs/*:\" "+name+".java; java -classpath \"../java_libs/*:\" "+name, 20000, false);
 
 			ChatManager.chat(chat, "Running java code. ID "+id+". Code: "+ ChatManager.createPaste(code));
 			

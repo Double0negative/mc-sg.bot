@@ -32,8 +32,8 @@ public class ShellCommand {
 	public static int exec(final Chat chat, String args, long limit,  boolean displayCommand){
 		int id = getId();
 		try{
-			String name = "temp"+System.currentTimeMillis()+".sh";
-			File file = FileUtils.getFile(name);
+			String name = "files/temp"+System.currentTimeMillis()+".sh";
+			File file = new File(name);
 			PrintWriter pw = new PrintWriter(new FileWriter(file));
 			pw.println(args);
 			pw.flush();

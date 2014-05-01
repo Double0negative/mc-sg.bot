@@ -13,6 +13,7 @@ import org.mcsg.bot.skype.commands.Heart;
 import org.mcsg.bot.skype.commands.Hi;
 import org.mcsg.bot.skype.commands.HostCall;
 import org.mcsg.bot.skype.commands.ImageSearch;
+import org.mcsg.bot.skype.commands.Is;
 import org.mcsg.bot.skype.commands.JavaCommand;
 import org.mcsg.bot.skype.commands.Kick;
 import org.mcsg.bot.skype.commands.KillProc;
@@ -118,11 +119,12 @@ public class Bot {
 		commands.put("yt", new VideoSearch());
 		commands.put("leave", new Leave());
 		commands.put("java", new JavaCommand());
+		commands.put("is", new Is());
 
 
 		Skype.addChatMessageListener(new ChatMessageAdapter() {
 			public void chatMessageReceived(ChatMessage received) throws SkypeException {
-				if(received.getContent().startsWith(".")){
+				if(received.getContent().startsWith(".") && received.getTime().getTime() > System.currentTimeMillis() - 300000){
 					String split[] = received.getContent().split(" ");
 					String command = getCommand(split);
 					String args[]  = getArgs(split);

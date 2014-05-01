@@ -10,7 +10,7 @@ public class Source implements SubCommand {
 	public void execute(Chat chat, User sender, String[] args)
 			throws SkypeException {
 		chat.send("https://bitbucket.org/mcsg/mc-sg.bot");
-		
+		chat.send("https://github.com/Double0negative/mc-sg.bot");
 	}
 
 	@Override
