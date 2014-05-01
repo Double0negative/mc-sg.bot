@@ -9,5 +9,5 @@ public interface SubCommand {
 	
 	public String getHelp();
 	
-	public String getName();
+	public String getUsage();
 }

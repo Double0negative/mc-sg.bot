@@ -26,13 +26,11 @@ public class Shell implements SubCommand{
 
 	@Override
 	public String getHelp() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
+	public String getUsage() {
 		return null;
 	}
 

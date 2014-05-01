@@ -59,12 +59,12 @@ public class WebSearch implements SubCommand {
 
 	@Override
 	public String getHelp() {
-		return "<search> - Search the web";
+		return "Search the web";
 	}
 
 	@Override
-	public String getName() {
-		return "search";
+	public String getUsage() {
+		return ".search <search>";
 	}
 
 }

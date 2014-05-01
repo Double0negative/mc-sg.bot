@@ -31,12 +31,12 @@ public class WikipediaSearchCommand implements SubCommand {
 
 	@Override
 	public String getHelp() {
-		return "<search> - Search for a wikipage";
+		return "Search for a wikipage";
 	}
 
 	@Override
-	public String getName() {
-		return "wiki";
+	public String getUsage() {
+		return ".wiki <search>";
 	}
 
 

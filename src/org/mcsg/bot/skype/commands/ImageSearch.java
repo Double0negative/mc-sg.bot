@@ -39,14 +39,12 @@ public class ImageSearch implements SubCommand{
 
 	@Override
 	public String getHelp() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Search google images";
 	}
 
 	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getUsage() {
+		return ".img <search>";
 	}
 
 }

@@ -26,14 +26,12 @@ public class Define implements SubCommand{
 
 	@Override
 	public String getHelp() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Define a word";
 	}
 
 	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getUsage() {
+		return ".define <word>";
 	}
 
 }

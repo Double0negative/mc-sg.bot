@@ -25,14 +25,12 @@ public class GetUsers implements SubCommand{
 
 	@Override
 	public String getHelp() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Get all users in a chat";
 	}
 
 	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getUsage() {
+		return ".getusers [-noid]";
 	}
 
 }

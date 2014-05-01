@@ -33,12 +33,12 @@ public class RandomNumber implements SubCommand {
 
 	@Override
 	public String getHelp() {
-		return "<type (int:double:long:boolean)> <max (int only)>Get a random number";
+		return "Get a random";
 	}
 
 	@Override
-	public String getName() {
-		return "Random Gen";
+	public String getUsage() {
+		return ".rand [type]";
 	}
 
 }

@@ -26,14 +26,12 @@ public class Heart implements SubCommand{
 
 	@Override
 	public String getHelp() {
-		// TODO Auto-generated method stub
-		return null;
+		return "I love you";
 	}
 
 	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getUsage(){
+		return ".<3";
 	}
 
 	

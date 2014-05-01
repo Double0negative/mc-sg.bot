@@ -29,8 +29,8 @@ public class Ping implements SubCommand{
 	}
 
 	@Override
-	public String getName() {
-		return "Ping, Pong!";
+	public String getUsage() {
+		return ".ping [server]";
 	}
 
 }

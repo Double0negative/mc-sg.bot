@@ -42,8 +42,8 @@ public class MinecraftPingCommand implements SubCommand{
 	}
 
 	@Override
-	public String getName() {
-		return "Minecraft ping";
+	public String getUsage() {
+		return ".mcping <server:port>";
 	}
 
 }

@@ -17,7 +17,7 @@ public class WikiPage implements SubCommand{
 	}
 
 	@Override
-	public String getName() {
+	public String getUsage() {
 		// TODO Auto-generated method stub
 		return null;
 	}

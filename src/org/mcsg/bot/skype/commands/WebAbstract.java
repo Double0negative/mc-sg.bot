@@ -26,14 +26,12 @@ public class WebAbstract implements SubCommand {
 
 	@Override
 	public String getHelp() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Get an abstract";
 	}
 
 	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getUsage() {
+		return ".abstract <search>";
 	}
 
 }

@@ -23,8 +23,8 @@ public class Hi implements SubCommand{
 	}
 
 	@Override
-	public String getName() {
-		return "Hello";
+	public String getUsage() {
+		return ".hi";
 	}
 
 }

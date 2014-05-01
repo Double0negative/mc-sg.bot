@@ -15,14 +15,12 @@ public class Source implements SubCommand {
 
 	@Override
 	public String getHelp() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Get the source";
 	}
 
 	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getUsage() {
+		return ".src";
 	}
 
 }

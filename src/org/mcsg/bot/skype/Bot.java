@@ -46,7 +46,7 @@ import com.skype.User;
 
 public class Bot {
 
-	public static final String version ="1.19";
+	public static final String version ="1.20";
 
 	private HashMap<String, SubCommand> commands = 
 			new HashMap<String, SubCommand>();
@@ -136,9 +136,9 @@ public class Bot {
 						sb.append("--- [ MC-SG Bot Help ] ---");
 
 						for(String com : commands.keySet()){
-							String name = commands.get(com).getName();
+							String name = commands.get(com).getUsage();
 							if(name != null){
-								sb.append("\n."+com+" - " + commands.get(com).getHelp());
+								ChatManager.chat(received.getChat(), "\n"+commands.get(com).getUsage()+" - " + commands.get(com).getHelp());
 							}
 						}
 						received.getChat().send(sb.toString());

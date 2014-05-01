@@ -56,14 +56,12 @@ public class JavaCommand implements SubCommand {
 
 	@Override
 	public String getHelp() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Run a java command";
 	}
 
 	@Override
-	public String getName() {
-		return null;
-		
+	public String getUsage() {
+		return ".java [-template] <code|pastebin>";
 	}
 
 	

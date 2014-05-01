@@ -30,7 +30,7 @@ public class Nuke implements SubCommand{
 	}
 
 	@Override
-	public String getName() {
+	public String getUsage() {
 		return null;
 	}
 

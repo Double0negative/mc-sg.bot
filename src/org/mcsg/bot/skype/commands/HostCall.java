@@ -25,8 +25,8 @@ public class HostCall implements SubCommand{
 	}
 
 	@Override
-	public String getName() {
-		return "Call host";
+	public String getUsage() {
+		return ".host";
 	}
 
 }
