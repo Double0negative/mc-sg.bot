@@ -10,7 +10,7 @@ public class HostCall implements SubCommand{
 
 	@Override
 	public void execute(Chat chat, User sender, String[] args)
-			throws SkypeException {
+			throws Exception {
 		if(Permissions.hasPermission(sender, chat, "host")){
 			chat.send("Hosting call.");
 			chat.send("/golive");

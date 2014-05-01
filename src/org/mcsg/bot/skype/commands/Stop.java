@@ -16,7 +16,7 @@ public class Stop implements SubCommand{
 
 	@Override
 	public void execute(Chat chat, User sender, String[] args)
-			throws SkypeException {
+			throws Exception {
 		if(Permissions.hasPermission(sender, chat, "stop")){
 			chat.send("Stopping...");
 			

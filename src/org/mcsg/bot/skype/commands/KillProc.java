@@ -11,7 +11,7 @@ public class KillProc implements SubCommand{
 
 	@Override
 	public void execute(Chat chat, User sender, String[] args)
-			throws SkypeException {
+			throws Exception {
 		if(Permissions.hasPermission(sender, chat, "killproc")){
 			if(args.length == 2){
 				ShellCommand.forceKill(chat, Integer.parseInt(args[0]));

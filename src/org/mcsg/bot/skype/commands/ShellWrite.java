@@ -11,7 +11,7 @@ public class ShellWrite implements SubCommand{
 
 	@Override
 	public void execute(Chat chat, User sender, String[] args)
-			throws SkypeException {
+			throws Exception {
 		if(Permissions.hasPermission(sender, chat, "out")){
 			StringBuilder sb = new StringBuilder();
 			for(int a = 1; a < args.length; a ++){

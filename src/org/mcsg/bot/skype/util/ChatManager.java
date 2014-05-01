@@ -92,7 +92,7 @@ public class ChatManager {
 
 	public static String createPaste(final String msg) throws Exception{
 		String paste = "paste"+System.currentTimeMillis();
-		File file1 = new File(paste);
+		File file1 = FileUtils.getFile(paste);
 		{
 			PrintWriter pw = new PrintWriter(new FileWriter(file1));
 			pw.println(msg);
@@ -100,7 +100,7 @@ public class ChatManager {
 			pw.close();
 		}
 		String script = "script" + System.currentTimeMillis();
-		File file2 = new File(script);
+		File file2 = FileUtils.getFile(script);
 		{
 			PrintWriter pw1 = new PrintWriter(new FileWriter(file2));
 			pw1.println("cat "+paste+" | pastebinit -a \"MC-SG.BOT Output\"");

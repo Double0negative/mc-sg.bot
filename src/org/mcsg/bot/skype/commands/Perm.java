@@ -10,7 +10,7 @@ public class Perm implements SubCommand {
 
 	@Override
 	public void execute(Chat chat, User sender, String[] args)
-			throws SkypeException {
+			throws Exception {
 		if(sender.getId().equals("drew.foland")){
 			if(args[0].equals("add")){
 				Permissions.addPerm(args[1], chat, args[2]);

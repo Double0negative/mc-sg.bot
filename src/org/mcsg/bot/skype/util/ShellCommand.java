@@ -33,7 +33,7 @@ public class ShellCommand {
 		int id = getId();
 		try{
 			String name = "temp"+System.currentTimeMillis()+".sh";
-			File file = new File(name);
+			File file = FileUtils.getFile(name);
 			PrintWriter pw = new PrintWriter(new FileWriter(file));
 			pw.println(args);
 			pw.flush();
