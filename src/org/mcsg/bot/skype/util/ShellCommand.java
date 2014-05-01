@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.skype.Chat;
+import com.skype.SkypeException;
 
 public class ShellCommand {
 
@@ -25,6 +26,10 @@ public class ShellCommand {
 	private static ConcurrentHashMap<Integer, ArrayList<Chat>> chats = new ConcurrentHashMap<>();
 
 	public static int exec(final Chat chat, String args){
+		return exec(chat, args, 0, true);
+	}
+	
+	public static int exec(final Chat chat, String args, long limit,  boolean displayCommand){
 		int id = getId();
 		try{
 			String name = "temp"+System.currentTimeMillis()+".sh";
@@ -32,7 +37,7 @@ public class ShellCommand {
 			PrintWriter pw = new PrintWriter(new FileWriter(file));
 			pw.println(args);
 			pw.flush();
-			ChatManager.chat(chat, "Running command: \""+ args +"\" ID: "+id);
+			if(displayCommand) ChatManager.chat(chat, "Running command: \""+ args +"\" ID: "+id);
 			final Process proc = Runtime.getRuntime().exec("bash "+name);
 
 			procs.put(id, proc);
@@ -40,6 +45,9 @@ public class ShellCommand {
 			readToChat(chat, id);
 			startReaders(id);
 
+			if(limit != 0){
+				new Limiter(proc, chat, limit, id).start();
+			}
 
 			file.deleteOnExit();
 			pw.close();
@@ -99,6 +107,32 @@ public class ShellCommand {
 
 	public static void forceKill(Chat chat, int id){
 		procs.get(id).destroyForcibly();
+	}
+	
+	static class  Limiter extends Thread{
+		Process process;
+		long time;
+		int id;
+		Chat chat;
+		public Limiter(Process process, Chat chat, long time, int id){
+			this.process = process;
+			this.time = time;
+			this.id = id;
+			this.chat = chat;
+		}
+		
+		public void run(){
+			try { Thread.sleep(time); } catch (Exception e){ ChatManager.printThrowable(chat, e);}
+			if(process.isAlive()){
+				process.destroyForcibly();
+				try {
+					chat.send("Process "+id+" exceeded time limit. Process was killed");
+				} catch (SkypeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 }

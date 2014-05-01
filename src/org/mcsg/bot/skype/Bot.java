@@ -13,6 +13,7 @@ import org.mcsg.bot.skype.commands.Heart;
 import org.mcsg.bot.skype.commands.Hi;
 import org.mcsg.bot.skype.commands.HostCall;
 import org.mcsg.bot.skype.commands.ImageSearch;
+import org.mcsg.bot.skype.commands.JavaCommand;
 import org.mcsg.bot.skype.commands.Kick;
 import org.mcsg.bot.skype.commands.KillProc;
 import org.mcsg.bot.skype.commands.Leave;
@@ -44,7 +45,7 @@ import com.skype.User;
 
 public class Bot {
 
-	public static final String version ="1.17";
+	public static final String version ="1.19";
 
 	private HashMap<String, SubCommand> commands = 
 			new HashMap<String, SubCommand>();
@@ -116,6 +117,7 @@ public class Bot {
 		commands.put("youtube", new VideoSearch());
 		commands.put("yt", new VideoSearch());
 		commands.put("leave", new Leave());
+		commands.put("java", new JavaCommand());
 
 
 		Skype.addChatMessageListener(new ChatMessageAdapter() {

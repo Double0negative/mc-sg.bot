@@ -62,7 +62,7 @@ public class ChatManager {
 								}
 								sb.delete(sb.length() - 1, sb.length());
 								if(chats.remove(chat).size() > paste){
-									chat.send("Output: "+createPaste(chat, sb.toString()));
+									chat.send("Output: "+createPaste(sb.toString()));
 								} else {
 									try { chat.send(sb.toString()); } catch (SkypeException e) { printThrowable(chat, e); }
 								}
@@ -90,7 +90,7 @@ public class ChatManager {
 		paste = pastes;
 	}
 
-	public static String createPaste(final Chat chat, final String msg) throws Exception{
+	public static String createPaste(final String msg) throws Exception{
 		String paste = "paste"+System.currentTimeMillis();
 		File file1 = new File(paste);
 		{
