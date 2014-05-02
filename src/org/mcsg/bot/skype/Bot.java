@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import org.mcsg.bot.skype.commands.ArgTest;
 import org.mcsg.bot.skype.commands.Define;
 import org.mcsg.bot.skype.commands.GetUsers;
 import org.mcsg.bot.skype.commands.Heart;
@@ -120,6 +121,7 @@ public class Bot {
 		commands.put("leave", new Leave());
 		commands.put("java", new JavaCommand());
 		commands.put("is", new Is());
+		commands.put("argtest", new ArgTest());
 
 
 		Skype.addChatMessageListener(new ChatMessageAdapter() {
