@@ -41,6 +41,7 @@ import org.mcsg.bot.skype.util.ChatManager;
 import com.skype.Chat;
 import com.skype.ChatMessage;
 import com.skype.ChatMessageAdapter;
+import com.skype.GlobalChatListener;
 import com.skype.Skype;
 import com.skype.SkypeException;
 import com.skype.User;
@@ -123,7 +124,27 @@ public class Bot {
 		commands.put("is", new Is());
 		commands.put("argtest", new ArgTest());
 
-
+		Skype.addGlobalChatListener(new GlobalChatListener() {
+			
+			@Override
+			public void userLeft(Chat arg0, User arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void userAdded(Chat arg0, User arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void newChatStarted(Chat arg0, User[] arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		Skype.addChatMessageListener(new ChatMessageAdapter() {
 			public void chatMessageReceived(ChatMessage received) throws SkypeException {
 				if(received.getContent().startsWith(".") && received.getTime().getTime() > System.currentTimeMillis() - 300000){

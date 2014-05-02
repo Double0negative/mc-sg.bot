@@ -15,8 +15,8 @@ public class ArgTest implements SubCommand{
 	@Override
 	public void execute(Chat chat, User sender, String[] args) throws Exception {
 		Arguments arge = new Arguments(args, "test arg", "hello arg", "rand", "template/temp arg");
-		for(String key : arge.getValues().keySet()){
-			ChatManager.chat(chat, key +" : "+arge.getValues().get(key));
+		for(String key : arge.getSwitches().keySet()){
+			ChatManager.chat(chat, key +" : "+arge.getSwitches().get(key));
 		}
 		System.out.println(Arrays.toString(arge.getArgs()));
 		ChatManager.chat(chat, StringUtils.
