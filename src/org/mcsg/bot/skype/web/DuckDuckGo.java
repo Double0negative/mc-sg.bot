@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 
 public class DuckDuckGo {
 
-	public static DuckDuckResult search(String search){
+	public static DuckDuckResult search(String search) throws Exception{
 		String url = "http://api.duckduckgo.com/?q="+search+"&format=json&pretty=1";
 		String json = WebClient.request(url);
 

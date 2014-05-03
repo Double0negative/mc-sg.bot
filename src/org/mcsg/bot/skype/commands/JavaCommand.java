@@ -33,15 +33,15 @@ public class JavaCommand implements SubCommand {
 			if(swi.containsKey("paste")){
 				String url = swi.get("paste");
 				String link = getPasteLink(url);
-				System.out.println(link);
+				//System.out.println(link);
 				code = WebClient.request(link);
-				code = template.replace("$code", "");
+				code = code.replace("$code", "");
 			} else {
 				code = StringUtils.implode(args);
 				
 				if(swi.containsKey("template")){
 					String link = getPasteLink(swi.get("template"));
-					System.out.println(link);
+					//System.out.println(link);
 					templatelink = link;
 				}
 				
@@ -51,7 +51,17 @@ public class JavaCommand implements SubCommand {
 			}
 			
 			if(swi.containsKey("imports")){
-				code = code.replace("$imports", swi.get("imports").replace(":", ";\n"));
+				String[] split = swi.get("imports").split(":");
+				StringBuilder sb = new StringBuilder();
+				for(String imp : split){
+					if(imp.startsWith("s/")){
+						sb.append("import static "+imp.substring(2)+";");
+					} else {
+						sb.append("import "+imp+";");
+					}
+					sb.append("\n");
+				}
+				code = code.replace("$imports", sb.toString());
 			} else {
 				code = code.replace("$imports", "");
 			}
@@ -75,6 +85,7 @@ public class JavaCommand implements SubCommand {
 
 	public void runCode(Chat chat, String code, long cap, boolean b) throws Exception{
 		int cindex = code.indexOf("class") + "class ".length();
+		//chat.send(ChatManager.createPaste(cindex+" "+code.indexOf(" ", cindex)+"\n"+code));
 		String name = code.substring(cindex, code.indexOf(" ", cindex)).trim();
 		
 		File javaf = new File("files/",name+".java");
@@ -101,7 +112,7 @@ public class JavaCommand implements SubCommand {
 			id = url.substring(url.lastIndexOf("/")+1);
 			return paste.replace("$id", id);
 		} else if(url.contains("github")){
-			id = url.substring(url.indexOf("/", 10)+1);
+			id = url.substring(url.indexOf("/", 15)+1);
 			return gist.replace("$id", id);
 		}
 		return "";

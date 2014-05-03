@@ -11,10 +11,9 @@ import java.util.List;
 
 public class WebClient {
 
-	public static String request(String urls){
+	public static String request(String urls) throws Exception{
 		StringBuilder sb = new StringBuilder();
 
-		try{
 			URL url = new URL(urls.replace(" ", "%20"));
 			URLConnection con = url.openConnection();
 			con.setRequestProperty("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/31.0");
@@ -32,9 +31,7 @@ public class WebClient {
 				sb.append(buff, 0, len);
 			}
 			br.close();
-		}catch (Exception e){
-
-		}
+	
 		return sb.toString();
 
 	}

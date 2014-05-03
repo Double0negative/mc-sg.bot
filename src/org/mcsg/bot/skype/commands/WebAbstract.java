@@ -13,7 +13,7 @@ public class WebAbstract implements SubCommand {
 
 	@Override
 	public void execute(Chat chat, User sender, String[] args)
-			throws SkypeException {
+			throws Exception {
 		DuckDuckResult result = DuckDuckGo.search(StringUtils.implode(args));
 		String abstractt = result.AbstractText;
 		if(abstractt != null && !abstractt.equals("")){

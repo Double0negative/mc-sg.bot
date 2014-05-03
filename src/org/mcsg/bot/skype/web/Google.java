@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 
 public class Google {
 
-	public static GoogleResult search(String type, String search, int start){
+	public static GoogleResult search(String type, String search, int start) throws Exception{
 		String url = "http://ajax.googleapis.com/ajax/services/search/"+type+"?v=2.0&safe=off&q="+search+"&start="+start;
 		String json = WebClient.request(url);
 		

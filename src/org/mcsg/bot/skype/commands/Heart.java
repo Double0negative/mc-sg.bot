@@ -16,7 +16,7 @@ public class Heart implements SubCommand{
 
 	@Override
 	public void execute(Chat chat, User sender, String[] args)
-			throws SkypeException {
+			throws Exception {
 		GoogleResult result = Google.search("images", "heart", new Random().nextInt(60));
 		Results[] results = result.responseData.results;
 		if(results != null && results.length > 0){

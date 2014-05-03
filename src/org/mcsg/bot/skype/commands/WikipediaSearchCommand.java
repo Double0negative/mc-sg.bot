@@ -14,7 +14,7 @@ public class WikipediaSearchCommand implements SubCommand {
 
 	@Override
 	public void execute(Chat chat, User sender, String[] args)
-			throws SkypeException {
+			throws Exception {
 		String search = StringUtils.implode(args);
 
 
