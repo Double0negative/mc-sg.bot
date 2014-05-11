@@ -17,23 +17,29 @@ public class UUIDCommand implements SubCommand {
 
 	@Override
 	public void execute(Chat chat, User sender, String[] args) throws Exception {
-		Arguments arge = new Arguments(args, "daniel/denial/dd/d", "noformat/nofmt/no/n");
+		Arguments arge = new Arguments(args, "daniel/denial/dd/d", "noformat/nofmt/no/n", "time/t");
 		HashMap<String, String> swi = arge.getSwitches();
 		args = arge.getArgs();
+		
+		long time = System.currentTimeMillis();
 		
 		if(swi.containsKey("daniel")){
 			HashMap<String, String > uuids = UUIDAPI.getUUIDs(Arrays.asList(args));
 			
 			for(Entry<String, String> e : uuids.entrySet()){
-				ChatManager.chat(chat, e.getKey()+"\t"+e.getValue());
+				ChatManager.chat(chat, e.getKey()+"   "+e.getValue());
 			}
 		} else {
 			boolean fmt = !swi.containsKey("noformat");
 			Profile [] profiles = MinecraftUUID.getUUIDs(args);
 			
 			for(Profile profile : profiles){
-				ChatManager.chat(chat, profile.name + "\t" + ((fmt) ? profile.getUuid() : profile.uuid));
+				ChatManager.chat(chat, profile.name + "   " + ((fmt) ? profile.getUuid() : profile.uuid));
 			}
+		}
+		
+		if(swi.containsKey("time")){
+			ChatManager.chat(chat, "time: "+(System.currentTimeMillis() - time)+"ms");
 		}
 		
 	}

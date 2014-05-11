@@ -34,10 +34,12 @@ import org.mcsg.bot.skype.commands.StopNuke;
 import org.mcsg.bot.skype.commands.SubCommand;
 import org.mcsg.bot.skype.commands.UUIDCommand;
 import org.mcsg.bot.skype.commands.VideoSearch;
+import org.mcsg.bot.skype.commands.Weather;
 import org.mcsg.bot.skype.commands.WebAbstract;
 import org.mcsg.bot.skype.commands.WebSearch;
 import org.mcsg.bot.skype.commands.WikipediaSearchCommand;
 import org.mcsg.bot.skype.util.ChatManager;
+import org.mcsg.bot.skype.util.Settings;
 
 import com.skype.Chat;
 import com.skype.ChatMessage;
@@ -49,7 +51,7 @@ import com.skype.User;
 
 public class Bot {
 
-	public static final String version ="1.22";
+	public static final String version ="1.24";
 
 	private HashMap<String, SubCommand> commands = 
 			new HashMap<String, SubCommand>();
@@ -89,6 +91,7 @@ public class Bot {
 	public void start() throws SkypeException{
 		
 		ChatManager.start();
+		Settings.load();
 		
 		commands.put("ping", new Ping());
 		commands.put("mcping", new MinecraftPingCommand());
@@ -125,6 +128,8 @@ public class Bot {
 		commands.put("is", new Is());
 		commands.put("argtest", new ArgTest());
 		commands.put("uuid", new UUIDCommand());
+		commands.put("weather", new Weather());
+		commands.put("w", new Weather());
 
 		Skype.addGlobalChatListener(new GlobalChatListener() {
 			

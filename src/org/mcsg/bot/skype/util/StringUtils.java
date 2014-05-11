@@ -13,7 +13,7 @@ public class StringUtils {
 		}
 		return sb.toString().trim();
 	}
-	
+
 	public static String implode(int start, String ... strs){
 		List<String> list = new ArrayList<String>(Arrays.asList(strs));
 		for(int a = 0; a < start; a++){
@@ -21,6 +21,15 @@ public class StringUtils {
 		}
 		return implode(list.toArray(new String[0]));
 	}
-	
-	
+
+
+	public static String replaceVars(String str, Object ... args){
+		int a = 0;
+		for(Object ob: args){
+			str = str.replace("{"+a+"}", ob.toString());
+			a++;
+		}
+		return str;
+
+	}
 }
