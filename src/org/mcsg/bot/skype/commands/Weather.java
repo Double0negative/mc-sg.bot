@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.mcsg.bot.skype.util.Arguments;
 import org.mcsg.bot.skype.util.ChatManager;
+import org.mcsg.bot.skype.util.Settings;
 import org.mcsg.bot.skype.util.StringUtils;
 import org.mcsg.bot.skype.web.WeatherUnderground;
 import org.mcsg.bot.skype.web.WeatherUnderground.AlertInfo.Alert;
@@ -28,7 +29,7 @@ public class Weather implements SubCommand{
 
 	@Override
 	public void execute(Chat chat, User sender, String[] args) throws Exception {
-		Arguments arge = new Arguments(args, "day/d", "hourly/hour/h", "metric/m");
+		Arguments arge = new Arguments(args, "day/d", "hourly/hour/h", "metric/m", "number/n args");
 		HashMap<String, String > swi = arge.getSwitches();
 		args = arge.getArgs();
 		WeatherConditions conditions;
@@ -76,8 +77,10 @@ public class Weather implements SubCommand{
 						cur.wind_dir, cur.wind_mph, cur.wind_kph, cur.relative_humidity);
 				ChatManager.chat(chat, weather);
 
+				int i = (swi.containsKey("number")) ? Integer.parseInt(swi.get("number")) : Settings.Root.Weather.max_forecast;
+
 				if(hour != null){
-					for(int a = 0; a < 4; a++){
+					for(int a = 0; a < i; a++){
 						HourlyForecast fcst = hour.hourly_forecast[a];
 						String hourw = StringUtils.replaceVars(HOURLY_FORMAT, fcst.FCTTIME.civil, fcst.wx, fcst.temp.english, fcst.temp.metric, 
 								fcst.wspd.english, fcst.wspd.metric, fcst.wdir.dir, fcst.pop);
@@ -85,7 +88,7 @@ public class Weather implements SubCommand{
 					}
 				}
 				if(day != null){
-					for(int a = 0; a < 4; a++){
+					for(int a = 0; a < i; a++){
 						Day fcst = day.forecast.txt_forecast.forecastday[a];
 						String hourw;
 						if(swi.containsKey("metric"))
