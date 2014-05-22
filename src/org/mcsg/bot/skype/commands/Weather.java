@@ -102,7 +102,7 @@ public class Weather implements SubCommand{
 
 			if(alerts != null){
 				for(Alert alert : alerts.alerts){
-					ChatManager.chat(chat, StringUtils.replaceVars(ALERTS_FORMAT, alert.description, alert.expires));
+					ChatManager.chat(chat,  sender, StringUtils.replaceVars(ALERTS_FORMAT, alert.description, alert.expires));
 				}
 			}
 		}

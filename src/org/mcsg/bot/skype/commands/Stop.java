@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import org.mcsg.bot.skype.Bot;
+import org.mcsg.bot.skype.util.FileUtils;
 import org.mcsg.bot.skype.util.Permissions;
 
 import com.skype.Chat;
@@ -19,19 +20,7 @@ public class Stop implements SubCommand{
 			throws Exception {
 		if(Permissions.hasPermission(sender, chat, "stop")){
 			chat.send("Stopping...");
-			
-			File file = new File(Bot.LAST_FILE);
-			PrintWriter pw;
-			try {
-				pw = new PrintWriter(new FileWriter(file));
-				pw.println(chat.getId());
-				pw.flush();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
+			FileUtils.writeFile(new File(Bot.LAST_FILE), chat.getId());			
 			System.exit(0);
 		} else {
 			chat.send("No permission");

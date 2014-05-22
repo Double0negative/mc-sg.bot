@@ -20,7 +20,7 @@ public class Heart implements SubCommand{
 		GoogleResult result = Google.search("images", "heart", new Random().nextInt(60));
 		Results[] results = result.responseData.results;
 		if(results != null && results.length > 0){
-			ChatManager.chat(chat, results[0].url);
+			ChatManager.chat(chat, sender, results[0].url);
 		} 
 	}
 

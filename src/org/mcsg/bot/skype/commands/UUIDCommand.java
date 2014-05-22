@@ -27,19 +27,19 @@ public class UUIDCommand implements SubCommand {
 			HashMap<String, String > uuids = UUIDAPI.getUUIDs(Arrays.asList(args));
 			
 			for(Entry<String, String> e : uuids.entrySet()){
-				ChatManager.chat(chat, e.getKey()+"   "+e.getValue());
+				ChatManager.chat(chat,  sender,e.getKey()+"   "+e.getValue());
 			}
 		} else {
 			boolean fmt = !swi.containsKey("noformat");
 			Profile [] profiles = MinecraftUUID.getUUIDs(args);
 			
 			for(Profile profile : profiles){
-				ChatManager.chat(chat, profile.name + "   " + ((fmt) ? profile.getUuid() : profile.uuid));
+				ChatManager.chat(chat, sender,profile.name + "   " + ((fmt) ? profile.getUuid() : profile.uuid));
 			}
 		}
 		
 		if(swi.containsKey("time")){
-			ChatManager.chat(chat, "time: "+(System.currentTimeMillis() - time)+"ms");
+			ChatManager.chat(chat,  sender, "time: "+(System.currentTimeMillis() - time)+"ms");
 		}
 		
 	}

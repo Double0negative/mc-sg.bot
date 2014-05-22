@@ -17,10 +17,10 @@ public class Define implements SubCommand{
 			DuckDuckResult result = DuckDuckGo.search(StringUtils.implode(args));
 			String def = result.Definition;
 			if(def != null && !def.equals("")){
-				ChatManager.chat(chat, def);
-				ChatManager.chat(chat, result.DefinitionURL);
+				ChatManager.chat(chat, sender, def);
+				ChatManager.chat(chat, sender, result.DefinitionURL);
 			} else {
-				ChatManager.chat(chat, "No definition for "+StringUtils.implode(args));
+				ChatManager.chat(chat, sender, "No definition for "+StringUtils.implode(args));
 			}
 	}
 

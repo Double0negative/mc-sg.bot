@@ -30,9 +30,9 @@ public class WebSearch implements SubCommand {
 				ChatManager.chat(chat, results[0].Text);
 
 			} else if (related != null && related.length > 0){
-				ChatManager.chat(chat, "Related: "+related[0].FirstURL);
+				ChatManager.chat(chat, sender, "Related: "+related[0].FirstURL);
 			} else {
-				ChatManager.chat(chat, "No results");
+				ChatManager.chat(chat, sender, "No results");
 			}
 		} else {
 			String search = "";
@@ -49,10 +49,10 @@ public class WebSearch implements SubCommand {
 			GoogleResult result = Google.search("web", search, start);
 			org.mcsg.bot.skype.web.Google.Results[] results = result.responseData.results;
 			if(results != null && results.length > 0){
-				ChatManager.chat(chat, start+1+". "+results[0].unescapedUrl);
-				ChatManager.chat(chat, results[0].titleNoFormatting);
+				ChatManager.chat(chat,  sender,start+1+". "+results[0].unescapedUrl);
+				ChatManager.chat(chat,  sender,results[0].titleNoFormatting);
 			} else {
-				ChatManager.chat(chat, "No results for "+StringUtils.implode(args));
+				ChatManager.chat(chat,  sender,"No results for "+StringUtils.implode(args));
 			}
 		}
 	}

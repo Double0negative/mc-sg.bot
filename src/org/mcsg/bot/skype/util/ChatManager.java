@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.skype.Chat;
 import com.skype.SkypeException;
+import com.skype.User;
 
 public class ChatManager {
 
@@ -37,6 +38,13 @@ public class ChatManager {
 		}
 	}
 
+	private static String getUserName(User user){
+		try {return (user.getFullName().length() > 15) ? user.getFullName().substring(0,  15) : user.getFullName();} catch (Exception e) { return null; }
+	}
+	
+	public static void chat(Chat chat, User user, String msg){
+		chat(chat, "@"+getUserName(user)+" "+msg);
+	}
 
 	public static void chat(Chat chat, String msg){
 		ArrayList<String> msgs = chats.get(chat);

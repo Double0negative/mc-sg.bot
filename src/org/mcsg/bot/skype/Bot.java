@@ -33,6 +33,7 @@ import org.mcsg.bot.skype.commands.Stop;
 import org.mcsg.bot.skype.commands.StopNuke;
 import org.mcsg.bot.skype.commands.SubCommand;
 import org.mcsg.bot.skype.commands.UUIDCommand;
+import org.mcsg.bot.skype.commands.Version;
 import org.mcsg.bot.skype.commands.VideoSearch;
 import org.mcsg.bot.skype.commands.Weather;
 import org.mcsg.bot.skype.commands.WebAbstract;
@@ -51,7 +52,7 @@ import com.skype.User;
 
 public class Bot {
 
-	public static final String version ="1.24";
+	public static final String version ="1.25";
 
 	private HashMap<String, SubCommand> commands = 
 			new HashMap<String, SubCommand>();
@@ -130,6 +131,7 @@ public class Bot {
 		commands.put("uuid", new UUIDCommand());
 		commands.put("weather", new Weather());
 		commands.put("w", new Weather());
+		commands.put("version", new Version());
 
 		Skype.addGlobalChatListener(new GlobalChatListener() {
 			

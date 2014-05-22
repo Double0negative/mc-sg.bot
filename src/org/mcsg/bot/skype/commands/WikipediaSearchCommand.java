@@ -22,10 +22,10 @@ public class WikipediaSearchCommand implements SubCommand {
 
 		Search[] result = query.query.search; 
 		if(result.length > 0){
-			ChatManager.chat(chat, "http://en.wikipedia.org/wiki/"+result[0].title.replace(" ", "%20"));
-			ChatManager.chat(chat, result[0].snippet);
+			ChatManager.chat(chat, sender, "http://en.wikipedia.org/wiki/"+result[0].title.replace(" ", "%20"));
+			ChatManager.chat(chat,  sender,result[0].snippet);
 		} else {
-			ChatManager.chat(chat, "No wikipedia results found for \""+args[0]+"\"");
+			ChatManager.chat(chat,  sender,"No wikipedia results found for \""+args[0]+"\"");
 		}
 	}
 

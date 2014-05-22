@@ -75,7 +75,7 @@ public class JavaCommand implements SubCommand {
 			}
 			
 
-			runCode(chat, code, execap, swi.containsKey("code"));
+			runCode(chat, sender, code, execap, swi.containsKey("code"));
 
 			
 		} else {
@@ -83,7 +83,7 @@ public class JavaCommand implements SubCommand {
 		}
 	}
 
-	public void runCode(Chat chat, String code, long cap, boolean b) throws Exception{
+	public void runCode(Chat chat, User sender, String code, long cap, boolean b) throws Exception{
 		int cindex = code.indexOf("class") + "class ".length();
 		//chat.send(ChatManager.createPaste(cindex+" "+code.indexOf(" ", cindex)+"\n"+code));
 		String name = code.substring(cindex, code.indexOf(" ", cindex)).trim();
@@ -95,7 +95,7 @@ public class JavaCommand implements SubCommand {
 		int id = ShellCommand.exec(chat, "cd files; javac -classpath \"../java_libs/*:\" "+name+".java; java -classpath \"../java_libs/*:\" "+name, cap, false);
 
 		if(b)
-			ChatManager.chat(chat, "Running java code. ID "+id+". Code: "+ ChatManager.createPaste(code));
+			ChatManager.chat(chat,  sender,"Running java code. ID "+id+". Code: "+ ChatManager.createPaste(code));
 
 		javaf.deleteOnExit();
 		javac.deleteOnExit();

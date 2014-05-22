@@ -1,20 +1,15 @@
 package org.mcsg.bot.skype.commands;
 
-import org.mcsg.bot.skype.util.Permissions;
+import org.mcsg.bot.skype.Bot;
 
 import com.skype.Chat;
 import com.skype.User;
 
-public class Leave implements SubCommand{
+public class Version implements SubCommand{
 
 	@Override
 	public void execute(Chat chat, User sender, String[] args) throws Exception {
-		if(Permissions.hasPermission(sender, chat, "leave")){
-			chat.send("/leave");
-		} else {
-			chat.send("/kick " + sender.getId());
-		}
-		
+		chat.send("MC-SG.BOT Version "+Bot.version);
 	}
 
 	@Override

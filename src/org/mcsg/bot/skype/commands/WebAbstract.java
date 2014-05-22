@@ -17,10 +17,10 @@ public class WebAbstract implements SubCommand {
 		DuckDuckResult result = DuckDuckGo.search(StringUtils.implode(args));
 		String abstractt = result.AbstractText;
 		if(abstractt != null && !abstractt.equals("")){
-			ChatManager.chat(chat, abstractt);
-			ChatManager.chat(chat, " -"+result.AbstractSource);
+			ChatManager.chat(chat, sender, abstractt);
+			ChatManager.chat(chat, sender, " -"+result.AbstractSource);
 		} else {
-			ChatManager.chat(chat, "No abstract for "+StringUtils.implode(args));
+			ChatManager.chat(chat, sender, "No abstract for "+StringUtils.implode(args));
 		}
 	}
 
