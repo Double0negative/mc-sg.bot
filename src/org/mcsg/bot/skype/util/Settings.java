@@ -19,6 +19,13 @@ public class Settings {
 	
 	public static class Bot {
 		public String Owner = "drew.foland";
+		public Chat chat = new Chat();
+		
+		public static class Chat{
+			public int paste = 6;
+			public int time = 5;
+			public String pastemethod = "pastebinit";
+		}
 	}
 	
 	public static class Weather {

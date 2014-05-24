@@ -41,6 +41,7 @@ public class WebClient {
 	        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
 	        connection.setRequestMethod("POST");
 
+	        if(headers != null)
 	        for (HttpHeader header : headers) {
 	            connection.setRequestProperty(header.getName(), header.getValue());
 	        }

