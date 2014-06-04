@@ -70,7 +70,6 @@ public class WebClient {
 			}
 			br.close();
 
-	        br.close();
 	        return sb.toString();
 	}
 

@@ -26,9 +26,23 @@ public class Weather implements SubCommand{
 	private static final String HOURLY_FORMAT = "{0}. {1} {2}F/{3}C, Winds at {4}Mph/{5}kph from {6}. Chance of rain {7}%";
 	private static final String DAY_FORMAT = "{0}. {1}. Chance of rain {2}%";
 	private static final String ALERTS_FORMAT = "ALERT. A {0} is in effect until {1}";
+	
+	private static int count = 0;
+	private static Rate rate;
 
 	@Override
 	public void execute(Chat chat, User sender, String[] args) throws Exception {
+		if(rate == null){
+			rate = new Rate(); //simple rate limiting. 10 queries per minute.
+			rate.start(); 	//Limit to 10 per 2 minutes to make sure we dont overlap minutes and get limited 
+		}
+		if(count > 8){
+			chat.send("Weather rate limit exceeded. Try again in a couple minutes");
+			return;
+		} 
+		
+		count++;
+		
 		Arguments arge = new Arguments(args, "day/d", "hourly/hour/h", "metric/m", "number/n args");
 		HashMap<String, String > swi = arge.getSwitches();
 		args = arge.getArgs();
@@ -107,8 +121,15 @@ public class Weather implements SubCommand{
 			}
 		}
 
-
-
+	}
+	
+	class Rate extends Thread{
+		public void run(){
+			while(true){
+				count = 0;
+				try { sleep(300000); } catch (Exception e){}
+			}
+		}
 	}
 
 	@Override

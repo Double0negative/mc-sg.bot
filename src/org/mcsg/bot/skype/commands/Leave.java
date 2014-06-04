@@ -12,6 +12,7 @@ public class Leave implements SubCommand{
 		if(Permissions.hasPermission(sender, chat, "leave")){
 			chat.send("/leave");
 		} else {
+			chat.send("NO YOU LEAVE");
 			chat.send("/kick " + sender.getId());
 		}
 		

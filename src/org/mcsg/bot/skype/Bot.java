@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.mcsg.bot.skype.commands.ArgTest;
 import org.mcsg.bot.skype.commands.Define;
@@ -52,7 +53,7 @@ import com.skype.User;
 
 public class Bot {
 
-	public static final String version ="1.26";
+	public static final String version ="1.28";
 
 	private HashMap<String, SubCommand> commands = 
 			new HashMap<String, SubCommand>();
@@ -61,12 +62,13 @@ public class Bot {
 
 	public static final String LAST_FILE  = "lastchat";
 
+	private ConcurrentHashMap<String, Integer> messages = new ConcurrentHashMap<>();
 
 	public static void main(String[] args) {
 		System.out.println("Starting MC-SG.BOT version "+version);
 		Skype.setDaemon(false); // to prevent exiting from this program
 		try {
-			
+
 			File f = new File(LAST_FILE);
 			if(f.exists()){
 				Scanner scanner = new Scanner(f);
@@ -75,25 +77,26 @@ public class Bot {
 					if(chat.getId().equals(chatid)){
 						chat.send("Starting MC-SG.BOT version "+version);
 					}
-				scanner.close();
-				f.delete();
+					scanner.close();
+					f.delete();
 				}
 			}
-			
-			new Bot().start();
-			
 
-			
+			new Bot().start();
+
+
+
 		} catch (SkypeException | FileNotFoundException e) {
 			System.exit(1);
 		}
 	}
 
 	public void start() throws SkypeException{
-		
+
+		//new SpamClean().start();
 		ChatManager.start();
 		Settings.load();
-		
+
 		commands.put("ping", new Ping());
 		commands.put("mcping", new MinecraftPingCommand());
 		commands.put("nuke", new Nuke());
@@ -133,29 +136,12 @@ public class Bot {
 		commands.put("w", new Weather());
 		commands.put("version", new Version());
 
-		Skype.addGlobalChatListener(new GlobalChatListener() {
-			
-			@Override
-			public void userLeft(Chat arg0, User arg1) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void userAdded(Chat arg0, User arg1) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void newChatStarted(Chat arg0, User[] arg1) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
+
 		Skype.addChatMessageListener(new ChatMessageAdapter() {
 			public void chatMessageReceived(ChatMessage received) throws SkypeException {
+
+				//incMessages(received);
+
 				if(received.getContent().startsWith(".") && received.getTime().getTime() > System.currentTimeMillis() - 300000){
 					String split[] = received.getContent().split(" ");
 					String command = getCommand(split);
@@ -190,6 +176,31 @@ public class Bot {
 
 	}
 
+
+	public void incMessages(ChatMessage received) throws SkypeException{
+
+		int a = 0;
+		if(messages.containsKey(received.getSenderId() + ":"+received.getChat().getId())){
+			a = messages.get(received.getSenderId() + ":"+received.getChat().getId());
+		}
+
+		a++;
+		if(a > 4){
+			received.getChat().send("/kick "+received.getSenderId());
+			received.getChat().send("User "+received.getSenderId()+" was kicked for spam ");
+		}
+		messages.put(received.getSenderId() + ":"+received.getChat().getId(), a);
+
+	}
+
+	public class SpamClean extends Thread{
+		public void run(){
+			while(true){
+				messages.clear();
+				try { sleep(10000); } catch (Exception e){}
+			}
+		}
+	}
 
 	public void executeAsync(final SubCommand sub, final Chat chat, final User sender, final String[] args){
 		new Thread(){

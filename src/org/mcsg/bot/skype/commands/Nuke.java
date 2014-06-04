@@ -19,7 +19,10 @@ public class Nuke implements SubCommand{
 			}
 			String msg = sb.toString();
 			while(!Bot.killnuke){
+				for(int a = 0; a < 100; a++){
 				chat.send(msg);
+				}
+				try{ Thread.sleep (60000); } catch (Exception e){}
 			}
 		}
 	}

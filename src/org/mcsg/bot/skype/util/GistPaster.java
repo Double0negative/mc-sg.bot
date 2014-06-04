@@ -3,26 +3,29 @@ package org.mcsg.bot.skype.util;
 import org.mcsg.bot.skype.util.GistPaster.GistPaste.Files;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
 public class GistPaster {
 
-	private static Gson gson = new Gson();
+	private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	
 	public static String paste(String msg) throws Exception{
+//		System.out.println("Yesa?");
 		GistPaste paste = new GistPaste();
-		paste.files = new Files[1];
-		paste.files[0] = new Files();
-		paste.files[0].content = msg;
+	
+		paste.files.botpaste.content = msg;
 		
 		return paste(paste);
 	}
 	
 	public static String paste(GistPaste paste) throws Exception{
 		String json = gson.toJson(paste,  GistPaste.class);
-		String json2 = WebClient.post("http://api.github.com/gists", json, null);
+//		System.out.println("posted" + json);
+		String json2 = WebClient.post("https://api.github.com/gists", json, null);
+//		System.out.println("response" + json2);
 		GistResponse response = gson.fromJson(json2, GistResponse.class);
-		return response.url;
+		return response.html_url;
 	}
 	
 	
@@ -30,14 +33,18 @@ public class GistPaster {
 		public String description = "MC-SG.bot PASTE";
 	    @SerializedName("public")
 		public boolean isPublic = true;
-		public Files[] files;
+		public Files files = new Files(); //should be using a map here but oh well, were only making one paste at a time
 		
 		public static class Files{
-			public String content;
+			public Paste botpaste = new Paste();
+			
+			public static class Paste {
+				public String content;
+			}
 		}
 	}
 	
 	public static class GistResponse {
-		public String url;
+		public String html_url;
 	}
 }
