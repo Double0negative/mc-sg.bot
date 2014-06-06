@@ -53,7 +53,7 @@ import com.skype.User;
 
 public class Bot {
 
-	public static final String version ="1.28";
+	public static final String version ="1.29";
 
 	private HashMap<String, SubCommand> commands = 
 			new HashMap<String, SubCommand>();
@@ -76,6 +76,7 @@ public class Bot {
 				for(Chat chat : Skype.getAllChats()){
 					if(chat.getId().equals(chatid)){
 						chat.send("Starting MC-SG.BOT version "+version);
+						chat.send("/topic MC-SG bot v"+version);
 					}
 					scanner.close();
 					f.delete();

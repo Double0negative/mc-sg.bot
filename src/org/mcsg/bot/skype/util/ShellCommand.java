@@ -60,7 +60,7 @@ public class ShellCommand {
 	public static void startReaders(int id){
 		Process proc = procs.get(id);
 
-		readStream("", id, proc.getInputStream());
+		readStream("|", id, proc.getInputStream());
 		readStream("ERROR: ", id, proc.getErrorStream());
 	}
 
