@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.mcsg.bot.skype.commands.ArgTest;
+import org.mcsg.bot.skype.commands.Connect4;
 import org.mcsg.bot.skype.commands.Define;
 import org.mcsg.bot.skype.commands.GetUsers;
 import org.mcsg.bot.skype.commands.Heart;
@@ -53,7 +54,7 @@ import com.skype.User;
 
 public class Bot {
 
-	public static final String version ="1.29";
+	public static final String version ="1.30";
 
 	private HashMap<String, SubCommand> commands = 
 			new HashMap<String, SubCommand>();
@@ -76,7 +77,7 @@ public class Bot {
 				for(Chat chat : Skype.getAllChats()){
 					if(chat.getId().equals(chatid)){
 						chat.send("Starting MC-SG.BOT version "+version);
-						chat.send("/topic MC-SG bot v"+version);
+						chat.send("/topic MC-SG BOT  v"+version);
 					}
 					scanner.close();
 					f.delete();
@@ -136,6 +137,7 @@ public class Bot {
 		commands.put("weather", new Weather());
 		commands.put("w", new Weather());
 		commands.put("version", new Version());
+		commands.put("c4", new Connect4());
 
 
 		Skype.addChatMessageListener(new ChatMessageAdapter() {

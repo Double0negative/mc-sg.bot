@@ -26,7 +26,7 @@ public class ManageChat implements SubCommand {
 				Settings.Root.Bot.chat.time = time;
 			} 
 			if (swi.containsKey("paste")){
-				int paste = Integer.parseInt(swi.get("seconds"));
+				int paste = Integer.parseInt(swi.get("paste"));
 				Settings.Root.Bot.chat.paste = paste; 
 			} 
 			if(swi.containsKey("pastemethod")){
