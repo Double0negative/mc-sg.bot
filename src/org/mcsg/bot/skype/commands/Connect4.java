@@ -2,8 +2,10 @@ package org.mcsg.bot.skype.commands;
 
 import java.util.HashMap;
 
+import org.mcsg.bot.skype.Bot;
 import org.mcsg.bot.skype.games.Connect4Game;
 import org.mcsg.bot.skype.games.Connect4Manager;
+import org.mcsg.bot.skype.games.TicTacToeGame;
 import org.mcsg.bot.skype.games.Connect4Game.BoardFullException;
 import org.mcsg.bot.skype.games.Connect4Game.ColumnFullException;
 import org.mcsg.bot.skype.games.Connect4Game.IllegalColumnException;
@@ -11,6 +13,7 @@ import org.mcsg.bot.skype.games.Connect4Game.Tile;
 import org.mcsg.bot.skype.util.ChatManager;
 
 import com.skype.Chat;
+import com.skype.ChatMessage;
 import com.skype.SkypeException;
 import com.skype.User;
 
@@ -23,6 +26,7 @@ public class Connect4 implements SubCommand{
 		Connect4Game game = Connect4Manager.getInstance().getGame(chat.getId(), sender.getId());
 		if(game != null){
 			int col = Integer.parseInt(args[0]) -1;
+			Tile[][] pretiles = game.getTiles().clone();
 			if(!game.isMove(sender.getId())){
 				ChatManager.chat(chat, sender, "Not your move!");
 				return;
@@ -35,12 +39,12 @@ public class Connect4 implements SubCommand{
 			} catch(ColumnFullException e){
 				ChatManager.chat(chat, sender, "Column is full!");
 			} catch (BoardFullException e){
-				printGame(chat, game, true);
+				printGame(chat, game.getTiles(), game, true);
 				ChatManager.chat(chat, "Draw! ");
 				Connect4Manager.getInstance().removeGame(chat.getId(), game);
 				return;
 			}
-			printGame(chat, game, win);
+			animateGame(chat, pretiles, game, sender.getId(), win);
 			if (win){
 				chat.send( sender.getId() +" WINS!!!!!!!");
 				Connect4Manager.getInstance().removeGame(chat.getId(), game);
@@ -52,12 +56,30 @@ public class Connect4 implements SubCommand{
 			} catch (Exception e){
 				game = Connect4Manager.getInstance().createGame(chat.getId(), sender.getId(), args[0]);
 				chat.send("Created Game");
-				printGame(chat, game, false);
+				printGame(chat, game.getTiles(), game, false);
 			}
 		}
 	}
 
-	private void printGame(Chat chat, Connect4Game game, boolean won) throws SkypeException{
+	private ChatMessage msg;
+	private int lastMessage;
+	private boolean animating;
+
+	private void animateGame(Chat chat, Tile[][] tiles, Connect4Game game, String player,  boolean won) throws SkypeException{
+		tiles[game.getLastRow()][game.getLastCol()] = null;
+		for(int row = 0; row <= game.getLastRow(); row++){
+			tiles[row][game.getLastCol()] = game.getTile(player);
+			if(row > 0){
+				tiles[row-1][game.getLastCol()] = null;
+			}
+			printGame(chat, tiles, game, won);
+			try{Thread.sleep(500); } catch (Exception e){}
+		}
+		printGame(chat, game.getTiles(), game, won);
+
+	}
+
+	private void printGame(Chat chat, Tile[][] tiles, Connect4Game game, boolean won) throws SkypeException{
 		StringBuilder sb = new StringBuilder();
 		StringBuilder border = new StringBuilder();
 
@@ -68,7 +90,6 @@ public class Connect4 implements SubCommand{
 
 		sb.append(border).append("\n");
 
-		Tile[][] tiles  = game.getTiles();
 		for(Tile[] row : tiles){
 			sb.append("   |");
 			for(Tile tile : row){
@@ -85,7 +106,16 @@ public class Connect4 implements SubCommand{
 
 		sb.append("\n");
 		if(!won) sb.append("Move: "+game.getMover());
-		chat.send(sb.toString());
+
+		if(msg != null  && lastMessage + 10 > Bot.messageCount.get(chat)){
+			msg.setContent(sb.toString());
+		} else {
+			if(msg != null){
+				msg.setContent("");
+			}
+			msg = chat.send(sb.toString());
+			lastMessage = Bot.messageCount.get(chat);
+		}
 	}
 
 	@Override

@@ -63,7 +63,8 @@ public class Bot {
 	public static boolean killnuke = false;
 
 	public static final String LAST_FILE  = "lastchat";
-
+	public static final HashMap<Chat, Integer> messageCount = new HashMap<Chat, Integer>();
+	
 	private ConcurrentHashMap<String, Integer> messages = new ConcurrentHashMap<>();
 
 	public static void main(String[] args) {
@@ -143,6 +144,8 @@ public class Bot {
 
 		Skype.addChatMessageListener(new ChatMessageAdapter() {
 			public void chatMessageReceived(ChatMessage received) throws SkypeException {
+				int count = (messageCount.containsKey(received.getChat()) ? messageCount.get(received.getChat()) : 0);
+				messageCount.put(received.getChat(), count+1);
 
 				//incMessages(received);
 

@@ -18,6 +18,8 @@ public class Connect4Game {
 	private Tile p1Tile;
 	private Tile p2Tile;
 	
+	private int lastRow, lastCol;
+	
 	private int move = 0;
 	
 	public Connect4Game(String p1, String p2, Tile p1Tile, Tile p2Tile){
@@ -53,8 +55,9 @@ public class Connect4Game {
 	}
 	
 	public enum Tile {
-		SQUARE("■"), CIRCLE("○");
-		
+		SQUARE("✔"), CIRCLE("✕");
+//		SQUARE("■"), CIRCLE("○");
+
 		
 		public String symbol;
 		private Tile(String symbol){
@@ -87,8 +90,17 @@ public class Connect4Game {
 		
 		int row = getFirstRow(col);
 		tiles[row][col] = tile;
+		lastCol = col; lastRow = row;
 		move = Math.abs(move - 1);
 		return checkForVictory(tile);
+	}
+	
+	public int getLastRow(){
+		return lastRow;
+	}
+	
+	public int getLastCol(){
+		return lastCol;
 	}
 	
 	private int getFirstRow(int col){

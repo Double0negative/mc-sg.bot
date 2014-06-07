@@ -70,11 +70,11 @@ public class TicTacToe implements SubCommand{
 		StringBuilder border = new StringBuilder();
 
 		sb.append(".\n    1  2  3\n   ");
-		for(int a = 0; a < 15; a++){ 
-			border.append("-");
-		}
-
-		sb.append(border).append("\n");
+//		for(int a = 0; a < 15; a++){ 
+//			border.append("-");
+//		}
+//
+//		sb.append(border).append("\n");
 
 		Tile[][] tiles  = game.getTiles();
 		char[] chars = new char[]{'A', 'B', 'C'};
@@ -92,7 +92,7 @@ public class TicTacToe implements SubCommand{
 			}
 			sb.append("\n");
 		}
-		sb.append("   ").append(border);
+//		sb.append("   ").append(border);
 
 		sb.append("\n");
 		if(!won) sb.append("Move: "+game.getMover());
