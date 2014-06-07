@@ -1,6 +1,11 @@
-package org.mcsg.bot.skype.util;
+package org.mcsg.bot.skype.games;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import org.mcsg.bot.skype.util.ChatManager;
+
+import com.skype.Skype;
 
 public class Connect4Game {
 
@@ -48,7 +53,7 @@ public class Connect4Game {
 	}
 	
 	public enum Tile {
-		RED("■"), BLUE("○");
+		SQUARE("■"), CIRCLE("○");
 		
 		
 		public String symbol;
@@ -98,23 +103,30 @@ public class Connect4Game {
 	
 	private boolean checkForVictory(Tile tile){
 		int count = 0;
-		
+		try{
 //		x, y, rowdelt, coldelt, rowinc, colinx;
+			
+			ChatManager.chat(Skype.getAllBookmarkedChats()[0], "Checking for tile: "+tile);
+
 		int [][] patterns = {
 				new int[]{0,0,1,0,0,1},
 				new int[]{0,0,0,1,1,0},
-				new int[]{0,0,1,0,-1,1},
-				new int[]{ROWS,0,-1,0,1,1},
-				new int[]{ROWS,COLS,-1,0,-1,-1},
-				new int[]{0,COLS,0,-1,-1,1}};
-		
+				new int[]{0,0,1,0,-1,1}, new int[]{ROWS-1,COLS-1,0,-1,1,-1},
+				new int[]{ROWS-1,0,-1,0,1,1}, new int[]{0,COLS-1,0,-1,1,1}}; 
+	
 		for(int[] pattern : patterns){
+//			ChatManager.chat(Skype.getAllBookmarkedChats()[0], "\n\n\nChecking pattern "+Arrays.toString(pattern));
 			int rowi = pattern[0];
 			int coli = pattern[1];
 			while(rowi >= 0 && rowi < ROWS && coli >= 0 && coli < COLS){
+//				ChatManager.chat(Skype.getAllBookmarkedChats()[0], "\nStarting sweep. RowI: "+rowi+" ColI: "+coli);
+				count = 0;
 				int row = rowi; int col = coli;
 				while(row >= 0 && row < ROWS && col >= 0 && col < COLS){
+//					ChatManager.chat(Skype.getAllBookmarkedChats()[0], "Row: "+row+" Col: "+col+" Value: "+tiles[row][col]+" Count: "+count);
+
 					if(tiles[row][col] == tile){
+//						ChatManager.chat(Skype.getAllBookmarkedChats()[0], "Found match.");
 						count++;
 						if(count > 3) return true;
 					} else count=0;
@@ -125,7 +137,7 @@ public class Connect4Game {
 				coli += pattern[3];
 			}
 		}
-		
+		}catch (Exception e){}
 		return false;
 	}
 	

@@ -2,12 +2,16 @@ package org.mcsg.bot.skype.commands;
 
 import java.util.HashMap;
 
+import org.mcsg.bot.skype.games.Connect4Game;
+import org.mcsg.bot.skype.games.Connect4Manager;
+import org.mcsg.bot.skype.games.Connect4Game.BoardFullException;
+import org.mcsg.bot.skype.games.Connect4Game.ColumnFullException;
+import org.mcsg.bot.skype.games.Connect4Game.IllegalColumnException;
+import org.mcsg.bot.skype.games.Connect4Game.Tile;
 import org.mcsg.bot.skype.util.ChatManager;
-import org.mcsg.bot.skype.util.Connect4Game;
-import org.mcsg.bot.skype.util.Connect4Game.Tile;
-import org.mcsg.bot.skype.util.Connect4Manager;
 
 import com.skype.Chat;
+import com.skype.SkypeException;
 import com.skype.User;
 
 public class Connect4 implements SubCommand{
@@ -23,12 +27,22 @@ public class Connect4 implements SubCommand{
 				ChatManager.chat(chat, sender, "Not your move!");
 				return;
 			}
-			boolean win = game.makeMove(game.getTile(sender.getId()), col);
-
-
+			boolean win = false;
+			try{
+				win = game.makeMove(game.getTile(sender.getId()), col);
+			}catch (IllegalColumnException e){
+				ChatManager.chat(chat, sender, "Column doesn't exist!");
+			} catch(ColumnFullException e){
+				ChatManager.chat(chat, sender, "Column is full!");
+			} catch (BoardFullException e){
+				printGame(chat, game, true);
+				ChatManager.chat(chat, "Draw! ");
+				Connect4Manager.getInstance().removeGame(chat.getId(), game);
+				return;
+			}
 			printGame(chat, game, win);
 			if (win){
-				ChatManager.chat(chat, sender.getId() +" WINS!!!!!!!");
+				chat.send( sender.getId() +" WINS!!!!!!!");
 				Connect4Manager.getInstance().removeGame(chat.getId(), game);
 			}
 		} else {
@@ -37,18 +51,18 @@ public class Connect4 implements SubCommand{
 				ChatManager.chat(chat, sender, "Not in a game!");
 			} catch (Exception e){
 				game = Connect4Manager.getInstance().createGame(chat.getId(), sender.getId(), args[0]);
-				ChatManager.chat(chat, "Created Game");
+				chat.send("Created Game");
 				printGame(chat, game, false);
 			}
 		}
 	}
 
-	private void printGame(Chat chat, Connect4Game game, boolean won){
+	private void printGame(Chat chat, Connect4Game game, boolean won) throws SkypeException{
 		StringBuilder sb = new StringBuilder();
 		StringBuilder border = new StringBuilder();
 
 		sb.append(".\n    1  2  3  4  5  6  7\n   ");
-		for(int a = 0; a < 26; a++){
+		for(int a = 0; a < 26; a++){ 
 			border.append("-");
 		}
 
@@ -71,7 +85,7 @@ public class Connect4 implements SubCommand{
 
 		sb.append("\n");
 		if(!won) sb.append("Move: "+game.getMover());
-		ChatManager.chat(chat, sb.toString());
+		chat.send(sb.toString());
 	}
 
 	@Override

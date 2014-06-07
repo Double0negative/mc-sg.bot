@@ -1,9 +1,9 @@
-package org.mcsg.bot.skype.util;
+package org.mcsg.bot.skype.games;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.mcsg.bot.skype.util.Connect4Game.Tile;
+import org.mcsg.bot.skype.games.Connect4Game.Tile;
 
 public class Connect4Manager {
 
@@ -20,7 +20,7 @@ public class Connect4Manager {
 	}
 	
 	public Connect4Game createGame(String chat, String p1, String p2){
-		Connect4Game c4 = new Connect4Game(p1, p2, Tile.RED, Tile.BLUE);
+		Connect4Game c4 = new Connect4Game(p1, p2, Tile.SQUARE, Tile.CIRCLE);
 		ArrayList<Connect4Game> gamea = games.get(chat);
 		if(gamea == null){
 			gamea = new ArrayList<Connect4Game>();
