@@ -92,7 +92,7 @@ public class Connect4Game {
 	}
 	
 	private int getFirstRow(int col){
-		for(int a = 5; a > 0; a--){
+		for(int a = 5; a > -1; a--){
 			if(tiles[a][col] == null){
 				return a ;
 			}
@@ -106,7 +106,7 @@ public class Connect4Game {
 		try{
 //		x, y, rowdelt, coldelt, rowinc, colinx;
 			
-			ChatManager.chat(Skype.getAllBookmarkedChats()[0], "Checking for tile: "+tile);
+//			ChatManager.chat(Skype.getAllBookmarkedChats()[0], "Checking for tile: "+tile);
 
 		int [][] patterns = {
 				new int[]{0,0,1,0,0,1},
