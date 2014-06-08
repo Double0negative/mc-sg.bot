@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import org.mcsg.bot.skype.util.ChatManager;
 
+import com.skype.ChatMessage;
 import com.skype.Skype;
 
 public class Connect4Game {
@@ -22,6 +23,9 @@ public class Connect4Game {
 	
 	private int move = 0;
 	
+	private ChatMessage msg;
+	private int lastMessage;
+	
 	public Connect4Game(String p1, String p2, Tile p1Tile, Tile p2Tile){
 		this.player1 = p1;
 		this.player2 = p2;
@@ -38,6 +42,22 @@ public class Connect4Game {
 		return player2;
 	}
 	
+	public ChatMessage getMsg() {
+		return msg;
+	}
+
+	public void setMsg(ChatMessage msg) {
+		this.msg = msg;
+	}
+
+	public int getLastMessage() {
+		return lastMessage;
+	}
+
+	public void setLastMessage(int lastMessage) {
+		this.lastMessage = lastMessage;
+	}
+
 	public boolean isMove(String player){
 		return move == 0 && player.equals(player1) || move == 1 && player.equals(player2);
 	}
@@ -91,8 +111,11 @@ public class Connect4Game {
 		int row = getFirstRow(col);
 		tiles[row][col] = tile;
 		lastCol = col; lastRow = row;
-		move = Math.abs(move - 1);
 		return checkForVictory(tile);
+	}
+	
+	public void nextMove(){
+		move = Math.abs(move - 1);
 	}
 	
 	public int getLastRow(){

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.mcsg.bot.skype.Bot;
 import org.mcsg.bot.skype.games.Connect4Game;
 import org.mcsg.bot.skype.games.Connect4Manager;
+import org.mcsg.bot.skype.games.GameStatsManager;
 import org.mcsg.bot.skype.games.TicTacToeGame;
 import org.mcsg.bot.skype.games.Connect4Game.BoardFullException;
 import org.mcsg.bot.skype.games.Connect4Game.ColumnFullException;
@@ -46,7 +47,7 @@ public class Connect4 implements SubCommand{
 			}
 			animateGame(chat, pretiles, game, sender.getId(), win);
 			if (win){
-				chat.send( sender.getId() +" WINS!!!!!!!");
+				GameStatsManager.addGameResult("connect4", chat.getId(), game.getPlayer1(), game.getPlayer2(), sender.getId());
 				Connect4Manager.getInstance().removeGame(chat.getId(), game);
 			}
 		} else {
@@ -54,16 +55,13 @@ public class Connect4 implements SubCommand{
 				Integer.parseInt(args[0]);
 				ChatManager.chat(chat, sender, "Not in a game!");
 			} catch (Exception e){
+				if(sender.getId().equals(args[0])){chat.send("Cannot create game with self!"); return;}
 				game = Connect4Manager.getInstance().createGame(chat.getId(), sender.getId(), args[0]);
 				chat.send("Created Game");
 				printGame(chat, game.getTiles(), game, false);
 			}
 		}
 	}
-
-	private ChatMessage msg;
-	private int lastMessage;
-	private boolean animating;
 
 	private void animateGame(Chat chat, Tile[][] tiles, Connect4Game game, String player,  boolean won) throws SkypeException{
 		tiles[game.getLastRow()][game.getLastCol()] = null;
@@ -75,8 +73,9 @@ public class Connect4 implements SubCommand{
 			printGame(chat, tiles, game, won);
 			try{Thread.sleep(500); } catch (Exception e){}
 		}
-		printGame(chat, game.getTiles(), game, won);
+		if(!won)game.nextMove();
 
+		printGame(chat, game.getTiles(), game, won);
 	}
 
 	private void printGame(Chat chat, Tile[][] tiles, Connect4Game game, boolean won) throws SkypeException{
@@ -105,16 +104,22 @@ public class Connect4 implements SubCommand{
 		sb.append("   ").append(border);
 
 		sb.append("\n");
-		if(!won) sb.append("Move: "+game.getMover());
+		if(!won) 
+			sb.append("Move: "+game.getMover());
+		else 
+			sb.append("WINNER: "+game.getMover());
 
+		ChatMessage msg = game.getMsg();
+		int lastMessage = game.getLastMessage();
+		
 		if(msg != null  && lastMessage + 10 > Bot.messageCount.get(chat)){
 			msg.setContent(sb.toString());
 		} else {
 			if(msg != null){
 				msg.setContent("");
 			}
-			msg = chat.send(sb.toString());
-			lastMessage = Bot.messageCount.get(chat);
+			game.setMsg(chat.send(sb.toString()));
+			game.setLastMessage(Bot.messageCount.get(chat));
 		}
 	}
 

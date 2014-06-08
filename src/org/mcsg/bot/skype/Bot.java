@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.mcsg.bot.skype.commands.ArgTest;
 import org.mcsg.bot.skype.commands.Connect4;
 import org.mcsg.bot.skype.commands.Define;
+import org.mcsg.bot.skype.commands.GameStatsCommand;
 import org.mcsg.bot.skype.commands.GetUsers;
 import org.mcsg.bot.skype.commands.Heart;
 import org.mcsg.bot.skype.commands.Hi;
@@ -55,7 +56,7 @@ import com.skype.User;
 
 public class Bot {
 
-	public static final String version ="1.31";
+	public static final String version ="1.32";
 
 	private HashMap<String, SubCommand> commands = 
 			new HashMap<String, SubCommand>();
@@ -141,7 +142,10 @@ public class Bot {
 		commands.put("version", new Version());
 		commands.put("c4", new Connect4());
 		commands.put("t3", new TicTacToe());
-
+		commands.put("stats", new GameStatsCommand());
+		
+		
+		
 		Skype.addChatMessageListener(new ChatMessageAdapter() {
 			public void chatMessageReceived(ChatMessage received) throws SkypeException {
 				int count = (messageCount.containsKey(received.getChat()) ? messageCount.get(received.getChat()) : 0);

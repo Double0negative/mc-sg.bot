@@ -2,6 +2,7 @@ package org.mcsg.bot.skype.commands;
 
 import java.util.HashMap;
 
+import org.mcsg.bot.skype.games.GameStatsManager;
 import org.mcsg.bot.skype.games.TicTacToeGame;
 import org.mcsg.bot.skype.games.TicTacToeGame.IllegalTileException;
 import org.mcsg.bot.skype.games.TicTacToeManager;
@@ -50,6 +51,8 @@ public class TicTacToe implements SubCommand{
 			}
 			printGame(chat, game, win);
 			if (win){
+				GameStatsManager.addGameResult("tictactoe", chat.getId(), game.getPlayer1(), game.getPlayer2(), sender.getId());
+
 				chat.send( sender.getId() +" WINS!!!!!!!");
 				TicTacToeManager.getInstance().removeGame(chat.getId(), game);
 			}
@@ -69,7 +72,7 @@ public class TicTacToe implements SubCommand{
 		StringBuilder sb = new StringBuilder();
 		StringBuilder border = new StringBuilder();
 
-		sb.append(".\n    1  2  3\n   ");
+		sb.append(".\n    1  2  3\n");
 //		for(int a = 0; a < 15; a++){ 
 //			border.append("-");
 //		}
