@@ -3,7 +3,12 @@ package org.mcsg.bot.skype.games;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.mcsg.bot.skype.games.Connect4Game.BoardFullException;
+import org.mcsg.bot.skype.games.Connect4Game.ColumnFullException;
+import org.mcsg.bot.skype.games.Connect4Game.IllegalColumnException;
 import org.mcsg.bot.skype.games.Connect4Game.Tile;
+
+import com.skype.Chat;
 
 public class Connect4Manager {
 
@@ -19,14 +24,14 @@ public class Connect4Manager {
 		return instance;
 	}
 	
-	public Connect4Game createGame(String chat, String p1, String p2){
-		Connect4Game c4 = new Connect4Game(p1, p2, Tile.SQUARE, Tile.CIRCLE);
-		ArrayList<Connect4Game> gamea = games.get(chat);
+	public Connect4Game createGame(Chat chat, String p1, String p2){
+		Connect4Game c4 = new Connect4Game(chat, p1, p2, Tile.SQUARE, Tile.CIRCLE);
+		ArrayList<Connect4Game> gamea = games.get(chat.getId());
 		if(gamea == null){
 			gamea = new ArrayList<Connect4Game>();
 		}
 		gamea.add(c4);
-		games.put(chat, gamea);
+		games.put(chat.getId(), gamea);
 		return c4;		
 	}
 	
@@ -47,5 +52,6 @@ public class Connect4Manager {
 		gamea.remove(game);
 	}
 	
+
 	
 }

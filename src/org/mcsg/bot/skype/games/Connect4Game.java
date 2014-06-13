@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import org.mcsg.bot.skype.util.ChatManager;
 
+import com.skype.Chat;
 import com.skype.ChatMessage;
 import com.skype.Skype;
 
@@ -15,23 +16,35 @@ public class Connect4Game {
 	
 	private String player1;
 	private String player2;
-	
 	private Tile p1Tile;
 	private Tile p2Tile;
 	
 	private int lastRow, lastCol;
-	
 	private int move = 0;
 	
 	private ChatMessage msg;
 	private int lastMessage;
 	
-	public Connect4Game(String p1, String p2, Tile p1Tile, Tile p2Tile){
+	private Connect4AI AI;
+	
+	public Connect4Game(Chat chat, String p1, String p2, Tile p1Tile, Tile p2Tile){
 		this.player1 = p1;
 		this.player2 = p2;
 		
 		this.p1Tile = p1Tile;
 		this.p2Tile = p2Tile;
+		
+		
+		try{
+		if(p1.equalsIgnoreCase("ai")){ //This shouldn't be possible but whatever
+			AI = new Connect4AI(chat, p1Tile, this);
+		} else if(p2.equalsIgnoreCase("ai")){
+			AI = new Connect4AI(chat, p2Tile, this);
+		}
+		
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	public String getPlayer1(){
@@ -111,7 +124,14 @@ public class Connect4Game {
 		int row = getFirstRow(col);
 		tiles[row][col] = tile;
 		lastCol = col; lastRow = row;
-		return checkForVictory(tile);
+		return checkForVictory(tile, tiles);
+	}
+	
+	public int doAiMove(){
+		if(AI != null){
+			return (AI.makeMove()) ? 1 : 0;
+		}
+		return -1;
 	}
 	
 	public void nextMove(){
@@ -127,6 +147,10 @@ public class Connect4Game {
 	}
 	
 	private int getFirstRow(int col){
+		return getFirstRow(tiles, col);
+	}
+	
+	protected int getFirstRow(Tile[][] tiles, int col){
 		for(int a = 5; a > -1; a--){
 			if(tiles[a][col] == null){
 				return a ;
@@ -136,7 +160,11 @@ public class Connect4Game {
 	}
 	
 	
-	private boolean checkForVictory(Tile tile){
+	public Tile checkForVictory(Tile[][] tiles){
+		return (checkForVictory(Tile.CIRCLE, tiles)) ? Tile.CIRCLE : (checkForVictory(Tile.SQUARE, tiles)) ? Tile.SQUARE : null;
+	}
+	
+	public boolean checkForVictory(Tile tile, Tile[][] tiles){
 		int count = 0;
 		try{
 //		x, y, rowdelt, coldelt, rowinc, colinx;

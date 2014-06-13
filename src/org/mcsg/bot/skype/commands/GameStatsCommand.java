@@ -70,11 +70,10 @@ public class GameStatsCommand implements SubCommand{
 						}
 					}
 					
+					Player player = gchat.players.get(player1);
+					sb.append( "   Wins: "+player.win +"   Losses: "+player.loss +" W/L Ratio: "+ Math.round((player.win / (player.win + player.loss) * 100)) + "%");
 					chat.send(sb.toString());
-
-				}
-				
-				if(!swi.containsKey("opponent")){
+				}else {
 
 					Player player = gchat.players.get(player1);
 					chat.send("Player stats for "+player1+" in game "+gamename);

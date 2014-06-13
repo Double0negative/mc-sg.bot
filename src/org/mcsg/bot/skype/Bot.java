@@ -56,7 +56,7 @@ import com.skype.User;
 
 public class Bot {
 
-	public static final String version ="1.32";
+	public static final String version ="1.33 SkyNet";
 
 	private HashMap<String, SubCommand> commands = 
 			new HashMap<String, SubCommand>();

@@ -1,13 +1,28 @@
 package org.mcsg.bot.skype.games;
 
 public class HangmanGame {
-  /*  
-___                                                                    
-|	|
-O	|
+  //http://screencloud.net/v/uIwG
+	String[] sprite = new String[] {" ___ \n |	|\n O	|\n\\|/	|\n |	|\n/ \\ |",
+			" ___ \n |	|\n O	|\n\\|/	|\n |	|\n/   |",
+			" ___ \n |	|\n O	|\n\\|/	|\n |	|\n    |",
+			" ___ \n |	|\n O	|\n\\|	|\n |	|\n    |",
+			" ___ \n |	|\n O	|\n |	|\n |	|\n    |",
+			" ___ \n |	|\n O	|\n 	|\n 	|\n    |",
+			" ___ \n |	|\n 	|\n 	|\n 	|\n    |"
+	};
+	
+	private String word;
+	private String hint;
+	private int guess;
+	
+	
+	/*  
+ ___                                                                    
+ |	|
+ O	|
 \|/	|
-|	|
-/ \   ----
+ |	|
+/ \ |  ----
 
 _ _ _ _ _ _ _ _ _ _ _ _
 	

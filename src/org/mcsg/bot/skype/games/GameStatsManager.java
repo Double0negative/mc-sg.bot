@@ -69,7 +69,7 @@ public class GameStatsManager {
 		doWinLose(local, lPlayer2, winner);
 		doWinLose(global, gPlayer1, winner);
 		doWinLose(global, gPlayer2, winner);
-		
+	
 		global.games.add(game);
 		local.games.add(game);
 		

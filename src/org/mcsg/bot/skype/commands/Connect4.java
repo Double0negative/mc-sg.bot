@@ -15,6 +15,7 @@ import org.mcsg.bot.skype.util.ChatManager;
 
 import com.skype.Chat;
 import com.skype.ChatMessage;
+import com.skype.Skype;
 import com.skype.SkypeException;
 import com.skype.User;
 
@@ -26,6 +27,11 @@ public class Connect4 implements SubCommand{
 	public void execute(Chat chat, User sender, String[] args) throws Exception {
 		Connect4Game game = Connect4Manager.getInstance().getGame(chat.getId(), sender.getId());
 		if(game != null){
+			if(args[0].equalsIgnoreCase("leave")){
+				ChatManager.chat(chat, sender, "Left the game!");
+				Connect4Manager.getInstance().removeGame(chat.getId(), game);
+
+			}
 			int col = Integer.parseInt(args[0]) -1;
 			Tile[][] pretiles = game.getTiles().clone();
 			if(!game.isMove(sender.getId())){
@@ -37,18 +43,32 @@ public class Connect4 implements SubCommand{
 				win = game.makeMove(game.getTile(sender.getId()), col);
 			}catch (IllegalColumnException e){
 				ChatManager.chat(chat, sender, "Column doesn't exist!");
+				return;
 			} catch(ColumnFullException e){
 				ChatManager.chat(chat, sender, "Column is full!");
+				return;
 			} catch (BoardFullException e){
 				printGame(chat, game.getTiles(), game, true);
 				ChatManager.chat(chat, "Draw! ");
 				Connect4Manager.getInstance().removeGame(chat.getId(), game);
 				return;
 			}
-			animateGame(chat, pretiles, game, sender.getId(), win);
+			animateGame(chat, pretiles, game, sender.getId(), win);			
 			if (win){
 				GameStatsManager.addGameResult("connect4", chat.getId(), game.getPlayer1(), game.getPlayer2(), sender.getId());
 				Connect4Manager.getInstance().removeGame(chat.getId(), game);
+			} else {
+
+				//Make AI move 
+				pretiles = game.getTiles();
+				int aiStatus = game.doAiMove();
+				if(aiStatus != -1){
+					animateGame(chat, pretiles, game, Skype.getProfile().getId(), aiStatus == 1);
+					if(aiStatus == 1){
+						GameStatsManager.addGameResult("connect4", chat.getId(), game.getPlayer1(), game.getPlayer2(), Skype.getProfile().getId());
+						Connect4Manager.getInstance().removeGame(chat.getId(), game);
+					}
+				}
 			}
 		} else {
 			try{ 
@@ -56,7 +76,7 @@ public class Connect4 implements SubCommand{
 				ChatManager.chat(chat, sender, "Not in a game!");
 			} catch (Exception e){
 				if(sender.getId().equals(args[0])){chat.send("Cannot create game with self!"); return;}
-				game = Connect4Manager.getInstance().createGame(chat.getId(), sender.getId(), args[0]);
+				game = Connect4Manager.getInstance().createGame(chat, sender.getId(), args[0]);
 				chat.send("Created Game");
 				printGame(chat, game.getTiles(), game, false);
 			}
@@ -111,7 +131,7 @@ public class Connect4 implements SubCommand{
 
 		ChatMessage msg = game.getMsg();
 		int lastMessage = game.getLastMessage();
-		
+
 		if(msg != null  && lastMessage + 10 > Bot.messageCount.get(chat)){
 			msg.setContent(sb.toString());
 		} else {
