@@ -15,6 +15,7 @@ public class Settings {
 	public static class Root{
 		public Bot Bot = new Bot();
 		public Weather Weather = new Weather();
+		public Imgur Imgur = new Imgur();
 	}
 	
 	public static class Bot {
@@ -26,6 +27,10 @@ public class Settings {
 			public int time = 5;
 			public String pastemethod = "pastebinit";
 		}
+	}
+	
+	public static class Imgur {
+		public String CLIENT_ID = "";
 	}
 	
 	public static class Weather {

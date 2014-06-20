@@ -12,6 +12,7 @@ import org.mcsg.bot.skype.commands.ArgTest;
 import org.mcsg.bot.skype.commands.Connect4;
 import org.mcsg.bot.skype.commands.Define;
 import org.mcsg.bot.skype.commands.GameStatsCommand;
+import org.mcsg.bot.skype.commands.GenImage;
 import org.mcsg.bot.skype.commands.GetUsers;
 import org.mcsg.bot.skype.commands.Heart;
 import org.mcsg.bot.skype.commands.Hi;
@@ -56,7 +57,7 @@ import com.skype.User;
 
 public class Bot {
 
-	public static final String version ="1.33 SkyNet";
+	public static final String version ="1.337 Painter";
 
 	private HashMap<String, SubCommand> commands = 
 			new HashMap<String, SubCommand>();
@@ -143,6 +144,7 @@ public class Bot {
 		commands.put("c4", new Connect4());
 		commands.put("t3", new TicTacToe());
 		commands.put("stats", new GameStatsCommand());
+		commands.put("genimage", new GenImage());
 		
 		
 		
