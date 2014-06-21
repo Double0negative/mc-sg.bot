@@ -50,7 +50,7 @@ public class WebClient {
 		String data = "";
 		
 		for(int a = 0; a < args.length; a+=2){
-			data += URLEncoder.encode(args[a], "UTF-8") + "="+ URLEncoder.encode(args[a+1], "UTF-8");
+			data += URLEncoder.encode(args[a], "UTF-8") + "="+ URLEncoder.encode(args[a+1], "UTF-8") + "&";
 		}
 		
 		connection.setUseCaches(false);
@@ -60,7 +60,6 @@ public class WebClient {
 		DataOutputStream writer = new DataOutputStream(connection.getOutputStream());
 		writer.write(data.getBytes());
 		writer.flush();
-		writer.close();
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(
 				connection.getInputStream()));
@@ -76,6 +75,7 @@ public class WebClient {
 			sb.append(buff, 0, len);
 		}
 		br.close();
+		writer.close();
 
 		return sb.toString();
 	}

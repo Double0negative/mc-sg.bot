@@ -144,8 +144,9 @@ public class Bot {
 		commands.put("c4", new Connect4());
 		commands.put("t3", new TicTacToe());
 		commands.put("stats", new GameStatsCommand());
-		commands.put("genimage", new GenImage());
-		
+		commands.put("genimg", new GenImage());
+		commands.put("background", new GenImage());
+
 		
 		
 		Skype.addChatMessageListener(new ChatMessageAdapter() {

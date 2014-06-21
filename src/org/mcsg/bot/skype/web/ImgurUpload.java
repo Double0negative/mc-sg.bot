@@ -16,7 +16,7 @@ public class ImgurUpload {
 	public static String upload(byte [] img){
 		try {
 			List<HttpHeader> headers = new ArrayList<HttpHeader>();
-			headers.add(new HttpHeader("Authorization", "Client-ID "+Settings.Root.Imgur.CLIENT_ID));
+			headers.add(new HttpHeader("Authorization", "Client-ID "+Settings.Root.Image.IMGUR_CLIENT_ID));
 			String json = WebClient.postArgs("https://api.imgur.com/3/image", headers, "image", Base64.getEncoder().encodeToString(img));
 			return new Gson().fromJson(json, ImgurResponse.class).data.link;
 		} catch (Exception e) {

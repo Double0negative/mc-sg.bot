@@ -21,8 +21,8 @@ import org.mcsg.bot.skype.util.WebClient;
 
 public class PictureDraw {
 
-	private int WIDTH = 1200;
-	private int HEIGHT = 720;
+	private int WIDTH = 1920;
+	private int HEIGHT = 1080;
 
 	private Random rand = new Random();
 	private BufferedImage img;
@@ -35,18 +35,25 @@ public class PictureDraw {
 			draw.draw();
 			draw.save(new File("/home/drew/", "TestImage.png"));
 		
-			/*try {
-				List<HttpHeader> headers = new ArrayList<HttpHeader>();
-				headers.add(new HttpHeader("Authorization", "Client-ID "+Settings.Root.Imgur.CLIENT_ID));
-				String json = WebClient.postArgs("https://api.imgur.com/3/image", headers, "image", Base64.getEncoder().encodeToString(draw.getBytes()));
+			try {
+				//List<HttpHeader> headers = new ArrayList<HttpHeader>();
+				//headers.add(new HttpHeader("Authorization", "Client-ID "+Settings.Root.Imgur.CLIENT_ID));
+				/*System.out.println(Base64.getEncoder().encodeToString(draw.getBytes()));
+				String json = WebClient.post("http://uploads.im/api.php",  new String("file="+draw.getBytes()), null);
+				System.out.println(json);*/
+				
+				String json = WebClient.postArgs("http://mc-sg.org/bot/upload.php",  null,"img", Base64.getEncoder().encodeToString(draw.getBytes()), "key", "2gsd@#YdfG#$" );
+
 				System.out.println(json);
 				} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}*/
+			}
 			
 	}
 
+	
+	
 	public PictureDraw(){
 		img = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
 		g = (Graphics2D) img.getGraphics();
@@ -54,10 +61,13 @@ public class PictureDraw {
 	}
 
 	public void draw(){
-		if(rand.nextBoolean()){
+		int sel = rand.nextInt(3);
+		if(sel == 0){
 			new DrawShapes(WIDTH, HEIGHT, g).draw();
-		} else {
+		} else if (sel == 1) {
 			new DrawLines(WIDTH, HEIGHT, g).draw();
+		} else {
+			new DrawCircles(WIDTH, HEIGHT, g).draw();
 		}
 	}
 

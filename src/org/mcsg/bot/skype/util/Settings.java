@@ -15,7 +15,7 @@ public class Settings {
 	public static class Root{
 		public Bot Bot = new Bot();
 		public Weather Weather = new Weather();
-		public Imgur Imgur = new Imgur();
+		public Image Image = new Image();
 	}
 	
 	public static class Bot {
@@ -29,8 +29,10 @@ public class Settings {
 		}
 	}
 	
-	public static class Imgur {
-		public String CLIENT_ID = "";
+	public static class Image {
+		public String IMGUR_CLIENT_ID = "";
+		public String MCSG_UPLOAD_KEY = "";
+		public String IMAGE_UPLOAD_METHOD = "imgur";
 	}
 	
 	public static class Weather {
