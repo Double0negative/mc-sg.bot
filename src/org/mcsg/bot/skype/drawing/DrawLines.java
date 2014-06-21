@@ -8,7 +8,6 @@ import org.mcsg.bot.skype.util.Fader;
 
 class DrawLines extends Drawer{
 
-	private	Fader fade = new Fader(0,0,0,0,0,0,1);
 	int r=rand.nextInt(255);
 	int gc=rand.nextInt(255);
 	int b=rand.nextInt(255);
@@ -62,6 +61,7 @@ class DrawLines extends Drawer{
 				y2 = y2 > HEIGHT ? HEIGHT : y2 < 0 ? 0 : y2;
 			}
 			g.drawLine(x1, y1, x2, y2);
+
 		}
 
 	}
