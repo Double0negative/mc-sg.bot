@@ -2,16 +2,16 @@ package org.mcsg.bot.skype.drawing;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 class DrawShapes extends Drawer {
 	
-	public DrawShapes(int width, int height, Graphics2D g) {
-		super(width, height, g);
+	public DrawShapes(int width, int height, BufferedImage img, Graphics2D g) {
+		super(width, height, img, g);
 	}
 
 	public void draw(){
-		setRandomColor(false);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
+
 		for(int a = 0; a < rand.nextInt(25); a++){
 			setRandomColor(true);
 			if(rand.nextInt(10) > 1)

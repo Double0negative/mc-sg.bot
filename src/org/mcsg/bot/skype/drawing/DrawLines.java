@@ -3,6 +3,7 @@ package org.mcsg.bot.skype.drawing;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import org.mcsg.bot.skype.util.Fader;
 
@@ -20,8 +21,8 @@ class DrawLines extends Drawer{
 	int y2 = rand.nextInt(HEIGHT);
 
 
-	public DrawLines(int width, int height, Graphics2D g) {
-		super(width, height, g);
+	public DrawLines(int width, int height, BufferedImage img, Graphics2D g) {
+		super(width, height, img, g);
 	}
 
 

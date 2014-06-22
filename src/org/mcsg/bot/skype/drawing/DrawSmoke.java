@@ -3,6 +3,7 @@ package org.mcsg.bot.skype.drawing;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 public class DrawSmoke extends Drawer{
 	int r=rand.nextInt(255);
@@ -16,8 +17,8 @@ public class DrawSmoke extends Drawer{
 	int size = rand.nextInt(45);
 
 
-	public DrawSmoke(int width, int height, Graphics2D g) {
-		super(width, height, g);
+	public DrawSmoke(int width, int height, BufferedImage img, Graphics2D g) {
+		super(width, height, img, g);
 	}
 
 
@@ -25,8 +26,7 @@ public class DrawSmoke extends Drawer{
 	public void draw() {
 		
 		g.setColor(Color.WHITE);
-		setRandomColor(false);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
+		
 		g.setStroke(new BasicStroke(rand.nextInt(7)));
 		
 		int stop = rand.nextInt(90000);

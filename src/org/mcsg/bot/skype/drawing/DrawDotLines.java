@@ -3,6 +3,7 @@ package org.mcsg.bot.skype.drawing;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 public class DrawDotLines extends Drawer {
 
@@ -17,8 +18,8 @@ public class DrawDotLines extends Drawer {
 	int size = rand.nextInt(45);
 
 
-	public DrawDotLines(int width, int height, Graphics2D g) {
-		super(width, height, g);
+	public DrawDotLines(int width, int height, BufferedImage img, Graphics2D g) {
+		super(width, height, img, g);
 	}
 
 
@@ -26,8 +27,7 @@ public class DrawDotLines extends Drawer {
 	public void draw() {
 		
 		g.setColor(Color.WHITE);
-		setRandomColor(false);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
+
 		g.setStroke(new BasicStroke(rand.nextInt(7)));
 		
 		int stop = rand.nextInt(10000);

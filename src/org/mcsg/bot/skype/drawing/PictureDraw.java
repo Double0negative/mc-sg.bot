@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -29,9 +31,11 @@ public class PictureDraw {
 	private Graphics2D g;
 
 
-	public static void main(String args[]){
-		PictureDraw draw = new PictureDraw();
-		draw.draw(-1);
+	public static void main(String args[]) throws MalformedURLException, IOException{
+		System.out.println("Drawing...");
+		//BufferedImage img = ImageIO.read(new URL("http://assets.worldwildlife.org/photos/2842/images/hero_small/shutterstock_12730534.jpg?1352150501"));
+		PictureDraw draw = new PictureDraw(null);
+		draw.draw(5);
 		draw.save(new File("/home/drew/", "TestImage.png"));
 
 		/*try {
@@ -41,9 +45,6 @@ public class PictureDraw {
 				String json = WebClient.post("http://uploads.im/api.php",  new String("file="+draw.getBytes()), null);
 				System.out.println(json);
 
-				String json = WebClient.postArgs("http://mc-sg.org/bot/upload.php",  null,"img", Base64.getEncoder().encodeToString(draw.getBytes()), "key", "2gsd@#YdfG#$" );
-
-				System.out.println(json);
 				} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -51,40 +52,57 @@ public class PictureDraw {
 
 	}
 
-	public PictureDraw(int width, int height){
+	public PictureDraw(int width, int height, BufferedImage imgb){
 		this.WIDTH = width;
 		this.HEIGHT = height;
-		setup();
+		setup(imgb);
 	}
 
-	public PictureDraw(){
-		setup();
+	public PictureDraw(BufferedImage imgb){
+		if(imgb != null){
+			WIDTH = imgb.getWidth();
+			HEIGHT = imgb.getHeight();
+		}
+		setup(imgb);
 	}
 
-	private void setup(){
+	private void setup(BufferedImage imgb){
 		img = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
 		g = (Graphics2D) img.getGraphics();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		
+	    g.setColor(Drawer.getRandomColor(false));
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+		
+		if(imgb != null){
+			g.drawImage(imgb, 0, 0, null);
+		}
 	}
 	
 	public void draw(int sel){
 		if(sel == -1)
-			sel = rand.nextInt(5);
+			sel = rand.nextInt(6);
 		switch (sel) {
 		case 0:
-			new DrawShapes(WIDTH, HEIGHT, g).draw();
+			new DrawShapes(WIDTH, HEIGHT, img, g).draw();
 			break;
 		case 1:
-			new DrawLines(WIDTH, HEIGHT, g).draw();
+			new DrawLines(WIDTH, HEIGHT, img, g).draw();
 			break;
 		case 2:
-			new DrawCircles(WIDTH, HEIGHT, g).draw();
+			new DrawCircles(WIDTH, HEIGHT, img, g).draw();
 			break;
 		case 3:
-			new DrawDotLines(WIDTH, HEIGHT, g).draw();
+			new DrawDotLines(WIDTH, HEIGHT, img, g).draw();
 			break;
 		case 4:
-			new DrawSmoke(WIDTH, HEIGHT, g).draw();
+			new DrawSmoke(WIDTH, HEIGHT, img, g).draw();
+			break;
+		case 5:
+			new DrawClusters(WIDTH, HEIGHT, img, g).draw();
+			break;
+		case 25: 
+			new DrawPixelImg(WIDTH, HEIGHT, img, g).draw();
 		}
 	}
 

@@ -1,10 +1,14 @@
 package org.mcsg.bot.skype.commands;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import org.mcsg.bot.skype.drawing.PictureDraw;
 import org.mcsg.bot.skype.util.Arguments;
@@ -28,7 +32,9 @@ public class GenImage implements SubCommand{
 		gens.put("circles", 2);
 		gens.put("circlelines", 3);
 		gens.put("smoke", 4);
+		gens.put("cluster", 5);
 
+		gens.put("pixel", 25);
 
 	}
 
@@ -38,18 +44,21 @@ public class GenImage implements SubCommand{
 		args = arge.getArgs();
 		HashMap<String, String> swi = arge.getSwitches();
 
-
+		BufferedImage base = null;
+		if(swi.containsKey("base")){
+			base = ImageIO.read(new URL(swi.get("base")));
+		}
+		
 		PictureDraw draw = null;
 		if(swi.containsKey("resolution")){
 			String res [] = swi.get("resolution").split("x");
 			if(res.length == 2)
-				draw = new PictureDraw(Integer.parseInt(res[0]), Integer.parseInt(res[1]));
+				draw = new PictureDraw(Integer.parseInt(res[0]), Integer.parseInt(res[1]), base);
 			else 
-				draw = new PictureDraw();
+				draw = new PictureDraw(base);
 		} else 
-			draw = new PictureDraw();
+			draw = new PictureDraw(base);
 
-		new PictureDraw();
 		draw.draw(swi.containsKey("generator") ? gens.getOrDefault(swi.get("generator"), -1) : -1);
 
 		if(Settings.Root.Image.IMAGE_UPLOAD_METHOD.equals("mcsg")){

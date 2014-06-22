@@ -2,17 +2,17 @@ package org.mcsg.bot.skype.drawing;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 public class DrawCircles extends Drawer {
 
-	public DrawCircles(int width, int height, Graphics2D g) {
-		super(width, height, g);
+	public DrawCircles(int width, int height, BufferedImage img, Graphics2D g) {
+		super(width, height, img, g);
 	}
 
 	@Override
 	public void draw() {
-		setRandomColor(false);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
+
 		g.setStroke(new BasicStroke(4));
 
 		for(int a = 0; a < rand.nextInt(20) + 10; a++){ 
