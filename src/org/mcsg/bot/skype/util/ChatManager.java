@@ -63,7 +63,7 @@ public class ChatManager {
 							try{
 								StringBuilder sb = new StringBuilder();
 								for(String msg : chats.get(chat)){
-									sb.append(msg).append("\n");
+									sb.append(msg.startsWith("/") ? "." : "").append(msg).append("\n");
 								}
 								sb.delete(sb.length() - 1, sb.length());
 								if(chats.remove(chat).size() > Settings.Root.Bot.chat.paste){

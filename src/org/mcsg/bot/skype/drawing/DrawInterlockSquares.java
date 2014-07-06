@@ -13,7 +13,7 @@ public class DrawInterlockSquares extends Drawer {
 	}
 
 	
-	public void draw() {
+	public void draw(String ... args) {
 		// TODO Auto-generated method stub
 		
 	}

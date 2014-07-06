@@ -3,7 +3,7 @@ import com.google.gson.Gson;
 
 public class MinecraftUUID {
 
-	private static final String API_URL = "http://74.201.57.144/uuid/?players=";
+	private static final String API_URL = "http://mcapi.ca/uuid/?players=";
 	private static Gson gson = new Gson();
 
 	public static class Profile{

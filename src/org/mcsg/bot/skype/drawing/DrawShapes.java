@@ -10,7 +10,7 @@ class DrawShapes extends Drawer {
 		super(width, height, img, g);
 	}
 
-	public void draw(){
+	public void draw(String ... args){
 
 		for(int a = 0; a < rand.nextInt(25); a++){
 			setRandomColor(true);
@@ -31,7 +31,7 @@ class DrawShapes extends Drawer {
 		int xcent = rand.nextInt(WIDTH);
 		int ycent = rand.nextInt(HEIGHT);
 
-		int fade = rand.nextInt(25) + 5;
+		int fade = rand.nextInt(30) + 5;
 
 		setRandomColor(true);
 		Color c = g.getColor();

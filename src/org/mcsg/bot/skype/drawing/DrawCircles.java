@@ -11,7 +11,7 @@ public class DrawCircles extends Drawer {
 	}
 
 	@Override
-	public void draw() {
+	public void draw(String ... args) {
 
 		g.setStroke(new BasicStroke(4));
 

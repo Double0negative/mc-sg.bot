@@ -23,7 +23,7 @@ public class DrawClusters extends Drawer {
 	private ArrayList<Point> points = new ArrayList<>();
 	private Color baseColor;
 	
-	public void draw() {
+	public void draw(String ... args) {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		int stop = rand.nextInt(10000);
@@ -45,13 +45,17 @@ public class DrawClusters extends Drawer {
 			
 			g.setColor(new Color(baseColor.getRed(), baseColor.getBlue(), baseColor.getGreen(), size));
 			size = Math.max(1, 200 - dis) / 3;
-			if(size == 1)
-				while(rand.nextBoolean())
-					size=size * 3;
-			size = rand.nextInt(size + 10);
-			g.fillOval(x - size /2 , y - size /2, size, size);
 			
 		}
+	}
+	
+	private void drawCircle(int x, int y, int size){
+
+		if(size == 1)
+			while(rand.nextBoolean())
+				size=size * 3;
+		size = rand.nextInt(size + 10);
+		g.fillOval(x - size /2 , y - size /2, size, size);
 	}
 
 }

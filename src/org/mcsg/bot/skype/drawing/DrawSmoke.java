@@ -14,7 +14,7 @@ public class DrawSmoke extends Drawer{
 	int x = rand.nextInt(WIDTH);
 	int y = rand.nextInt(HEIGHT);
 
-	int size = rand.nextInt(45);
+	int size = rand.nextInt(45) + 1;
 
 
 	public DrawSmoke(int width, int height, BufferedImage img, Graphics2D g) {
@@ -23,7 +23,7 @@ public class DrawSmoke extends Drawer{
 
 
 	@Override
-	public void draw() {
+	public void draw(String ... args) {
 		
 		g.setColor(Color.WHITE);
 		

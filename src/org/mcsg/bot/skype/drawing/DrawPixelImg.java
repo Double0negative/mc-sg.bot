@@ -14,7 +14,7 @@ public class DrawPixelImg extends Drawer {
 	}
 
 	@Override
-	public void draw() {
+	public void draw(String ... args) {
 		PixelImage pixelimg = new PixelImage(img, 7);
 		
 		ArrayList<PixelData> points = pixelimg.getPoints();

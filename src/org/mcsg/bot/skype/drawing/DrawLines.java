@@ -27,7 +27,7 @@ class DrawLines extends Drawer{
 
 
 	@Override
-	public void draw() {
+	public void draw(String ... args) {
 		setRandomColor(false);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		g.setStroke(new BasicStroke(2));

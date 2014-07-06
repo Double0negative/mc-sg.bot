@@ -23,7 +23,7 @@ abstract class Drawer {
 		this.g = g;
 	}
 	
-	public abstract void draw();
+	public abstract void draw(String ... args);
 	
 	
 	public static Color getRandomColor(boolean a){

@@ -24,7 +24,7 @@ public class DrawDotLines extends Drawer {
 
 
 	@Override
-	public void draw() {
+	public void draw(String ... args) {
 		
 		g.setColor(Color.WHITE);
 
