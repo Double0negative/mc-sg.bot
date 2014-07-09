@@ -15,11 +15,7 @@ public class DrawPixelImg extends Drawer {
 	}
 
 	@Override
-<<<<<<< HEAD
 	public void draw(Progress<Integer> prog, String ... args) {
-=======
-	public void draw(String ... args) {
->>>>>>> 7c41bd3b9dd888e04b098fee745757b8f6819725
 		PixelImage pixelimg = new PixelImage(img, 7);
 		
 		ArrayList<PixelData> points = pixelimg.getPoints();

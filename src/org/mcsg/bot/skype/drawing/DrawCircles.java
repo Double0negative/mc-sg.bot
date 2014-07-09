@@ -13,11 +13,8 @@ public class DrawCircles extends Drawer {
 	}
 
 	@Override
-<<<<<<< HEAD
 	public void draw(Progress<Integer> prog, String ... args) {
-=======
-	public void draw(String ... args) {
->>>>>>> 7c41bd3b9dd888e04b098fee745757b8f6819725
+
 
 		g.setStroke(new BasicStroke(4));
 
