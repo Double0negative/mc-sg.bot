@@ -4,7 +4,7 @@ import org.mcsg.bot.skype.util.StringUtils;
 
 import com.google.gson.Gson;
 
-public class YivePinger {
+public class MinecraftServerPinger {
 
 	public static final String HOST = "http://mineskin.ca/v2/query/info/?ip={0}&port={1}";
 	public static final Gson gson = new Gson();

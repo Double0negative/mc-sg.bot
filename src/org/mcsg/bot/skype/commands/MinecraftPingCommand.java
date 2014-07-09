@@ -1,8 +1,8 @@
 package org.mcsg.bot.skype.commands;
 
 import org.mcsg.bot.skype.util.ChatManager;
-import org.mcsg.bot.skype.web.YivePinger;
-import org.mcsg.bot.skype.web.YivePinger.MinecraftPing;
+import org.mcsg.bot.skype.web.MinecraftServerPinger;
+import org.mcsg.bot.skype.web.MinecraftServerPinger.MinecraftPing;
 
 import com.skype.Chat;
 import com.skype.User;
@@ -19,9 +19,9 @@ public class MinecraftPingCommand implements SubCommand{
 			String server[] = args[0].split(":");
 			MinecraftPing ping = null;
 			if(server.length > 1){
-				ping = YivePinger.ping(server[0], Integer.parseInt(server[1]));
+				ping = MinecraftServerPinger.ping(server[0], Integer.parseInt(server[1]));
 			} else {
-				ping = YivePinger.ping(server[0]);
+				ping = MinecraftServerPinger.ping(server[0]);
 			}
 
 			if(ping.status == false){

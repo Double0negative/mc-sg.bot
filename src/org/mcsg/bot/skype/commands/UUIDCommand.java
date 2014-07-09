@@ -6,9 +6,9 @@ import java.util.Map.Entry;
 
 import org.mcsg.bot.skype.util.Arguments;
 import org.mcsg.bot.skype.util.ChatManager;
+import org.mcsg.bot.skype.web.MinecraftUUIDDaniel;
 import org.mcsg.bot.skype.web.MinecraftUUID;
-import org.mcsg.bot.skype.web.UUIDAPI;
-import org.mcsg.bot.skype.web.MinecraftUUID.Profile;
+import org.mcsg.bot.skype.web.MinecraftUUIDDaniel.Profile;
 
 import com.skype.Chat;
 import com.skype.User;
@@ -24,14 +24,14 @@ public class UUIDCommand implements SubCommand {
 		long time = System.currentTimeMillis();
 		
 		if(swi.containsKey("daniel")){
-			HashMap<String, String > uuids = UUIDAPI.getUUIDs(Arrays.asList(args));
+			HashMap<String, String > uuids = MinecraftUUID.getUUIDs(Arrays.asList(args));
 			
 			for(Entry<String, String> e : uuids.entrySet()){
 				ChatManager.chat(chat,  sender,e.getKey()+"   "+e.getValue());
 			}
 		} else {
 			boolean fmt = !swi.containsKey("noformat");
-			Profile [] profiles = MinecraftUUID.getUUIDs(args);
+			Profile [] profiles = MinecraftUUIDDaniel.getUUIDs(args);
 			
 			for(Profile profile : profiles){
 				ChatManager.chat(chat, sender,profile.name + "   " + ((fmt) ? profile.getUuid() : profile.uuid));
