@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import org.mcsg.bot.skype.util.Progress;
+
 public class DrawSmoke extends Drawer{
 	int r=rand.nextInt(255);
 	int gc=rand.nextInt(255);
@@ -23,7 +25,11 @@ public class DrawSmoke extends Drawer{
 
 
 	@Override
+<<<<<<< HEAD
+	public void draw(Progress<Integer> prog, String ... args) {
+=======
 	public void draw(String ... args) {
+>>>>>>> 7c41bd3b9dd888e04b098fee745757b8f6819725
 		
 		g.setColor(Color.WHITE);
 		
@@ -31,12 +37,13 @@ public class DrawSmoke extends Drawer{
 		
 		int stop = rand.nextInt(90000);
 		
-		int minx = rand.nextInt(WIDTH - 750);
+		/*int minx = rand.nextInt(WIDTH - 750);
 		int maxx = rand.nextInt(600) + minx + 150;
 		
 		int miny = rand.nextInt(HEIGHT - 750);
-		int maxy = rand.nextInt(600) + miny + 150;
-		
+		int maxy = rand.nextInt(600) + miny + 150;*/
+		prog.setMax(stop);
+		prog.setMessage("smoke");
 		for(int aa = 0; aa < stop; aa++){
 			r += rand.nextInt(7) - 3;
 			b += rand.nextInt(7) - 3;
@@ -64,6 +71,7 @@ public class DrawSmoke extends Drawer{
 			g.fillOval(x, y, size, size);
 			g.setColor(g.getColor().brighter());
 			//g.drawOval(x, y, size, size);
+			prog.setProgress(aa);
 		}
 	}
 }

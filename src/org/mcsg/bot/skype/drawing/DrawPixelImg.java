@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import org.mcsg.bot.skype.drawing.PixelImage.PixelData;
+import org.mcsg.bot.skype.util.Progress;
 
 public class DrawPixelImg extends Drawer {
 
@@ -14,7 +15,11 @@ public class DrawPixelImg extends Drawer {
 	}
 
 	@Override
+<<<<<<< HEAD
+	public void draw(Progress<Integer> prog, String ... args) {
+=======
 	public void draw(String ... args) {
+>>>>>>> 7c41bd3b9dd888e04b098fee745757b8f6819725
 		PixelImage pixelimg = new PixelImage(img, 7);
 		
 		ArrayList<PixelData> points = pixelimg.getPoints();
@@ -30,9 +35,11 @@ public class DrawPixelImg extends Drawer {
 			}
 		}*/
 		
+		prog.setMax(points.size());
 		for(PixelData point : points){
 			g.setColor(new Color(point.r,point.g,point.b));
 			g.fillOval(point.x, point.y, 5, 5);
+			prog.incProgress(1);
 		}
 		
 		

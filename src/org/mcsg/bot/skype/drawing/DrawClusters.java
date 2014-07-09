@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import org.mcsg.bot.skype.util.Point;
+import org.mcsg.bot.skype.util.Progress;
 
 public class DrawClusters extends Drawer {
 
@@ -23,10 +24,15 @@ public class DrawClusters extends Drawer {
 	private ArrayList<Point> points = new ArrayList<>();
 	private Color baseColor;
 	
+<<<<<<< HEAD
+	public void draw(Progress<Integer> prog, String ... args) {
+=======
 	public void draw(String ... args) {
+>>>>>>> 7c41bd3b9dd888e04b098fee745757b8f6819725
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		int stop = rand.nextInt(10000);
+		prog.setMax(stop);
 		for(int a = 0; a < stop; a++){
 			int x = rand.nextInt(WIDTH);
 			int y = rand.nextInt(HEIGHT);
@@ -45,7 +51,12 @@ public class DrawClusters extends Drawer {
 			
 			g.setColor(new Color(baseColor.getRed(), baseColor.getBlue(), baseColor.getGreen(), size));
 			size = Math.max(1, 200 - dis) / 3;
+<<<<<<< HEAD
+			drawCircle(x, y, size);
+			prog.setProgress(a);
+=======
 			
+>>>>>>> 7c41bd3b9dd888e04b098fee745757b8f6819725
 		}
 	}
 	

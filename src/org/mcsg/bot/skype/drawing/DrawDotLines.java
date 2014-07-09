@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import org.mcsg.bot.skype.util.Progress;
+
 public class DrawDotLines extends Drawer {
 
 	int r=rand.nextInt(255);
@@ -24,13 +26,18 @@ public class DrawDotLines extends Drawer {
 
 
 	@Override
+<<<<<<< HEAD
+	public void draw(Progress<Integer> prog, String ... args) {
+=======
 	public void draw(String ... args) {
+>>>>>>> 7c41bd3b9dd888e04b098fee745757b8f6819725
 		
 		g.setColor(Color.WHITE);
 
 		g.setStroke(new BasicStroke(rand.nextInt(7)));
 		
 		int stop = rand.nextInt(10000);
+		prog.setMax(stop);
 		
 		for(int aa = 0; aa < stop; aa++){
 			r += rand.nextInt(7) - 3;
@@ -56,6 +63,7 @@ public class DrawDotLines extends Drawer {
 			g.fillOval(x, y, size, size);
 			g.setColor(g.getColor().brighter());
 			g.drawOval(x, y, size, size);
+			prog.setProgress(aa);
 		}
 	}
 

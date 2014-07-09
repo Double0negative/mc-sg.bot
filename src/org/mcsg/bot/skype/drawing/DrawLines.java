@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import org.mcsg.bot.skype.util.Fader;
+import org.mcsg.bot.skype.util.Progress;
 
 class DrawLines extends Drawer{
 
@@ -27,13 +28,19 @@ class DrawLines extends Drawer{
 
 
 	@Override
+<<<<<<< HEAD
+	public void draw(Progress<Integer> prog, String ... args) {
+=======
 	public void draw(String ... args) {
+>>>>>>> 7c41bd3b9dd888e04b098fee745757b8f6819725
 		setRandomColor(false);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		g.setStroke(new BasicStroke(2));
 
 		boolean limit = rand.nextBoolean();
-
+		int stop = rand.nextInt(40000) + 10000;
+		prog.setMax(stop);
+		prog.setMessage("lines");
 		for(int aa = 0; aa < 30000; aa++){
 
 			r += rand.nextInt(7) - 3;
@@ -62,7 +69,7 @@ class DrawLines extends Drawer{
 				y2 = y2 > HEIGHT ? HEIGHT : y2 < 0 ? 0 : y2;
 			}
 			g.drawLine(x1, y1, x2, y2);
-
+			prog.setProgress(aa);
 		}
 
 	}

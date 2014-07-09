@@ -4,13 +4,19 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import org.mcsg.bot.skype.util.Progress;
+
 class DrawShapes extends Drawer {
 	
 	public DrawShapes(int width, int height, BufferedImage img, Graphics2D g) {
 		super(width, height, img, g);
 	}
 
+<<<<<<< HEAD
+	public void draw(Progress<Integer> prog, String ... args){
+=======
 	public void draw(String ... args){
+>>>>>>> 7c41bd3b9dd888e04b098fee745757b8f6819725
 
 		for(int a = 0; a < rand.nextInt(25); a++){
 			setRandomColor(true);

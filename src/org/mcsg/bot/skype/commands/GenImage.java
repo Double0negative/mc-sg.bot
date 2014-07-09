@@ -1,6 +1,8 @@
 package org.mcsg.bot.skype.commands;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.Raster;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -14,6 +16,9 @@ import org.mcsg.bot.skype.drawing.PictureDraw;
 import org.mcsg.bot.skype.util.Arguments;
 import org.mcsg.bot.skype.util.ChatManager;
 import org.mcsg.bot.skype.util.HttpHeader;
+import org.mcsg.bot.skype.util.Progress;
+import org.mcsg.bot.skype.util.ProgressBar;
+import org.mcsg.bot.skype.util.ProgressChatMessage;
 import org.mcsg.bot.skype.util.Settings;
 import org.mcsg.bot.skype.util.WebClient;
 import org.mcsg.bot.skype.web.ImgurUpload;
@@ -43,11 +48,20 @@ public class GenImage implements SubCommand{
 		Arguments arge = new Arguments(args, "generator/gen args", "base/background arg", "resolution/res arg");
 		args = arge.getArgs();
 		HashMap<String, String> swi = arge.getSwitches();
-
+		ProgressBar bar = new ProgressBar("@"+sender.getId() + " genimg - Downloading Base", chat);
+		ProgressChatMessage progmsg = new ProgressChatMessage(bar);
+		
 		BufferedImage base = null;
 		if(swi.containsKey("base")){
-			base = ImageIO.read(new URL(swi.get("base")));
+			Progress<String> imgdl = WebClient.requestProgress(chat, swi.get("base"));
+			System.out.println("IMGDL OBJ"+imgdl);
+			progmsg.setProgress(imgdl).doWait();
+			
+			base = ImageIO.read(new ByteArrayInputStream(imgdl.getResult().getBytes()));
 		}
+		
+		bar.setTitle("@"+sender.getId() + " genimg - Generating");
+		bar.setProgress(0); //dont have a good wait to determine this yet,,,
 		
 		PictureDraw draw = null;
 		if(swi.containsKey("resolution")){
@@ -59,12 +73,18 @@ public class GenImage implements SubCommand{
 		} else 
 			draw = new PictureDraw(base);
 
-		draw.draw(swi.containsKey("generator") ? gens.getOrDefault(swi.get("generator"), -1) : -1);
-
+		Progress<Integer> progi = draw.draw(swi.containsKey("generator") ? gens.getOrDefault(swi.get("generator"), -1) : -1);
+		progmsg.setProgress(progi).doWait("@"+sender.getId() + " genimg - Generating");
+		
+		
+		bar.setProgress(0);
 		if(Settings.Root.Image.IMAGE_UPLOAD_METHOD.equals("mcsg")){
-			ChatManager.chat(chat, McsgUpload.upload(draw.getBytes()));
+			Progress<String> prog = McsgUpload.upload(chat, draw.getBytes());
+			System.out.println("PROGRESSOBJ"+prog);
+			progmsg.setProgress(prog).doWait("@"+sender.getId() + " genimg - ");
+			bar.finish(prog.getResult());
 		} else {
-			ChatManager.chat(chat, ImgurUpload.upload(draw.getBytes()));
+			ChatManager.chat(chat, ImgurUpload.upload(chat, draw.getBytes()));
 		}
 
 
@@ -72,6 +92,9 @@ public class GenImage implements SubCommand{
 	}
 
 
+	
+	
+	
 	@Override
 	public String getHelp() {
 		return "Generate a random image";

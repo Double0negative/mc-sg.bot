@@ -22,15 +22,12 @@ public class Arguments {
 			//System.out.println("split (search)"+Arrays.toString(split));
 			//System.out.println("Args" +list.toString());
 			int index = -1;
-			int a = 0;
-			for(String str : list){
+			for(String str : swi){
 				//System.out.println(a +" "+ str);
-				if(swi.contains(str.replace("-", ""))){
-					index = a;
-					//System.out.println("Found at "+a);
+				if(list.contains("-"+str)){
+					index = list.indexOf("-"+str);
 					break;
 				}
-				a++;
 			}
 
 			if(index != -1){

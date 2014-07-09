@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import org.mcsg.bot.skype.util.Progress;
+
 abstract class Drawer {
 	
 	protected BufferedImage img;
@@ -23,7 +25,11 @@ abstract class Drawer {
 		this.g = g;
 	}
 	
+<<<<<<< HEAD
+	public abstract void draw(Progress<Integer> prog, String ... args);
+=======
 	public abstract void draw(String ... args);
+>>>>>>> 7c41bd3b9dd888e04b098fee745757b8f6819725
 	
 	
 	public static Color getRandomColor(boolean a){

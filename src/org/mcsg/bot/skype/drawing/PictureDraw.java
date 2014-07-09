@@ -18,7 +18,9 @@ import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
 
 import org.mcsg.bot.skype.util.HttpHeader;
+import org.mcsg.bot.skype.util.Progress;
 import org.mcsg.bot.skype.util.Settings;
+import org.mcsg.bot.skype.util.ThreadUtil;
 import org.mcsg.bot.skype.util.WebClient;
 
 public class PictureDraw {
@@ -79,31 +81,40 @@ public class PictureDraw {
 		}
 	}
 	
-	public void draw(int sel){
-		if(sel == -1)
-			sel = rand.nextInt(6);
-		switch (sel) {
-		case 0:
-			new DrawShapes(WIDTH, HEIGHT, img, g).draw();
-			break;
-		case 1:
-			new DrawLines(WIDTH, HEIGHT, img, g).draw();
-			break;
-		case 2:
-			new DrawCircles(WIDTH, HEIGHT, img, g).draw();
-			break;
-		case 3:
-			new DrawDotLines(WIDTH, HEIGHT, img, g).draw();
-			break;
-		case 4:
-			new DrawSmoke(WIDTH, HEIGHT, img, g).draw();
-			break;
-		case 5:
-			new DrawClusters(WIDTH, HEIGHT, img, g).draw();
-			break;
-		case 25: 
-			new DrawPixelImg(WIDTH, HEIGHT, img, g).draw();
-		}
+	public Progress<Integer> draw(final int sell){
+		final Progress<Integer> prog = new Progress<>();
+		ThreadUtil.run("Image Generator", new Thread(){
+			public void run(){
+				int sel = sell;
+				if(sel == -1)
+					sel = rand.nextInt(6);
+				switch (sel) {
+				case 0:
+					new DrawShapes(WIDTH, HEIGHT, img, g).draw(prog);
+					break;
+				case 1:
+					new DrawLines(WIDTH, HEIGHT, img, g).draw(prog);
+					break;
+				case 2:
+					new DrawCircles(WIDTH, HEIGHT, img, g).draw(prog);
+					break;
+				case 3:
+					new DrawDotLines(WIDTH, HEIGHT, img, g).draw(prog);
+					break;
+				case 4:
+					new DrawSmoke(WIDTH, HEIGHT, img, g).draw(prog);
+					break;
+				case 5:
+					new DrawClusters(WIDTH, HEIGHT, img, g).draw(prog);
+					break;
+				case 25: 
+					new DrawPixelImg(WIDTH, HEIGHT, img, g).draw(prog);
+				}
+				prog.finish();
+			}
+		});
+		return prog;
+
 	}
 
 	public byte[] getBytes() {
