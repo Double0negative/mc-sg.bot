@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.mcsg.bot.skype.web.GistPaster;
+
 import com.skype.Chat;
 import com.skype.SkypeException;
 import com.skype.User;

@@ -1,4 +1,4 @@
-package org.mcsg.bot.skype.util;
+package org.mcsg.bot.skype.web;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -8,6 +8,10 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.List;
+
+import org.mcsg.bot.skype.util.ChatManager;
+import org.mcsg.bot.skype.util.Progress;
+import org.mcsg.bot.skype.util.ThreadUtil;
 
 import com.skype.Chat;
 

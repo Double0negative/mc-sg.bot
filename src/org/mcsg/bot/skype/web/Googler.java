@@ -1,6 +1,6 @@
 
 
-package org.mcsg.bot.skype.util;
+package org.mcsg.bot.skype.web;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

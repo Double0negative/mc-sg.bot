@@ -1,4 +1,6 @@
-package org.mcsg.bot.skype.util;
+package org.mcsg.bot.skype.web;
+
+import org.mcsg.bot.skype.util.StringUtils;
 
 import com.google.gson.Gson;
 

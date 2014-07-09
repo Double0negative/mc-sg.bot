@@ -10,7 +10,7 @@ import org.mcsg.bot.skype.util.FileUtils;
 import org.mcsg.bot.skype.util.Permissions;
 import org.mcsg.bot.skype.util.ShellCommand;
 import org.mcsg.bot.skype.util.StringUtils;
-import org.mcsg.bot.skype.util.WebClient;
+import org.mcsg.bot.skype.web.WebClient;
 
 import com.skype.Chat;
 import com.skype.User;
@@ -92,7 +92,7 @@ public class JavaCommand implements SubCommand {
 		File javac = new File("files/",name+".class");
 
 		FileUtils.writeFile(javaf, code);
-		int id = ShellCommand.exec(chat, "cd files; javac -classpath \"../java_libs/*:\" "+name+".java; java -classpath \"../java_libs/*:\" "+name, cap, false);
+		int id = ShellCommand.exec(chat, "cd files; javac -classpath \"../java_libs/*:\" "+name+".java && java -classpath \"../java_libs/*:\" "+name, cap, false);
 
 		if(b)
 			ChatManager.chat(chat,  sender,"Running java code. ID "+id+". Code: "+ ChatManager.createPaste(code));

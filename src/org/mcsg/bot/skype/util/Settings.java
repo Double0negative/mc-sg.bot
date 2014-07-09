@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 public class Settings {
 
 	private static Gson gson = new Gson(); 
-	private static File file = new File("bot_settings.json");
+	public static File file = new File("bot_settings.json");
 	public static Root Root = new Root();
 	
 	

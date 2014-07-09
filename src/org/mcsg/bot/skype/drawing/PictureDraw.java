@@ -17,11 +17,11 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
 
-import org.mcsg.bot.skype.util.HttpHeader;
 import org.mcsg.bot.skype.util.Progress;
 import org.mcsg.bot.skype.util.Settings;
 import org.mcsg.bot.skype.util.ThreadUtil;
-import org.mcsg.bot.skype.util.WebClient;
+import org.mcsg.bot.skype.web.HttpHeader;
+import org.mcsg.bot.skype.web.WebClient;
 
 public class PictureDraw {
 

@@ -1,8 +1,8 @@
 package org.mcsg.bot.skype.commands;
 
 import org.mcsg.bot.skype.util.ChatManager;
-import org.mcsg.bot.skype.util.YivePinger;
-import org.mcsg.bot.skype.util.YivePinger.MinecraftPing;
+import org.mcsg.bot.skype.web.YivePinger;
+import org.mcsg.bot.skype.web.YivePinger.MinecraftPing;
 
 import com.skype.Chat;
 import com.skype.User;

@@ -6,9 +6,9 @@ import java.util.Map.Entry;
 
 import org.mcsg.bot.skype.util.Arguments;
 import org.mcsg.bot.skype.util.ChatManager;
-import org.mcsg.bot.skype.util.MinecraftUUID;
-import org.mcsg.bot.skype.util.MinecraftUUID.Profile;
-import org.mcsg.bot.skype.util.UUIDAPI;
+import org.mcsg.bot.skype.web.MinecraftUUID;
+import org.mcsg.bot.skype.web.UUIDAPI;
+import org.mcsg.bot.skype.web.MinecraftUUID.Profile;
 
 import com.skype.Chat;
 import com.skype.User;

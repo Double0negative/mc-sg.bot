@@ -1,7 +1,5 @@
 package org.mcsg.bot.skype.web;
 
-import org.mcsg.bot.skype.util.WebClient;
-
 import com.google.gson.Gson;
 
 public class Google {

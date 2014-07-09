@@ -22,7 +22,7 @@ public class Permissions {
 	//chat, <map<user>, list<perm>>
 
 	private static HashMap<String, HashMap<String, ArrayList<String>>> perms = new HashMap<>();
-	private static File pfile = new File("Bot_Permissions.json");
+	public static File pfile = new File("Bot_Permissions.json");
 
 	static boolean loaded = false;
 	

@@ -4,7 +4,6 @@ import java.util.Base64;
 
 import org.mcsg.bot.skype.util.Progress;
 import org.mcsg.bot.skype.util.Settings;
-import org.mcsg.bot.skype.util.WebClient;
 
 import com.skype.Chat;
 

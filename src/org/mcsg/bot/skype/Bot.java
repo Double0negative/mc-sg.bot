@@ -45,6 +45,7 @@ import org.mcsg.bot.skype.commands.WebAbstract;
 import org.mcsg.bot.skype.commands.WebSearch;
 import org.mcsg.bot.skype.commands.WikipediaSearchCommand;
 import org.mcsg.bot.skype.util.ChatManager;
+import org.mcsg.bot.skype.util.Permissions;
 import org.mcsg.bot.skype.util.Settings;
 
 import com.skype.Chat;
@@ -71,6 +72,9 @@ public class Bot {
 
 	public static void main(String[] args) {
 		System.out.println("Starting MC-SG.BOT version "+version);
+		System.out.println("Settings File: "+Settings.file.getAbsolutePath());
+		System.out.println("Permissions Files: "+Permissions.pfile.getAbsolutePath());
+		
 		Skype.setDaemon(false); // to prevent exiting from this program
 		try {
 
@@ -87,7 +91,6 @@ public class Bot {
 					f.delete();
 				}
 			}
-
 			new Bot().start();
 
 

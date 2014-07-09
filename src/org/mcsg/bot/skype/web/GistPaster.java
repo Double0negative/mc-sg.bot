@@ -1,6 +1,6 @@
-package org.mcsg.bot.skype.util;
+package org.mcsg.bot.skype.web;
 
-import org.mcsg.bot.skype.util.GistPaster.GistPaste.Files;
+import org.mcsg.bot.skype.web.GistPaster.GistPaste.Files;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

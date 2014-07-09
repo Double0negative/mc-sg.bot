@@ -1,4 +1,4 @@
-package org.mcsg.bot.skype.util;
+package org.mcsg.bot.skype.web;
 import com.google.gson.Gson;
 
 public class MinecraftUUID {
