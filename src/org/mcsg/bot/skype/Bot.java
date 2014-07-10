@@ -14,6 +14,7 @@ import org.mcsg.bot.skype.commands.Define;
 import org.mcsg.bot.skype.commands.GameStatsCommand;
 import org.mcsg.bot.skype.commands.GenImage;
 import org.mcsg.bot.skype.commands.GetUsers;
+import org.mcsg.bot.skype.commands.GitHubListener;
 import org.mcsg.bot.skype.commands.Heart;
 import org.mcsg.bot.skype.commands.Hi;
 import org.mcsg.bot.skype.commands.HostCall;
@@ -152,7 +153,7 @@ public class Bot {
 		commands.put("stats", new GameStatsCommand());
 		commands.put("genimg", new GenImage());
 		commands.put("background", new GenImage());
-
+		commands.put("github", new GitHubListener());
 		
 		
 		Skype.addChatMessageListener(new ChatMessageAdapter() {
