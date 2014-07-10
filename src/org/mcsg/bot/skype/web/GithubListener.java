@@ -43,7 +43,6 @@ public class GithubListener {
 				while(true){
 					try{
 						Socket skt = sskt.accept();
-						System.out.println("Got github request from " + skt.getInetAddress());
 						BufferedReader read = new BufferedReader(new InputStreamReader(skt.getInputStream()));
 
 
@@ -93,7 +92,7 @@ public class GithubListener {
 			if(type.equalsIgnoreCase("push")){
 				if(data.commits.size() > 0){
 					StringBuilder sb = new StringBuilder();
-					sb.append(data.pusher.name+" pushed "+data.commits.size()+" to "+data.respository.url);
+					sb.append(data.pusher.name+" pushed "+data.commits.size()+" new commit to "+data.respository.url);
 					sb.append("\n");
 					for(Commit commit : data.commits){
 						sb.append(commit.committer.name+": "+commit.message);
