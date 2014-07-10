@@ -2,6 +2,8 @@ package org.mcsg.bot.skype.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.Gson;
 
@@ -16,6 +18,7 @@ public class Settings {
 		public Bot Bot = new Bot();
 		public Weather Weather = new Weather();
 		public Image Image = new Image();
+		public GithubHook Github = new GithubHook();
 	}
 	
 	public static class Bot {
@@ -27,6 +30,11 @@ public class Settings {
 			public int time = 5;
 			public String pastemethod = "pastebinit";
 		}
+	}
+	
+	public static class GithubHook {
+		public int port = 5225;
+		public List<String> github_update_chat = new ArrayList<>();
 	}
 	
 	public static class Image {

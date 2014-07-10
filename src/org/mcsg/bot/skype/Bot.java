@@ -47,6 +47,7 @@ import org.mcsg.bot.skype.commands.WikipediaSearchCommand;
 import org.mcsg.bot.skype.util.ChatManager;
 import org.mcsg.bot.skype.util.Permissions;
 import org.mcsg.bot.skype.util.Settings;
+import org.mcsg.bot.skype.web.GithubListener;
 
 import com.skype.Chat;
 import com.skype.ChatMessage;
@@ -58,7 +59,7 @@ import com.skype.User;
 
 public class Bot {
 
-	public static final String version ="1.39 Eating Exploits";
+	public static final String version ="1.40 GITHUB";
 
 	private HashMap<String, SubCommand> commands = 
 			new HashMap<String, SubCommand>();
@@ -74,6 +75,7 @@ public class Bot {
 		System.out.println("Starting MC-SG.BOT version "+version);
 		System.out.println("Settings File: "+Settings.file.getAbsolutePath());
 		System.out.println("Permissions Files: "+Permissions.pfile.getAbsolutePath());
+		
 		
 		Skype.setDaemon(false); // to prevent exiting from this program
 		try {
@@ -95,12 +97,13 @@ public class Bot {
 
 
 
-		} catch (SkypeException | FileNotFoundException e) {
+		} catch (Exception e) {
 			System.exit(1);
 		}
 	}
 
-	public void start() throws SkypeException{
+	public void start() throws Exception{
+		GithubListener.listen();
 
 		//new SpamClean().start();
 		ChatManager.start();
@@ -241,6 +244,20 @@ public class Bot {
 		ArrayList<String>t = new ArrayList<String>(Arrays.asList(split)); 
 		t.remove(0);
 		return t.toArray(new String[t.size()]);
+	}
+	
+	public static Chat getChat(String id){
+		try {
+			Chat[] chats = Skype.getAllChats();
+			for(Chat chat : chats){
+				if(chat.getId().equals(id)){
+					return chat;
+				}
+			}
+			return null;
+		} catch (SkypeException e) {
+			return null;
+		}
 	}
 }
 
