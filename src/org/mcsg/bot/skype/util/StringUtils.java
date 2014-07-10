@@ -32,4 +32,8 @@ public class StringUtils {
 		return str;
 
 	}
+	
+	public static long countOff(String str, String search){
+		return str.chars().filter((c) -> search.equals((char)c)).count();
+	}
 }

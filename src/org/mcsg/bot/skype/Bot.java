@@ -45,6 +45,7 @@ import org.mcsg.bot.skype.commands.Weather;
 import org.mcsg.bot.skype.commands.WebAbstract;
 import org.mcsg.bot.skype.commands.WebSearch;
 import org.mcsg.bot.skype.commands.WikipediaSearchCommand;
+import org.mcsg.bot.skype.message.MessagePaster;
 import org.mcsg.bot.skype.util.ChatManager;
 import org.mcsg.bot.skype.util.Permissions;
 import org.mcsg.bot.skype.util.Settings;
@@ -60,7 +61,7 @@ import com.skype.User;
 
 public class Bot {
 
-	public static final String version ="1.40 GITHUB";
+	public static final String version ="1.41 Auto-magic";
 
 	private HashMap<String, SubCommand> commands = 
 			new HashMap<String, SubCommand>();
@@ -189,6 +190,13 @@ public class Bot {
 						executeAsync(sub, received.getChat(), received.getSender(),  args);
 					}
 
+				} else {
+					try {
+						MessagePaster.message(received.getSender(), received.getChat(), received.getContent());
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				//received.getChat().get
 			}
