@@ -1,6 +1,7 @@
 package org.mcsg.bot.skype.commands;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.mcsg.bot.skype.util.Permissions;
@@ -15,8 +16,13 @@ public class GitHubListener implements SubCommand{
 	public void execute(Chat chat, User sender, String[] args) throws Exception {
 		if(Permissions.hasPermission(sender, chat, "github_hook")){
 			if(args.length > 0){
-				List<String> list = Settings.Root.Github.github_update_chat.getOrDefault(args[0], new ArrayList<String>());
+				HashMap<String, List<String>> map = Settings.Root.Github.github_update_chat;
+				List<String> list = map.getOrDefault(args[0], new ArrayList<String>());
 				list.add(chat.getId());
+				map.put(args[0], list);
+				
+				
+				
 				Settings.save();
 				chat.send("Added chat to Github Listener");
 			}
