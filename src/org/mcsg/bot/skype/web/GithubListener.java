@@ -99,7 +99,9 @@ public class GithubListener {
 					sb.append(data.pusher.name+" pushed "+data.commits.size()+" new commit to "+data.repository.url);
 					sb.append("\n");
 					for(Commit commit : data.commits){
-						sb.append(commit.committer.name+": "+commit.message);
+						sb.append(commit.committer.name+": "+commit.message.replace("\n", "").replace("  ", "").replace("\t", ""));
+						sb.append("\n");
+						sb.append(commit.url);
 						sb.append("\n");
 					}
 					chat.send(sb.toString().trim());
@@ -117,6 +119,7 @@ public class GithubListener {
 
 		class Commit {
 			public String message;
+			public String url;
 			public Committer committer;
 
 
