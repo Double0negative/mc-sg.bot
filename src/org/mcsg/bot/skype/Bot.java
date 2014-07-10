@@ -104,11 +104,12 @@ public class Bot {
 	}
 
 	public void start() throws Exception{
-		GithubListener.listen();
 
 		//new SpamClean().start();
 		ChatManager.start();
 		Settings.load();
+		GithubListener.listen();
+
 
 		commands.put("ping", new Ping());
 		commands.put("mcping", new MinecraftPingCommand());

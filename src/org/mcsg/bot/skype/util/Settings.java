@@ -3,6 +3,7 @@ package org.mcsg.bot.skype.util;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -34,7 +35,7 @@ public class Settings {
 	
 	public static class GithubHook {
 		public int port = 5225;
-		public List<String> github_update_chat = new ArrayList<>();
+		public HashMap<String, List<String>> github_update_chat = new HashMap<>();
 	}
 	
 	public static class Image {

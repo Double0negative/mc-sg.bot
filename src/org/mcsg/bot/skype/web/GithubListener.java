@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Predicate;
 
 import org.mcsg.bot.skype.Bot;
@@ -29,13 +30,13 @@ public class GithubListener {
 	}
 
 	public static void listen(){
-		System.out.println("Staring github listener");
+		System.out.println("Staring github listener on "+Settings.Root.Github.port);
 
 		new Thread(){
 			public void run(){
 				ServerSocket sskt;
 				try {
-					sskt = new ServerSocket(5335);
+					sskt = new ServerSocket(Settings.Root.Github.port);
 				} catch (IOException e1) {
 					return;
 				}
@@ -43,6 +44,7 @@ public class GithubListener {
 				while(true){
 					try{
 						Socket skt = sskt.accept();
+						System.out.println("Accepted github connection from "+skt.getInetAddress());
 						BufferedReader read = new BufferedReader(new InputStreamReader(skt.getInputStream()));
 
 
@@ -71,7 +73,7 @@ public class GithubListener {
 						skt.close();
 						sendMessageToChats(headers.get("X-GitHub-Event").getValue(), gson.fromJson(sb.toString(), GitHubMessage.class));
 					}catch (Exception e){
-
+						e.printStackTrace();
 					}
 
 				}
@@ -86,13 +88,15 @@ public class GithubListener {
 
 
 	public static void sendMessageToChats(String type, GitHubMessage data) throws SkypeException{
-		List<String> chats = Settings.Root.Github.github_update_chat;
+		System.out.println(type);
+		List<String> chats = Settings.Root.Github.github_update_chat.get(data.repository.url);
+		System.out.println(chats);
 		for(String chatid: chats){
 			Chat chat = Bot.getChat(chatid);
 			if(type.equalsIgnoreCase("push")){
 				if(data.commits.size() > 0){
 					StringBuilder sb = new StringBuilder();
-					sb.append(data.pusher.name+" pushed "+data.commits.size()+" new commit to "+data.respository.url);
+					sb.append(data.pusher.name+" pushed "+data.commits.size()+" new commit to "+data.repository.url);
 					sb.append("\n");
 					for(Commit commit : data.commits){
 						sb.append(commit.committer.name+": "+commit.message);
@@ -108,7 +112,7 @@ public class GithubListener {
 	class GitHubMessage {
 		public List<Commit> commits;
 		public Pusher pusher;
-		public Repo respository;
+		public Repo repository;
 		public String url;
 
 		class Commit {
