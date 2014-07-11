@@ -37,5 +37,8 @@ abstract class Drawer {
 		g.setColor(getRandomColor(a));
 	}
 
+	public void drawCircle(int x, int y, int size){
+		g.fillOval(x - size /2 , y - size /2, size, size);
+	}
 	
 }

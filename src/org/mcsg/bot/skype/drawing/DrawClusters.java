@@ -56,7 +56,7 @@ public class DrawClusters extends Drawer {
 		}
 	}
 	
-	private void drawCircle(int x, int y, int size){
+	public void drawCircle(int x, int y, int size){
 
 		if(size == 1)
 			while(rand.nextBoolean())

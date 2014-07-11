@@ -38,7 +38,8 @@ public class GenImage implements SubCommand{
 		gens.put("circlelines", 3);
 		gens.put("smoke", 4);
 		gens.put("cluster", 5);
-
+		gens.put("dots", 6);
+		
 		gens.put("pixel", 25);
 
 	}

@@ -15,6 +15,12 @@ import java.util.List;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.xml.bind.DatatypeConverter;
 
 import org.mcsg.bot.skype.Settings;
@@ -36,10 +42,29 @@ public class PictureDraw {
 	public static void main(String args[]) throws MalformedURLException, IOException{
 		System.out.println("Drawing...");
 		//BufferedImage img = ImageIO.read(new URL("http://assets.worldwildlife.org/photos/2842/images/hero_small/shutterstock_12730534.jpg?1352150501"));
-		PictureDraw draw = new PictureDraw(null);
-		draw.draw(5);
-		draw.save(new File("/home/drew/", "TestImage.png"));
 
+		//draw.save(new File("/home/drew/", "TestImage.png"));
+
+		JFrame frame = new JFrame("img");
+		frame.setSize(1920, 1080);
+		frame.setLayout(null);
+		frame.setVisible(true);
+		final JLabel l = new JLabel();
+		l.setBounds(0, 0, 1920, 1080);
+		frame.add(l);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JButton b = new JButton("next");
+		frame.add(b);
+		b.setBounds(0, 0, 70, 30);
+		
+		b.addActionListener((action) -> {
+			PictureDraw draw = new PictureDraw(null);
+
+			Progress<Integer> prog = draw.draw(6);
+			prog.waitForFinish();
+			l.setIcon(new ImageIcon(draw.getImage()));
+		});
 		/*try {
 				//List<HttpHeader> headers = new ArrayList<HttpHeader>();
 				//headers.add(new HttpHeader("Authorization", "Client-ID "+Settings.Root.Imgur.CLIENT_ID));
@@ -87,7 +112,7 @@ public class PictureDraw {
 			public void run(){
 				int sel = sell;
 				if(sel == -1)
-					sel = rand.nextInt(6);
+					sel = rand.nextInt(7);
 				switch (sel) {
 				case 0:
 					new DrawShapes(WIDTH, HEIGHT, img, g).draw(prog);
@@ -106,6 +131,9 @@ public class PictureDraw {
 					break;
 				case 5:
 					new DrawClusters(WIDTH, HEIGHT, img, g).draw(prog);
+					break;
+				case 6:
+					new DrawDots(WIDTH, HEIGHT, img, g).draw(prog);
 					break;
 				case 25: 
 					new DrawPixelImg(WIDTH, HEIGHT, img, g).draw(prog);
@@ -136,5 +164,8 @@ public class PictureDraw {
 		}
 	}
 
+	public BufferedImage getImage(){
+		return img;
+	}
 
 }

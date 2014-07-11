@@ -12,15 +12,15 @@ public class MessagePaster {
 
 
 	static {
-		prefix.put("java", "java");
-		prefix.put("ruby", "rb");
-		prefix.put("txt", "txt");
-		prefix.put("python", "py");
-		prefix.put("html", "html");
-		prefix.put("css", "css");
-		prefix.put("c++", "cpp");
-		prefix.put("c", "c");
-		prefix.put("json", "json");
+		prefix.put("java:", "java");
+		prefix.put("ruby:", "rb");
+		prefix.put("txt:", "txt");
+		prefix.put("python:", "py");
+		prefix.put("html:", "html");
+		prefix.put("css:", "css");
+		prefix.put("c++:", "cpp");
+		prefix.put("c:", "c");
+		prefix.put("json:", "json");
 	}
 
 
@@ -28,8 +28,8 @@ public class MessagePaster {
 		boolean paste = false;
 		String pre = "";
 		String prepre = "";
-		int pos = 0;
-		if(prefix.containsKey(prepre = message.trim().substring(0, ((pos = message.trim().indexOf(" ") == -1 ? 0 : pos))).toLowerCase())){
+		int pos = message.trim().indexOf(" ");
+		if(prefix.containsKey(prepre = message.trim().substring(0, (pos == -1 ? 0 : pos)).toLowerCase())){
 			paste = true;
 			pre = prefix.get(prepre);
 			message = message.replaceFirst(prepre, "");
