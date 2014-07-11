@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.mcsg.bot.skype.util.FileUtils;
@@ -19,7 +21,7 @@ import com.skype.User;
 
 public class ChatManager {
 
-	private static ConcurrentHashMap<Chat, ArrayList<String>> chats = new ConcurrentHashMap<>();
+	private static ConcurrentHashMap<Chat, List<String>> chats = new ConcurrentHashMap<>();
 
 	public static void printThrowable(Chat chat, Throwable t){
 		ChatManager.chat(chat, t.toString());
@@ -47,9 +49,9 @@ public class ChatManager {
 	}
 
 	public static void chat(Chat chat, String msg){
-		ArrayList<String> msgs = chats.get(chat);
+		List<String> msgs = chats.get(chat);
 		if(msgs == null){
-			msgs = new ArrayList<String>();
+			msgs = Collections.synchronizedList(new ArrayList<String>());
 		}
 		msgs.add(msg);
 		chats.put(chat, msgs);
@@ -61,8 +63,7 @@ public class ChatManager {
 			public void run(){
 				while(true){
 					try{
-						HashMap<Chat, ArrayList<String>> chats_copy = new HashMap<>(chats); //apparently chm doesn't have .keySet(); probs better way to do this
-						for(Chat chat : chats_copy.keySet()){
+						for(Chat chat : chats.keySet()){
 							try{
 								StringBuilder sb = new StringBuilder();
 								for(String msg : chats.get(chat)){
