@@ -22,22 +22,27 @@ import com.skype.User;
 public class ChatManager {
 
 	private static ConcurrentHashMap<Chat, List<String>> chats = new ConcurrentHashMap<>();
+	private static final String ERROR_PREFIX = "\0!!!";
 
 	public static void printThrowable(Chat chat, Throwable t){
-		ChatManager.chat(chat, t.toString());
+		printError(chat, t.toString());
 		for(StackTraceElement el : t.getStackTrace())
-			ChatManager.chat(chat, "\t" + el.toString());
+			printError(chat, "\t" + el.toString());
 
 		Throwable e1 = t.getCause();
 		if(e1 != null){
-			ChatManager.chat(chat, e1.toString());
+			printError(chat, e1.toString());
 			for(StackTraceElement el : e1.getStackTrace())
-				ChatManager.chat(chat, "\t" + el.toString());
+				printError(chat, "\t" + el.toString());
 		}
 
 		for(int a  = 0; a < Settings.Root.Bot.chat.paste ; a++){
 			chat(chat, "");
 		}
+	}
+
+	private static void printError(Chat chat, String str){
+		ChatManager.chat(chat, ERROR_PREFIX + str);
 	}
 
 	private static String getUserName(User user){
@@ -63,17 +68,28 @@ public class ChatManager {
 			public void run(){
 				while(true){
 					try{
-						for(Chat chat : chats.keySet()){
+						HashMap<Chat, List<String>> copy = new HashMap<>(chats);
+						for(Chat chat : copy.keySet()){
 							try{
 								StringBuilder sb = new StringBuilder();
-								for(String msg : chats.get(chat)){
-									sb.append(msg.trim().startsWith("/") ? "." : "").append(msg).append("\n");
+								StringBuilder error = new StringBuilder();
+								for(String msg : copy.get(chat)){
+									if(msg.startsWith(ERROR_PREFIX)){
+										error.append(msg.replaceFirst(ERROR_PREFIX, ""));
+									} else {
+										sb.append(msg.trim().startsWith("/") ? "." : "").append(msg).append("\n");
+									}
 								}
 								sb.delete(sb.length() - 1, sb.length());
 								if(chats.remove(chat).size() > Settings.Root.Bot.chat.paste){
 									chat.send("Output: "+createPaste(sb.toString()));
 								} else {
-									try { chat.send(sb.toString()); } catch (SkypeException e) { printThrowable(chat, e); }
+									try { 
+										chat.send(sb.toString());
+										if(error.length() > 0){
+											chat.send("Error: "+createPaste(sb.toString()));
+										}
+									} catch (SkypeException e) { printThrowable(chat, e); }
 								}
 							} catch (Exception e){
 								e.printStackTrace();
@@ -100,7 +116,7 @@ public class ChatManager {
 
 			File file1 = new File(paste);
 			FileUtils.writeFile(file1, msg);
-			
+
 			String script = "files/script" + System.currentTimeMillis();
 			File file2 = new File(script);
 			{
