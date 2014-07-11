@@ -73,7 +73,7 @@ public class ChatManager {
 							try{
 								StringBuilder sb = new StringBuilder();
 								StringBuilder error = new StringBuilder();
-								for(String msg : copy.get(chat)){
+								for(String msg : chats.get(chat).toArray(new String[0])){
 									if(msg.startsWith(ERROR_PREFIX)){
 										error.append(msg.replaceFirst(ERROR_PREFIX, ""));
 									} else {
