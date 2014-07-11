@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.mcsg.bot.skype.util.FileUtils;
+import org.mcsg.bot.skype.util.ThreadUtil;
 import org.mcsg.bot.skype.web.GistPaster;
 
 import com.skype.Chat;
@@ -82,12 +83,17 @@ public class ChatManager {
 								}
 								sb.delete(sb.length() - 1, sb.length());
 								if(chats.remove(chat).size() > Settings.Root.Bot.chat.paste){
-									chat.send("Output: "+createPaste(sb.toString()));
+									try {
+										ThreadUtil.run("Creating Paste", () -> {try {chat.send("Output: "+createPaste(sb.toString())); } catch (Exception e){}});
+									} catch (Exception e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
 								} else {
 									try { 
 										chat.send(sb.toString());
 										if(error.length() > 0){
-											chat.send("Error: "+createPaste(sb.toString()));
+											ThreadUtil.run("Creating Paste", () -> {try {chat.send("Error: "+createPaste(error.toString())); } catch (Exception e){}});
 										}
 									} catch (SkypeException e) { printThrowable(chat, e); }
 								}
@@ -108,6 +114,7 @@ public class ChatManager {
 		}.start();
 	}
 
+	
 	public static String createPaste(final String msg) throws Exception{
 		if(Settings.Root.Bot.chat.pastemethod.equals("gist")){
 			return GistPaster.paste(msg);
