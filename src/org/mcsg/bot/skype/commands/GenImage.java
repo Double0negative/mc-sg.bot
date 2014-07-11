@@ -54,11 +54,11 @@ public class GenImage implements SubCommand{
 		
 		BufferedImage base = null;
 		if(swi.containsKey("base")){
-			Progress<String> imgdl = WebClient.requestProgress(chat, swi.get("base"));
+			Progress<byte[]> imgdl = WebClient.requestByteProgress(chat, swi.get("base"));
 			System.out.println("IMGDL OBJ"+imgdl);
 			progmsg.setProgress(imgdl).doWait();
 			
-			base = ImageIO.read(new ByteArrayInputStream(imgdl.getResult().getBytes()));
+			base = ImageIO.read(new ByteArrayInputStream(imgdl.getResult()));
 		}
 		
 		bar.setTitle("@"+sender.getId() + " genimg - Generating");

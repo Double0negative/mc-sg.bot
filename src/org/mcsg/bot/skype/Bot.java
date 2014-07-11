@@ -58,7 +58,7 @@ import com.skype.User;
 
 public class Bot {
 
-	public static final String version ="1.43 Dawts";
+	public static final String version ="1.44 Bytes and bytes";
 
 	private HashMap<String, SubCommand> commands = 
 			new HashMap<String, SubCommand>();
