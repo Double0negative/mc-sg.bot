@@ -2,7 +2,7 @@ package org.mcsg.bot.skype.commands;
 
 import java.util.Random;
 
-import org.mcsg.bot.skype.util.ChatManager;
+import org.mcsg.bot.skype.ChatManager;
 
 import com.skype.Chat;
 import com.skype.User;

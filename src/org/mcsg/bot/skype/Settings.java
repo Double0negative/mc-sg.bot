@@ -1,10 +1,12 @@
-package org.mcsg.bot.skype.util;
+package org.mcsg.bot.skype;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.mcsg.bot.skype.util.FileUtils;
 
 import com.google.gson.Gson;
 

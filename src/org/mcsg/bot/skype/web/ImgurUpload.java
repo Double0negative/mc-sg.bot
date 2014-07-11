@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
-import org.mcsg.bot.skype.util.Settings;
+import org.mcsg.bot.skype.Settings;
 
 import com.google.gson.Gson;
 import com.skype.Chat;

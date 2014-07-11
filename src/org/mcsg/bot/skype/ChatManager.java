@@ -1,4 +1,4 @@
-package org.mcsg.bot.skype.util;
+package org.mcsg.bot.skype;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.mcsg.bot.skype.util.FileUtils;
 import org.mcsg.bot.skype.web.GistPaster;
 
 import com.skype.Chat;

@@ -12,13 +12,13 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.mcsg.bot.skype.ChatManager;
+import org.mcsg.bot.skype.Settings;
 import org.mcsg.bot.skype.drawing.PictureDraw;
 import org.mcsg.bot.skype.util.Arguments;
-import org.mcsg.bot.skype.util.ChatManager;
 import org.mcsg.bot.skype.util.Progress;
 import org.mcsg.bot.skype.util.ProgressBar;
 import org.mcsg.bot.skype.util.ProgressChatMessage;
-import org.mcsg.bot.skype.util.Settings;
 import org.mcsg.bot.skype.web.HttpHeader;
 import org.mcsg.bot.skype.web.ImgurUpload;
 import org.mcsg.bot.skype.web.McsgUpload;

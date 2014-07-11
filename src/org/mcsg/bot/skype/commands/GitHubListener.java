@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.mcsg.bot.skype.util.Permissions;
-import org.mcsg.bot.skype.util.Settings;
+import org.mcsg.bot.skype.Permissions;
+import org.mcsg.bot.skype.Settings;
 
 import com.skype.Chat;
 import com.skype.User;

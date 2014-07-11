@@ -1,6 +1,6 @@
 package org.mcsg.bot.skype.commands;
 
-import org.mcsg.bot.skype.util.ChatManager;
+import org.mcsg.bot.skype.ChatManager;
 import org.mcsg.bot.skype.util.StringUtils;
 import org.mcsg.bot.skype.web.DuckDuckGo;
 import org.mcsg.bot.skype.web.DuckDuckGo.DuckDuckResult;

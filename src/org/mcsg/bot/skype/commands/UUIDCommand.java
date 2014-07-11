@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import org.mcsg.bot.skype.ChatManager;
 import org.mcsg.bot.skype.util.Arguments;
-import org.mcsg.bot.skype.util.ChatManager;
 import org.mcsg.bot.skype.web.MinecraftUUIDDaniel;
 import org.mcsg.bot.skype.web.MinecraftUUID;
 import org.mcsg.bot.skype.web.MinecraftUUIDDaniel.Profile;

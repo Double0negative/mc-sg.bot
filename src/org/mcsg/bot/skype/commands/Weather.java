@@ -2,9 +2,9 @@ package org.mcsg.bot.skype.commands;
 
 import java.util.HashMap;
 
+import org.mcsg.bot.skype.ChatManager;
+import org.mcsg.bot.skype.Settings;
 import org.mcsg.bot.skype.util.Arguments;
-import org.mcsg.bot.skype.util.ChatManager;
-import org.mcsg.bot.skype.util.Settings;
 import org.mcsg.bot.skype.util.StringUtils;
 import org.mcsg.bot.skype.web.WeatherUnderground;
 import org.mcsg.bot.skype.web.WeatherUnderground.AlertInfo.Alert;

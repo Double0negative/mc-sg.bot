@@ -2,12 +2,12 @@ package org.mcsg.bot.skype.commands;
 
 import java.util.HashMap;
 
+import org.mcsg.bot.skype.ChatManager;
 import org.mcsg.bot.skype.games.GameStatsManager;
 import org.mcsg.bot.skype.games.GameStatsManager.GameStats;
 import org.mcsg.bot.skype.games.GameStatsManager.GameStats.Chat.Game;
 import org.mcsg.bot.skype.games.GameStatsManager.GameStats.Chat.Player;
 import org.mcsg.bot.skype.util.Arguments;
-import org.mcsg.bot.skype.util.ChatManager;
 
 import com.skype.Chat;
 import com.skype.User;

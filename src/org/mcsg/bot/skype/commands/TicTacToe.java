@@ -2,6 +2,7 @@ package org.mcsg.bot.skype.commands;
 
 import java.util.HashMap;
 
+import org.mcsg.bot.skype.ChatManager;
 import org.mcsg.bot.skype.games.GameStatsManager;
 import org.mcsg.bot.skype.games.TicTacToeGame;
 import org.mcsg.bot.skype.games.TicTacToeGame.IllegalTileException;
@@ -9,7 +10,6 @@ import org.mcsg.bot.skype.games.TicTacToeManager;
 import org.mcsg.bot.skype.games.TicTacToeGame.BoardFullException;
 import org.mcsg.bot.skype.games.TicTacToeGame.Tile;
 import org.mcsg.bot.skype.games.TicTacToeGame.TileIsFilledException;
-import org.mcsg.bot.skype.util.ChatManager;
 
 import com.skype.Chat;
 import com.skype.SkypeException;

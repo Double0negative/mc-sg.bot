@@ -1,7 +1,7 @@
 package org.mcsg.bot.skype.commands;
 
-import org.mcsg.bot.skype.util.ChatManager;
-import org.mcsg.bot.skype.util.Permissions;
+import org.mcsg.bot.skype.ChatManager;
+import org.mcsg.bot.skype.Permissions;
 
 import com.skype.Chat;
 import com.skype.SkypeException;

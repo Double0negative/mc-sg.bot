@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.mcsg.bot.skype.ChatManager;
+
 import com.skype.Chat;
 import com.skype.SkypeException;
 

@@ -9,7 +9,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.List;
 
-import org.mcsg.bot.skype.util.ChatManager;
+import org.mcsg.bot.skype.ChatManager;
 import org.mcsg.bot.skype.util.Progress;
 import org.mcsg.bot.skype.util.ThreadUtil;
 

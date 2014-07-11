@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import org.mcsg.bot.skype.Bot;
+import org.mcsg.bot.skype.Permissions;
 import org.mcsg.bot.skype.util.FileUtils;
-import org.mcsg.bot.skype.util.Permissions;
 
 import com.skype.Chat;
 import com.skype.SkypeException;

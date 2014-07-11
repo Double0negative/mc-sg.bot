@@ -3,6 +3,7 @@ package org.mcsg.bot.skype.commands;
 import java.util.HashMap;
 
 import org.mcsg.bot.skype.Bot;
+import org.mcsg.bot.skype.ChatManager;
 import org.mcsg.bot.skype.games.Connect4Game;
 import org.mcsg.bot.skype.games.Connect4Manager;
 import org.mcsg.bot.skype.games.GameStatsManager;
@@ -11,7 +12,6 @@ import org.mcsg.bot.skype.games.Connect4Game.BoardFullException;
 import org.mcsg.bot.skype.games.Connect4Game.ColumnFullException;
 import org.mcsg.bot.skype.games.Connect4Game.IllegalColumnException;
 import org.mcsg.bot.skype.games.Connect4Game.Tile;
-import org.mcsg.bot.skype.util.ChatManager;
 
 import com.skype.Chat;
 import com.skype.ChatMessage;

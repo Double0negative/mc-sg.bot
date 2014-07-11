@@ -2,10 +2,10 @@ package org.mcsg.bot.skype.commands;
 
 import java.util.HashMap;
 
+import org.mcsg.bot.skype.ChatManager;
+import org.mcsg.bot.skype.Permissions;
+import org.mcsg.bot.skype.Settings;
 import org.mcsg.bot.skype.util.Arguments;
-import org.mcsg.bot.skype.util.ChatManager;
-import org.mcsg.bot.skype.util.Permissions;
-import org.mcsg.bot.skype.util.Settings;
 
 import com.skype.Chat;
 import com.skype.SkypeException;

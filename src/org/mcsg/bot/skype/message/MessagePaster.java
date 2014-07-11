@@ -33,8 +33,8 @@ public class MessagePaster {
 			pre = prefix.get(prepre);
 			message = message.replaceFirst(prepre, "");
 			message = message.replace("\t", "  ").trim();
-		}else if(message.length() > 250 || StringUtils.countOff(message, "\n") > 5 ||
-				message.contains("{") && message.contains("}")){
+		}else if((!message.trim().startsWith(">") && !message.trim().startsWith("On")) && ((message.length() > 400 || StringUtils.countOff(message, "\n") > 6) ||
+				(message.contains("{") && message.contains("}") && message.length() > 200 || StringUtils.countOff(message, "\n") > 3))){
 			paste = true;
 			if(message.contains("{") && message.contains("}")){
 					pre = "java";

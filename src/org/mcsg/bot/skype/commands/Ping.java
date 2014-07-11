@@ -7,7 +7,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
 
-import org.mcsg.bot.skype.util.ChatManager;
+import org.mcsg.bot.skype.ChatManager;
 import org.mcsg.bot.skype.util.ShellCommand;
 
 import com.skype.Chat;

@@ -3,8 +3,8 @@ package org.mcsg.bot.skype.commands;
 
 import java.util.Arrays;
 
+import org.mcsg.bot.skype.ChatManager;
 import org.mcsg.bot.skype.util.Arguments;
-import org.mcsg.bot.skype.util.ChatManager;
 import org.mcsg.bot.skype.util.StringUtils;
 
 import com.skype.Chat;

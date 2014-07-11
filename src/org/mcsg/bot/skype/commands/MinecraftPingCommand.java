@@ -1,6 +1,6 @@
 package org.mcsg.bot.skype.commands;
 
-import org.mcsg.bot.skype.util.ChatManager;
+import org.mcsg.bot.skype.ChatManager;
 import org.mcsg.bot.skype.web.MinecraftServerPinger;
 import org.mcsg.bot.skype.web.MinecraftServerPinger.MinecraftPing;
 

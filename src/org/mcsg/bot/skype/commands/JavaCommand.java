@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+import org.mcsg.bot.skype.ChatManager;
+import org.mcsg.bot.skype.Permissions;
 import org.mcsg.bot.skype.util.Arguments;
-import org.mcsg.bot.skype.util.ChatManager;
 import org.mcsg.bot.skype.util.FileUtils;
-import org.mcsg.bot.skype.util.Permissions;
 import org.mcsg.bot.skype.util.ShellCommand;
 import org.mcsg.bot.skype.util.StringUtils;
 import org.mcsg.bot.skype.web.WebClient;

@@ -14,7 +14,7 @@ import java.util.Random;
 import java.util.function.Predicate;
 
 import org.mcsg.bot.skype.Bot;
-import org.mcsg.bot.skype.util.Settings;
+import org.mcsg.bot.skype.Settings;
 import org.mcsg.bot.skype.web.GithubListener.GitHubMessage.Commit;
 
 import com.google.gson.Gson;

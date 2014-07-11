@@ -5,12 +5,12 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.mcsg.bot.skype.ChatManager;
 import org.mcsg.bot.skype.games.Connect4Game.BoardFullException;
 import org.mcsg.bot.skype.games.Connect4Game.ColumnFullException;
 import org.mcsg.bot.skype.games.Connect4Game.IllegalColumnException;
 import org.mcsg.bot.skype.games.Connect4Game.Tile;
 import org.mcsg.bot.skype.util.ArrayUtil;
-import org.mcsg.bot.skype.util.ChatManager;
 
 import com.skype.Chat;
 import com.skype.ChatMessage;

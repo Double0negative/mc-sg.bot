@@ -3,7 +3,7 @@ package org.mcsg.bot.skype.games;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.mcsg.bot.skype.util.ChatManager;
+import org.mcsg.bot.skype.ChatManager;
 
 import com.skype.Chat;
 import com.skype.ChatMessage;

@@ -2,8 +2,8 @@ package org.mcsg.bot.skype.web;
 
 import java.util.Base64;
 
+import org.mcsg.bot.skype.Settings;
 import org.mcsg.bot.skype.util.Progress;
-import org.mcsg.bot.skype.util.Settings;
 
 import com.skype.Chat;
 

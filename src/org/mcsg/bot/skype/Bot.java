@@ -46,9 +46,6 @@ import org.mcsg.bot.skype.commands.WebAbstract;
 import org.mcsg.bot.skype.commands.WebSearch;
 import org.mcsg.bot.skype.commands.WikipediaSearchCommand;
 import org.mcsg.bot.skype.message.MessagePaster;
-import org.mcsg.bot.skype.util.ChatManager;
-import org.mcsg.bot.skype.util.Permissions;
-import org.mcsg.bot.skype.util.Settings;
 import org.mcsg.bot.skype.web.GithubListener;
 
 import com.skype.Chat;
