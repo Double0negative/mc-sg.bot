@@ -28,7 +28,8 @@ public class MessagePaster {
 		boolean paste = false;
 		String pre = "";
 		String prepre = "";
-		if(prefix.containsKey(prepre = message.trim().substring(0, message.trim().indexOf(" ")).toLowerCase())){
+		int pos = 0;
+		if(prefix.containsKey(prepre = message.trim().substring(0, ((pos = message.trim().indexOf(" ") == -1 ? 0 : pos))).toLowerCase())){
 			paste = true;
 			pre = prefix.get(prepre);
 			message = message.replaceFirst(prepre, "");
