@@ -11,6 +11,7 @@ import com.google.gson.annotations.SerializedName;
 public class GistPaster {
 
 	private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	
 
 	public static String paste(String msg) throws Exception {
 		return paste("file.txt", msg);
@@ -36,7 +37,7 @@ public class GistPaster {
 	public static class GistPaste {
 		public String description = "MC-SG.bot PASTE";
 		@SerializedName("public")
-		public boolean isPublic = true;
+		public boolean isPublic = false;
 		public HashMap<String, Paste> files = new HashMap<>(); 
 		
 		
