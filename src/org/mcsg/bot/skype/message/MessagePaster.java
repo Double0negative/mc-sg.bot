@@ -21,6 +21,7 @@ public class MessagePaster {
 		prefix.put("c++:", "cpp");
 		prefix.put("c:", "c");
 		prefix.put("json:", "json");
+		prefix.put("lua:", "lua");
 	}
 
 
@@ -35,7 +36,7 @@ public class MessagePaster {
 			message = message.replaceFirst(prepre, "");
 			message = message.replace("\t", "  ").trim();
 		}else if((!message.trim().startsWith(">") && !message.trim().startsWith("On")) && ((message.length() > 400 || StringUtils.countOff(message, "\n") > 6) ||
-				(message.contains("{") && message.contains("}") && message.length() > 200 || StringUtils.countOff(message, "\n") > 3))){
+				(message.contains("{") && message.contains("}") && message.length() > 250 || StringUtils.countOff(message, "\n") > 4))){
 			paste = true;
 			if(message.contains("{") && message.contains("}")){
 					pre = "java";
@@ -45,7 +46,7 @@ public class MessagePaster {
 		}
 		if(paste){
 			String url = GistPaster.paste("mcsg-bot."+pre, message);
-			chat.send(user.getFullName() +", I automatically created a paste for your message: "+ url +". You can now remove your message to save space.");
+			chat.send(user.getFullName() +", I automatically created a paste for your message: "+ url +".");
 		}
 	}
 
