@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import org.mcsg.bot.skype.util.MapWrapper;
 import org.mcsg.bot.skype.util.Point;
 import org.mcsg.bot.skype.util.Progress;
 
@@ -15,7 +16,7 @@ public class DrawDots extends Drawer{
 	}
 
 	@Override
-	public void draw(Progress<Integer> prog, String... args) {
+	public void draw(Progress<Integer> prog, MapWrapper args) {
 		int x = rand.nextInt(WIDTH);
 		int y = rand.nextInt(HEIGHT);
 		int amt = rand.nextInt(50000);

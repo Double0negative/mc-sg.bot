@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import org.mcsg.bot.skype.util.MapWrapper;
 import org.mcsg.bot.skype.util.Progress;
 
 public class DrawSunset extends Drawer{
@@ -14,7 +15,7 @@ public class DrawSunset extends Drawer{
 	}
 
 	@Override
-	public void draw(Progress<Integer> prog, String... args) {
+	public void draw(Progress<Integer> prog, MapWrapper args) {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 

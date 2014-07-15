@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
+import org.mcsg.bot.skype.util.MapWrapper;
 import org.mcsg.bot.skype.util.Progress;
 
 
@@ -16,7 +17,7 @@ public class DrawPerlin extends Drawer{
 	}
 
 	@Override
-	public void draw(Progress<Integer> prog, String... args) {
+	public void draw(Progress<Integer> prog, MapWrapper args) {
 		prog.setMax(HEIGHT * WIDTH);
 
 		ImageTools.createBWNoise(img, 200, WIDTH, HEIGHT, 0, 0, WIDTH, HEIGHT, WIDTH /2 , HEIGHT/2, 0.3, prog);

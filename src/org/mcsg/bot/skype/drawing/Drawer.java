@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import org.mcsg.bot.skype.util.MapWrapper;
 import org.mcsg.bot.skype.util.Progress;
 
 abstract class Drawer {
@@ -25,7 +26,7 @@ abstract class Drawer {
 		this.g = g;
 	}
 
-	public abstract void draw(Progress<Integer> prog, String ... args);
+	public abstract void draw(Progress<Integer> prog, MapWrapper args);
 
 	
 	

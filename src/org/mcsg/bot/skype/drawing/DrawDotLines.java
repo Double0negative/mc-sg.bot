@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import org.mcsg.bot.skype.util.MapWrapper;
 import org.mcsg.bot.skype.util.Progress;
 
 public class DrawDotLines extends Drawer {
@@ -26,7 +27,7 @@ public class DrawDotLines extends Drawer {
 
 
 	@Override
-	public void draw(Progress<Integer> prog, String ... args) {
+	public void draw(Progress<Integer> prog, MapWrapper args) {
 		g.setColor(Color.WHITE);
 
 		g.setStroke(new BasicStroke(rand.nextInt(7)));

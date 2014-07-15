@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import org.mcsg.bot.skype.util.MapWrapper;
 import org.mcsg.bot.skype.util.Progress;
 
 class DrawShapes extends Drawer {
@@ -13,7 +14,7 @@ class DrawShapes extends Drawer {
 	}
 
 
-	public void draw(Progress<Integer> prog, String ... args){
+	public void draw(Progress<Integer> prog, MapWrapper args){
 
 		for(int a = 0; a < rand.nextInt(25); a++){
 			setRandomColor(true);

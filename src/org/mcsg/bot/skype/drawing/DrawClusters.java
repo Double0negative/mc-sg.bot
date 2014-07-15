@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import org.mcsg.bot.skype.util.MapWrapper;
 import org.mcsg.bot.skype.util.Point;
 import org.mcsg.bot.skype.util.Progress;
 
@@ -25,7 +26,7 @@ public class DrawClusters extends Drawer {
 	private Color baseColor;
 	
 
-	public void draw(Progress<Integer> prog, String ... args) {
+	public void draw(Progress<Integer> prog, MapWrapper args) {
 
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);

@@ -26,6 +26,7 @@ import javax.swing.JScrollPane;
 import javax.xml.bind.DatatypeConverter;
 
 import org.mcsg.bot.skype.Settings;
+import org.mcsg.bot.skype.util.MapWrapper;
 import org.mcsg.bot.skype.util.Progress;
 import org.mcsg.bot.skype.util.ThreadUtil;
 import org.mcsg.bot.skype.web.HttpHeader;
@@ -67,7 +68,6 @@ public class PictureDraw {
 			PictureDraw draw = new PictureDraw(null);
 			Progress<Integer> prog = draw.draw(7);
 			bar.setMaximum((int) prog.getMax());
-			new Meep(prog).start();
 			prog.waitForFinish();
 			l.setIcon(new ImageIcon(draw.getImage()));
 			//frame.remove(bar);
@@ -84,22 +84,6 @@ public class PictureDraw {
 				e.printStackTrace();
 			}*/
 
-	}
-	static class Meep extends Thread {
-		Progress<?> prog;
-		
-		public Meep(Progress<?> prog){
-			this.prog = prog;
-		}
-		public void run(){
-			while(!prog.isFinished()){
-				bar.setValue((int) prog.getProgress());
-				try {
-					Thread.sleep(100);
-				} catch (Exception e) {
-				}
-			}
-		}
 	}
 	
 	public PictureDraw(int width, int height, BufferedImage imgb){
@@ -129,8 +113,13 @@ public class PictureDraw {
 		}
 	}
 	
-	public Progress<Integer> draw(final int sell){
+	public Progress<Integer> draw(final int sell, String ... args){
 		final Progress<Integer> prog = new Progress<>();
+		final MapWrapper wrap = new MapWrapper();
+		for(String arg : args){
+			String [] split = arg.split(":");
+			wrap.put(split[0], split[1]);
+		}
 		ThreadUtil.run("Image Generator", new Thread(){
 			public void run(){
 				int sel = sell;
@@ -138,31 +127,31 @@ public class PictureDraw {
 					sel = rand.nextInt(8);
 				switch (sel) {
 				case 0:
-					new DrawShapes(WIDTH, HEIGHT, img, g).draw(prog);
+					new DrawShapes(WIDTH, HEIGHT, img, g).draw(prog, wrap);
 					break;
 				case 1:
-					new DrawLines(WIDTH, HEIGHT, img, g).draw(prog);
+					new DrawLines(WIDTH, HEIGHT, img, g).draw(prog, wrap);
 					break;
 				case 2:
-					new DrawCircles(WIDTH, HEIGHT, img, g).draw(prog);
+					new DrawCircles(WIDTH, HEIGHT, img, g).draw(prog, wrap);
 					break;
 				case 3:
-					new DrawDotLines(WIDTH, HEIGHT, img, g).draw(prog);
+					new DrawDotLines(WIDTH, HEIGHT, img, g).draw(prog, wrap);
 					break;
 				case 4:
-					new DrawSmoke(WIDTH, HEIGHT, img, g).draw(prog);
+					new DrawSmoke(WIDTH, HEIGHT, img, g).draw(prog, wrap);
 					break;
 				case 5:
-					new DrawClusters(WIDTH, HEIGHT, img, g).draw(prog);
+					new DrawClusters(WIDTH, HEIGHT, img, g).draw(prog, wrap);
 					break;
 				case 6:
-					new DrawDots(WIDTH, HEIGHT, img, g).draw(prog);
+					new DrawDots(WIDTH, HEIGHT, img, g).draw(prog, wrap);
 					break;
 				case 7:
-					new DrawPerlin(WIDTH, HEIGHT, img, g).draw(prog);
+					new DrawPerlin(WIDTH, HEIGHT, img, g).draw(prog, wrap);
 					break;
 				case 25: 
-					new DrawPixelImg(WIDTH, HEIGHT, img, g).draw(prog);
+					new DrawPixelImg(WIDTH, HEIGHT, img, g).draw(prog, wrap);
 				}
 				prog.finish();
 			}

@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import org.mcsg.bot.skype.util.Fader;
+import org.mcsg.bot.skype.util.MapWrapper;
 import org.mcsg.bot.skype.util.Progress;
 
 class DrawLines extends Drawer{
@@ -27,7 +28,7 @@ class DrawLines extends Drawer{
 	}
 
 
-	public void draw(Progress<Integer> prog, String ... args) {
+	public void draw(Progress<Integer> prog, MapWrapper args) {
 		setRandomColor(false);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		g.setStroke(new BasicStroke(2));

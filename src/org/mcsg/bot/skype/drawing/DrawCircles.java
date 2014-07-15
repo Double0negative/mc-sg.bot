@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import org.mcsg.bot.skype.util.MapWrapper;
 import org.mcsg.bot.skype.util.Progress;
 
 public class DrawCircles extends Drawer {
@@ -13,7 +14,7 @@ public class DrawCircles extends Drawer {
 	}
 
 	@Override
-	public void draw(Progress<Integer> prog, String ... args) {
+	public void draw(Progress<Integer> prog, MapWrapper args) {
 
 
 		g.setStroke(new BasicStroke(4));
