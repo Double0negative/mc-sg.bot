@@ -29,25 +29,23 @@ class DrawLines extends Drawer{
 
 
 	public void draw(Progress<Integer> prog, MapWrapper args) {
-		setRandomColor(false);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
-		g.setStroke(new BasicStroke(2));
+		g.setStroke(new BasicStroke(args.getInt("stroke-size", 2)));
 
-		boolean limit = rand.nextBoolean();
-		int stop = rand.nextInt(40000) + 10000;
+		boolean limit = args.getBoolean("limit", rand.nextBoolean());
+		int stop = args.getInt("amount", rand.nextInt(40000)) + args.getInt("amount-base", 10000);
 		prog.setMax(stop);
 		prog.setMessage("lines");
-		for(int aa = 0; aa < 30000; aa++){
+		for(int aa = 0; aa < stop; aa++){
 
 			r += rand.nextInt(7) - 3;
 			b += rand.nextInt(7) - 3;
 			gc += rand.nextInt(7) - 3;
 			a += rand.nextInt(7) - 3;
 
-			r = r < 0 ? 0 : r > 255 ? 255 : r; 
-			b = b < 0 ? 0 : b > 255 ? 255 : b; 
-			gc = gc < 0 ? 0 : gc > 255 ? 255 : gc; 
-			a = a < 0 ? 0 : a > 255 ? 255 : a; 
+			r = ImageTools.limit(r, 255, 0); 
+			b = ImageTools.limit(b, 255, 0); 
+			gc = ImageTools.limit(gc, 255, 0); 
+			a = ImageTools.limit(a, 255, 0); 
 
 
 			Color c = new Color(r, gc,b, a);
@@ -59,10 +57,10 @@ class DrawLines extends Drawer{
 			y2 += rand.nextInt(13) - 6;
 
 			if(limit){
-				x1 = x1 > WIDTH ? WIDTH : x1 < 0 ? 0 : x1;
-				x2 = x2 > WIDTH ? WIDTH : x2 < 0 ? 0 : x2;
-				y1 = y1 > HEIGHT ? HEIGHT : y1 < 0 ? 0 : y1;
-				y2 = y2 > HEIGHT ? HEIGHT : y2 < 0 ? 0 : y2;
+				x1 = ImageTools.limit(x1, WIDTH, 0);
+				x2 = ImageTools.limit(x2, WIDTH, 0);
+				y1 = ImageTools.limit(y1, HEIGHT, 0);
+				y2 = ImageTools.limit(y2, HEIGHT, 0);
 			}
 			g.drawLine(x1, y1, x2, y2);
 			prog.setProgress(aa);

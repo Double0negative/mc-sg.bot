@@ -120,6 +120,7 @@ public class PictureDraw {
 			String [] split = arg.split(":");
 			wrap.put(split[0], split[1]);
 		}
+		System.out.println(wrap);
 		ThreadUtil.run("Image Generator", new Thread(){
 			public void run(){
 				int sel = sell;

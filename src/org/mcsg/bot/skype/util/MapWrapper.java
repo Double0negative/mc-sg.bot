@@ -44,7 +44,7 @@ public class MapWrapper extends HashMap<String, String> {
 		return Boolean.parseBoolean(key);
 	}
 
-	public boolean getBoolean(String key, double def){
+	public boolean getBoolean(String key, boolean def){
 		return Boolean.parseBoolean(getOrDefault(key, def+""));
 	}
 

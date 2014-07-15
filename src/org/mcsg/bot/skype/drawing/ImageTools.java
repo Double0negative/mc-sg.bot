@@ -65,5 +65,9 @@ public class ImageTools {
 	public static double limit (double val, double max, double min){
 		return (val > max) ? max : val < min ? min : val;
 	}
+	
+	public static int limit (int val, int max, int min){
+		return (val > max) ? max : val < min ? min : val;
+	}
 
 }

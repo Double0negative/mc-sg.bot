@@ -39,6 +39,7 @@ public class GenImage implements SubCommand{
 		gens.put("smoke", 4);
 		gens.put("cluster", 5);
 		gens.put("dots", 6);
+		gens.put("clouds", 7);
 		
 		gens.put("pixel", 25);
 
@@ -55,7 +56,6 @@ public class GenImage implements SubCommand{
 		BufferedImage base = null;
 		if(swi.containsKey("base")){
 			Progress<byte[]> imgdl = WebClient.requestByteProgress(chat, swi.get("base"));
-			System.out.println("IMGDL OBJ"+imgdl);
 			progmsg.setProgress(imgdl).doWait();
 			
 			base = ImageIO.read(new ByteArrayInputStream(imgdl.getResult()));
@@ -74,14 +74,13 @@ public class GenImage implements SubCommand{
 		} else 
 			draw = new PictureDraw(base);
 
-		Progress<Integer> progi = draw.draw(swi.containsKey("generator") ? gens.getOrDefault(swi.get("generator"), -1) : -1);
+		Progress<Integer> progi = draw.draw(swi.containsKey("generator") ? gens.getOrDefault(swi.get("generator"), -1) : -1, args);
 		progmsg.setProgress(progi).doWait("@"+sender.getId() + " genimg - Generating");
 		
 		
 		bar.setProgress(0);
 		if(Settings.Root.Image.IMAGE_UPLOAD_METHOD.equals("mcsg")){
 			Progress<String> prog = McsgUpload.upload(chat, draw.getBytes());
-			System.out.println("PROGRESSOBJ"+prog);
 			progmsg.setProgress(prog).doWait("@"+sender.getId() + " genimg - ");
 			bar.finish(prog.getResult());
 		} else {
