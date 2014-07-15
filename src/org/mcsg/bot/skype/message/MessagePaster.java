@@ -35,7 +35,7 @@ public class MessagePaster {
 			pre = prefix.get(prepre);
 			message = message.replaceFirst(prepre, "");
 			message = message.replace("\t", "  ").trim();
-		}else if((!message.trim().startsWith(">") && !message.trim().startsWith("On")) && ((message.length() > 400 || StringUtils.countOff(message, "\n") > 6) ||
+		}/*else if((!message.trim().startsWith(">") && !message.trim().startsWith("On")) && ((message.length() > 400 || StringUtils.countOff(message, "\n") > 6) ||
 				(message.contains("{") && message.contains("}") && message.length() > 250 || StringUtils.countOff(message, "\n") > 4))){
 			paste = true;
 			if(message.contains("{") && message.contains("}")){
@@ -43,7 +43,7 @@ public class MessagePaster {
 			} else {
 				pre = "txt";
 			}
-		}
+		}*/
 		if(paste){
 			String url = GistPaster.paste("mcsg-bot."+pre, message);
 			chat.send(user.getFullName() +", I automatically created a paste for your message: "+ url +".");

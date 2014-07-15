@@ -18,7 +18,7 @@ public class Progress<T> {
 		this.max.set(max);;
 	}
 	
-	public double getMax(){
+	public long getMax(){
 		return max.get();
 	}
 	

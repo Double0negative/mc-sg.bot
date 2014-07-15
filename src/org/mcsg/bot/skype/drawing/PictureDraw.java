@@ -21,6 +21,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.xml.bind.DatatypeConverter;
 
 import org.mcsg.bot.skype.Settings;
@@ -38,6 +40,7 @@ public class PictureDraw {
 	private BufferedImage img;
 	private Graphics2D g;
 
+	static JProgressBar bar = new JProgressBar(0, 100);
 
 	public static void main(String args[]) throws MalformedURLException, IOException{
 		System.out.println("Drawing...");
@@ -46,6 +49,7 @@ public class PictureDraw {
 		//draw.save(new File("/home/drew/", "TestImage.png"));
 
 		JFrame frame = new JFrame("img");
+		
 		frame.setSize(1920, 1080);
 		frame.setLayout(null);
 		frame.setVisible(true);
@@ -57,13 +61,16 @@ public class PictureDraw {
 		JButton b = new JButton("next");
 		frame.add(b);
 		b.setBounds(0, 0, 70, 30);
-		
+		bar.setBounds(300, 300, 800, 30);
+
 		b.addActionListener((action) -> {
 			PictureDraw draw = new PictureDraw(null);
-
-			Progress<Integer> prog = draw.draw(6);
+			Progress<Integer> prog = draw.draw(7);
+			bar.setMaximum((int) prog.getMax());
+			new Meep(prog).start();
 			prog.waitForFinish();
 			l.setIcon(new ImageIcon(draw.getImage()));
+			//frame.remove(bar);
 		});
 		/*try {
 				//List<HttpHeader> headers = new ArrayList<HttpHeader>();
@@ -78,7 +85,23 @@ public class PictureDraw {
 			}*/
 
 	}
-
+	static class Meep extends Thread {
+		Progress<?> prog;
+		
+		public Meep(Progress<?> prog){
+			this.prog = prog;
+		}
+		public void run(){
+			while(!prog.isFinished()){
+				bar.setValue((int) prog.getProgress());
+				try {
+					Thread.sleep(100);
+				} catch (Exception e) {
+				}
+			}
+		}
+	}
+	
 	public PictureDraw(int width, int height, BufferedImage imgb){
 		this.WIDTH = width;
 		this.HEIGHT = height;
@@ -112,7 +135,7 @@ public class PictureDraw {
 			public void run(){
 				int sel = sell;
 				if(sel == -1)
-					sel = rand.nextInt(7);
+					sel = rand.nextInt(8);
 				switch (sel) {
 				case 0:
 					new DrawShapes(WIDTH, HEIGHT, img, g).draw(prog);
@@ -134,6 +157,9 @@ public class PictureDraw {
 					break;
 				case 6:
 					new DrawDots(WIDTH, HEIGHT, img, g).draw(prog);
+					break;
+				case 7:
+					new DrawPerlin(WIDTH, HEIGHT, img, g).draw(prog);
 					break;
 				case 25: 
 					new DrawPixelImg(WIDTH, HEIGHT, img, g).draw(prog);

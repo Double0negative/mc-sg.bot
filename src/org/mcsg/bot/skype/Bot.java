@@ -51,6 +51,7 @@ import org.mcsg.bot.skype.web.GithubListener;
 import com.skype.Chat;
 import com.skype.ChatMessage;
 import com.skype.ChatMessageAdapter;
+import com.skype.Friend;
 import com.skype.GlobalChatListener;
 import com.skype.Skype;
 import com.skype.SkypeException;
@@ -58,7 +59,7 @@ import com.skype.User;
 
 public class Bot {
 
-	public static final String version ="1.44 Bytes and bytes";
+	public static final String version ="1.45 Friends";
 
 	private HashMap<String, SubCommand> commands = 
 			new HashMap<String, SubCommand>();
@@ -67,15 +68,17 @@ public class Bot {
 
 	public static final String LAST_FILE  = "lastchat";
 	public static final HashMap<Chat, Integer> messageCount = new HashMap<Chat, Integer>();
-	
+
 	private ConcurrentHashMap<String, Integer> messages = new ConcurrentHashMap<>();
 
 	public static void main(String[] args) {
+
+
 		System.out.println("Starting MC-SG.BOT version "+version);
 		System.out.println("Settings File: "+Settings.file.getAbsolutePath());
 		System.out.println("Permissions Files: "+Permissions.pfile.getAbsolutePath());
-		
-		
+
+
 		Skype.setDaemon(false); // to prevent exiting from this program
 		try {
 
@@ -87,6 +90,13 @@ public class Bot {
 					if(chat.getId().equals(chatid)){
 						chat.send("Starting MC-SG.BOT version "+version);
 						chat.send("/topic MC-SG BOT  v"+version);
+						
+						int a = 0;
+						for(Friend t : Skype.getContactList().getAllUserWaitingForAuthorization()){
+							t.setAuthorized(true);
+							a++;
+						}
+						chat.send("Accepted "+a+" new contacts.");
 					}
 					scanner.close();
 					f.delete();
@@ -153,8 +163,8 @@ public class Bot {
 		commands.put("genimg", new GenImage());
 		commands.put("background", new GenImage());
 		commands.put("github", new GitHubListener());
-		
-		
+
+
 		Skype.addChatMessageListener(new ChatMessageAdapter() {
 			public void chatMessageReceived(ChatMessage received) throws SkypeException {
 				int count = (messageCount.containsKey(received.getChat()) ? messageCount.get(received.getChat()) : 0);
@@ -252,7 +262,7 @@ public class Bot {
 		t.remove(0);
 		return t.toArray(new String[t.size()]);
 	}
-	
+
 	public static Chat getChat(String id){
 		try {
 			Chat[] chats = Skype.getAllChats();
@@ -267,4 +277,5 @@ public class Bot {
 		}
 	}
 }
+
 
