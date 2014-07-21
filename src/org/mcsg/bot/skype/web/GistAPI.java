@@ -2,13 +2,13 @@ package org.mcsg.bot.skype.web;
 
 import java.util.HashMap;
 
-import org.mcsg.bot.skype.web.GistPaster.GistPaste.Paste;
+import org.mcsg.bot.skype.web.GistAPI.GistPaste.Paste;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
-public class GistPaster {
+public class GistAPI {
 
 	private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	
@@ -33,6 +33,11 @@ public class GistPaster {
 		return response.html_url;
 	}
 
+	
+	public static GistResponse get(String id){
+	  String json = WebClient.request("https://api.github.com/gists/"+id);
+	  return gson.fromJson(json, GistResponse.class);
+	}
 
 	public static class GistPaste {
 		public String description = "MC-SG.bot PASTE";
@@ -49,5 +54,17 @@ public class GistPaster {
 
 	public static class GistResponse {
 		public String html_url;
+		
+		public HashMap<String, GistFile> files;
+		
+		public static class GistFile{
+		  public String filename;
+		  public String type; 
+		  public String language;
+		  public long size;
+		  public String raw_url;
+		  public boolean truncated;
+		  public String content;
+		}
 	}
 }

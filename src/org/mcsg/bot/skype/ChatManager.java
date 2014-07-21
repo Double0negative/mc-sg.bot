@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.mcsg.bot.skype.util.FileUtils;
 import org.mcsg.bot.skype.util.ThreadUtil;
-import org.mcsg.bot.skype.web.GistPaster;
+import org.mcsg.bot.skype.web.GistAPI;
 
 import com.skype.Chat;
 import com.skype.SkypeException;
@@ -117,7 +117,7 @@ public class ChatManager {
 	
 	public static String createPaste(final String msg) throws Exception{
 		if(Settings.Root.Bot.chat.pastemethod.equals("gist")){
-			return GistPaster.paste(msg);
+			return GistAPI.paste(msg);
 		} else {
 			String paste = "files/paste"+System.currentTimeMillis();
 

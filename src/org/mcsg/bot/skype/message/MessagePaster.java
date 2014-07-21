@@ -2,7 +2,7 @@ package org.mcsg.bot.skype.message;
 
 import java.util.HashMap;
 import org.mcsg.bot.skype.util.StringUtils;
-import org.mcsg.bot.skype.web.GistPaster;
+import org.mcsg.bot.skype.web.GistAPI;
 import com.skype.Chat;
 import com.skype.User;
 
@@ -45,7 +45,7 @@ public class MessagePaster {
 			}
 		}*/
 		if(paste){
-			String url = GistPaster.paste("mcsg-bot."+pre, message);
+			String url = GistAPI.paste("mcsg-bot."+pre, message);
 			chat.send(user.getFullName() +", I automatically created a paste for your message: "+ url +".");
 		}
 	}
