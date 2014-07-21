@@ -34,6 +34,17 @@ public class Heart implements SubCommand{
 		return ".<3";
 	}
 
+  @Override
+  public String getCommand() {
+    return "<3";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 	
 	
 	

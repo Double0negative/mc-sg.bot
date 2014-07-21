@@ -46,4 +46,14 @@ public class VideoSearch implements SubCommand{
 		return ".vid <search>";
 	}
 
+  @Override
+  public String getCommand() {
+    return "video";
+  }
+
+  @Override
+  public String[] getAliases() {
+    return a("v", "vid", "yt", "youtube");
+  }
+
 }

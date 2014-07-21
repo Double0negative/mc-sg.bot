@@ -51,4 +51,15 @@ public class ManageChat implements SubCommand {
 		return null;
 	}
 
+  @Override
+  public String getCommand() {
+    return "setchat";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

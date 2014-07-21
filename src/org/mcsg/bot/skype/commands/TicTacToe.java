@@ -104,8 +104,7 @@ public class TicTacToe implements SubCommand{
 
 	@Override
 	public String getHelp() {
-		// TODO Auto-generated method stub
-		return null;
+	  return "Starts or makes a move in a t3 game";
 	}
 
 	@Override
@@ -113,6 +112,17 @@ public class TicTacToe implements SubCommand{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+  @Override
+  public String getCommand() {
+   return "t3";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
 
 
 }

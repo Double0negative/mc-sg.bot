@@ -118,15 +118,26 @@ public class JavaCommand implements SubCommand {
 		return "";
 	}
 
-	@Override
-	public String getHelp() {
-		return "Run a java command";
-	}
 
 	@Override
 	public String getUsage() {
-		return ".java [-template] <code|pastebin>";
+		return ".java [code] [-template paste|gist] [-paste paste|gist] [-code/c] [-limit] [-nolimit]";
 	}
+
+  @Override
+  public String getCommand() {
+    return "java";
+  }
+
+  @Override
+  public String[] getAliases() {
+    return null;
+  }
+
+  @Override
+  public String getHelp() {
+    return "Runs Java code";
+  }
 
 
 }

@@ -142,4 +142,14 @@ public class Weather implements SubCommand{
 		return "weather <city> <state | country>";
 	}
 
+  @Override
+  public String getCommand() {
+    return "weather";
+  }
+
+  @Override
+  public String[] getAliases() {
+    return a("w");
+  }
+
 }

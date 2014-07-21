@@ -34,6 +34,17 @@ public class Shell implements SubCommand{
 		return null;
 	}
 
+  @Override
+  public String getCommand() {
+    return "sh";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 	
 	
 	

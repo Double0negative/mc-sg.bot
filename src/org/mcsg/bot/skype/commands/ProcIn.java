@@ -33,4 +33,15 @@ public class ProcIn implements SubCommand {
 		return null;
 	}
 
+  @Override
+  public String getCommand() {
+    return "procin";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

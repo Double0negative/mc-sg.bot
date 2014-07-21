@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.mcsg.bot.skype.commands.ArgTest;
 import org.mcsg.bot.skype.commands.Connect4;
 import org.mcsg.bot.skype.commands.Define;
 import org.mcsg.bot.skype.commands.GameStatsCommand;
@@ -52,7 +51,6 @@ import com.skype.Chat;
 import com.skype.ChatMessage;
 import com.skype.ChatMessageAdapter;
 import com.skype.Friend;
-import com.skype.GlobalChatListener;
 import com.skype.Skype;
 import com.skype.SkypeException;
 import com.skype.User;
@@ -61,15 +59,19 @@ public class Bot {
 
 	public static final String version ="1.46 Drawing options";
 
-	private HashMap<String, SubCommand> commands = 
+	private static HashMap<String, SubCommand> commands = 
 			new HashMap<String, SubCommand>();
+	 private static HashMap<String, SubCommand> aliases = 
+	      new HashMap<String, SubCommand>();
 
 	public static boolean killnuke = false;
 
+	private static Chat defaultChat;
 	public static final String LAST_FILE  = "lastchat";
 	public static final HashMap<Chat, Integer> messageCount = new HashMap<Chat, Integer>();
 
 	private ConcurrentHashMap<String, Integer> messages = new ConcurrentHashMap<>();
+	
 
 	public static void main(String[] args) {
 
@@ -88,6 +90,7 @@ public class Bot {
 				String chatid = scanner.nextLine();
 				for(Chat chat : Skype.getAllChats()){
 					if(chat.getId().equals(chatid)){
+					  defaultChat = chat;
 						chat.send("Starting MC-SG.BOT version "+version);
 						chat.send("/topic MC-SG BOT  v"+version);
 						
@@ -119,56 +122,47 @@ public class Bot {
 		GithubListener.listen();
 
 
-		commands.put("ping", new Ping());
-		commands.put("mcping", new MinecraftPingCommand());
-		commands.put("nuke", new Nuke());
-		commands.put("killnuke", new StopNuke());
-		commands.put("host", new HostCall());
-		commands.put("hi", new Hi());
-		commands.put("rand", new RandomNumber());
-		commands.put("<3", new Heart());
-		commands.put("kick", new Kick());
-		commands.put("getusers", new GetUsers());
-		commands.put("shell", new Shell());
-		commands.put("sh", new Shell());
-		commands.put("perm", new Perm());
-		commands.put("out", new ShellWrite());
-		commands.put("killproc", new KillProc());
-		commands.put("procin", new ProcIn());
-		commands.put("stop", new Stop());
-		commands.put("src", new Source());
-		commands.put("setchat", new ManageChat());
-		commands.put("wiki", new WikipediaSearchCommand());
-		commands.put("search", new WebSearch());
-		commands.put("abstract", new WebAbstract());
-		commands.put("define", new Define());
-		commands.put("img", new ImageSearch());
-		commands.put("g", new WebSearch());
-		commands.put("video", new VideoSearch());
-		commands.put("v", new VideoSearch());
-		commands.put("vid", new VideoSearch());
-		commands.put("youtube", new VideoSearch());
-		commands.put("yt", new VideoSearch());
-		commands.put("leave", new Leave());
-		commands.put("java", new JavaCommand());
-		commands.put("is", new Is());
-		commands.put("argtest", new ArgTest());
-		commands.put("uuid", new UUIDCommand());
-		commands.put("weather", new Weather());
-		commands.put("w", new Weather());
-		commands.put("version", new Version());
-		commands.put("c4", new Connect4());
-		commands.put("t3", new TicTacToe());
-		commands.put("stats", new GameStatsCommand());
-		commands.put("genimg", new GenImage());
-		commands.put("background", new GenImage());
-		commands.put("github", new GitHubListener());
+		registerCommand(new Ping());
+		registerCommand(new MinecraftPingCommand());
+		registerCommand(new Nuke());
+		registerCommand(new StopNuke());
+		registerCommand(new HostCall());
+		registerCommand(new Hi());
+		registerCommand(new RandomNumber());
+		registerCommand(new Heart());
+		registerCommand(new Kick());
+		registerCommand(new GetUsers());
+		registerCommand(new Shell());
+		registerCommand(new Perm());
+		registerCommand(new ShellWrite());
+		registerCommand(new KillProc());
+		registerCommand(new ProcIn());
+		registerCommand(new Stop());
+		registerCommand(new Source());
+		registerCommand(new ManageChat());
+		registerCommand(new WikipediaSearchCommand());
+		registerCommand(new WebSearch());
+		registerCommand(new WebAbstract());
+		registerCommand(new Define());
+		registerCommand(new ImageSearch());
+		registerCommand(new VideoSearch());
+		registerCommand(new Leave());
+		registerCommand(new JavaCommand());
+		registerCommand(new Is());
+		registerCommand(new UUIDCommand());
+		registerCommand(new Weather());
+		registerCommand(new Version());
+		registerCommand(new Connect4());
+		registerCommand(new TicTacToe());
+		registerCommand(new GameStatsCommand());
+		registerCommand(new GenImage());
+		registerCommand(new GitHubListener());
 
 
 		Skype.addChatMessageListener(new ChatMessageAdapter() {
 			public void chatMessageReceived(ChatMessage received) throws SkypeException {
-				int count = (messageCount.containsKey(received.getChat()) ? messageCount.get(received.getChat()) : 0);
-				messageCount.put(received.getChat(), count+1);
+			//	int count = (messageCount.containsKey(received.getChat()) ? messageCount.get(received.getChat()) : 0);
+			//	messageCount.put(received.getChat(), count+1);
 
 				//incMessages(received);
 
@@ -192,7 +186,7 @@ public class Bot {
 						received.getChat().send(sb.toString());
 					}
 
-					SubCommand sub = commands.get(command);
+					SubCommand sub = getCommand(command);
 					if(sub != null){
 						executeAsync(sub, received.getChat(), received.getSender(),  args);
 					}
@@ -201,18 +195,41 @@ public class Bot {
 					try {
 						MessagePaster.message(received.getSender(), received.getChat(), received.getContent());
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
-				//received.getChat().get
 			}
 		});
-
-
-
 	}
 
+	public static SubCommand getCommand(String command){
+	  if(commands.containsKey(command)){
+	    return commands.get(command);
+	  } else if(aliases.containsKey(command)){
+	    return aliases.get(command);
+	  } else return null;
+	}
+	
+	public static void registerCommand(SubCommand command){
+	  if(commands.containsKey(command.getCommand())){
+	    ChatManager.printThrowable(getDefaultChat(), new RuntimeException("Cannot register command: "+command.getCommand()+". Command already exist"));
+	  } else {
+	    commands.put(command.getCommand(), command);
+	  }
+	  if(command.getAliases() != null){
+	    for(String alias : command.getAliases()){
+	      if(aliases.containsKey(alias)){
+	        ChatManager.printThrowable(getDefaultChat(), new RuntimeException("Cannot register alias: "+ alias+". Alias already registered by "+aliases.get(alias).getCommand()));
+	      } else {
+	        aliases.put(alias, command);
+	      }
+	    }
+	  }
+	}
+	
+	public static Chat getDefaultChat(){
+	  return defaultChat;
+	}
 
 	public void incMessages(ChatMessage received) throws SkypeException{
 
@@ -253,7 +270,7 @@ public class Bot {
 
 
 
-	public String getCommand(String[] split){
+	private String getCommand(String[] split){
 		return split[0].substring(1).toLowerCase();
 	}
 

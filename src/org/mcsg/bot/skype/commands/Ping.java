@@ -42,4 +42,15 @@ public class Ping implements SubCommand{
 		return ".ping [server]";
 	}
 
+  @Override
+  public String getCommand() {
+   return "ping";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

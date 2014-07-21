@@ -42,4 +42,15 @@ public class GitHubListener implements SubCommand{
 		return null;
 	}
 
+  @Override
+  public String getCommand() {
+    return "github";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

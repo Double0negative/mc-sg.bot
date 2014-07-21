@@ -39,7 +39,18 @@ public class MinecraftPingCommand implements SubCommand{
 
 	@Override
 	public String getUsage() {
-		return ".mcping <server:port>";
+		return ".mcping <server[:port]>";
 	}
+
+  @Override
+  public String getCommand() {
+    return "mcping";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
 
 }

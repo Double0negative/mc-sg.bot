@@ -29,4 +29,15 @@ public class Is implements SubCommand{
 		return ".is <query>";
 	}
 
+  @Override
+  public String getCommand() {
+    return "is";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

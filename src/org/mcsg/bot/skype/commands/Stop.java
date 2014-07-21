@@ -40,4 +40,15 @@ public class Stop implements SubCommand{
 		return null;
 	}
 
+  @Override
+  public String getCommand() {
+    return "stop";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

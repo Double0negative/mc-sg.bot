@@ -34,4 +34,15 @@ public class Define implements SubCommand{
 		return ".define <word>";
 	}
 
+  @Override
+  public String getCommand() {
+    return "define";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

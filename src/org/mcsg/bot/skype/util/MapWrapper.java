@@ -55,10 +55,6 @@ public class MapWrapper extends HashMap<String, String> {
 			put(key, null);
 	}
 
-	public boolean containsKey(String key){
-		return containsKey(key);
-	}
-
 
 	public MapWrapper clone(){
 		return new MapWrapper(this);

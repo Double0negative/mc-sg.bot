@@ -41,4 +41,15 @@ public class RandomNumber implements SubCommand {
 		return ".rand [type]";
 	}
 
+  @Override
+  public String getCommand() {
+   return "rand";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

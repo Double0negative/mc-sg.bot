@@ -40,13 +40,17 @@ public class GenImage implements SubCommand{
 		gens.put("cluster", 5);
 		gens.put("dots", 6);
 		gens.put("clouds", 7);
-		
+    gens.put("abstract", 8);
+
 		gens.put("pixel", 25);
 
 	}
 
+	
+	
 	@Override
 	public void execute(Chat chat, User sender, String[] args) throws Exception {
+		
 		Arguments arge = new Arguments(args, "generator/gen args", "base/background arg", "resolution/res arg");
 		args = arge.getArgs();
 		HashMap<String, String> swi = arge.getSwitches();
@@ -102,7 +106,21 @@ public class GenImage implements SubCommand{
 
 	@Override
 	public String getUsage() {
-		return ".genimage";
+		return ".genimage [-gen generator] [-res reseloution] [-base baseimg] [option:value]";
 	}
+
+
+
+  @Override
+  public String getCommand() {
+    return "genimg";
+  }
+
+
+
+  @Override
+  public String[] getAliases() {
+    return a("genimage", "background");
+  }
 
 }

@@ -30,4 +30,15 @@ public class Kick implements SubCommand{
 		return null;
 	}
 
+  @Override
+  public String getCommand() {
+    return "kick";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

@@ -24,4 +24,14 @@ public class Version implements SubCommand{
 		return null;
 	}
 
+  @Override
+  public String getCommand() {
+    return "version";
+  }
+
+  @Override
+  public String[] getAliases() {
+    return null;
+  }
+
 }

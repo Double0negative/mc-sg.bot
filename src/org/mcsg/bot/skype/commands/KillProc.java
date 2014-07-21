@@ -18,7 +18,7 @@ public class KillProc implements SubCommand{
 			} else {
 				ShellCommand.kill(chat, Integer.parseInt(args[0]));
 			}
-			chat.send("Killed proc "+args[0]);
+			chat.send("Killed proccess "+args[0]);
 		}
 		
 	}
@@ -34,5 +34,16 @@ public class KillProc implements SubCommand{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+  @Override
+  public String getCommand() {
+    return "killproc";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
 
 }

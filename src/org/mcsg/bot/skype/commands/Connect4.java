@@ -143,17 +143,26 @@ public class Connect4 implements SubCommand{
 		}
 	}
 
-	@Override
-	public String getHelp() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public String getUsage() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Start a game: .c4 <player | ai>\nMake move: .c4 <column>";
 	}
+
+  @Override
+  public String getCommand() {
+    return "c4";
+  }
+
+  @Override
+  public String[] getAliases() {
+    return a("connect4", "connect");
+  }
+
+  @Override
+  public String getHelp() {
+    return "Starts a Connect 4 game or makes a move in a game. Games can be played against other players or AI";
+  }
 
 
 

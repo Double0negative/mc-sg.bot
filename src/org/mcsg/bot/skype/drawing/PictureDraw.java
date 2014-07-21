@@ -50,7 +50,7 @@ public class PictureDraw {
 		//draw.save(new File("/home/drew/", "TestImage.png"));
 
 		JFrame frame = new JFrame("img");
-		
+
 		frame.setSize(1920, 1080);
 		frame.setLayout(null);
 		frame.setVisible(true);
@@ -58,7 +58,7 @@ public class PictureDraw {
 		l.setBounds(0, 0, 1920, 1080);
 		frame.add(l);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		JButton b = new JButton("next");
 		frame.add(b);
 		b.setBounds(0, 0, 70, 30);
@@ -66,7 +66,7 @@ public class PictureDraw {
 
 		b.addActionListener((action) -> {
 			PictureDraw draw = new PictureDraw(null);
-			Progress<Integer> prog = draw.draw(7);
+			Progress<Integer> prog = draw.draw(8);
 			bar.setMaximum((int) prog.getMax());
 			prog.waitForFinish();
 			l.setIcon(new ImageIcon(draw.getImage()));
@@ -85,7 +85,7 @@ public class PictureDraw {
 			}*/
 
 	}
-	
+
 	public PictureDraw(int width, int height, BufferedImage imgb){
 		this.WIDTH = width;
 		this.HEIGHT = height;
@@ -104,15 +104,15 @@ public class PictureDraw {
 		img = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
 		g = (Graphics2D) img.getGraphics();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
-	    g.setColor(Drawer.getRandomColor(false));
+
+		g.setColor(Drawer.getRandomColor(false));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
-		
+
 		if(imgb != null){
 			g.drawImage(imgb, 0, 0, null);
 		}
 	}
-	
+
 	public Progress<Integer> draw(final int sell, String ... args){
 		final Progress<Integer> prog = new Progress<>();
 		final MapWrapper wrap = new MapWrapper();
@@ -120,12 +120,22 @@ public class PictureDraw {
 			String [] split = arg.split(":");
 			wrap.put(split[0], split[1]);
 		}
-		System.out.println(wrap);
+		if(wrap.containsKey("bg") || wrap.containsKey("background")){
+		  String bg = wrap.get("bg");
+		  Color c = null;
+		  if(bg.startsWith("#")){
+		    c = Color.decode(bg);
+		  } else {
+		    c = Color.getColor(bg);
+		  }
+		  g.setColor(c);
+      g.fillRect(0, 0, WIDTH, HEIGHT);
+		}
 		ThreadUtil.run("Image Generator", new Thread(){
 			public void run(){
 				int sel = sell;
 				if(sel == -1)
-					sel = rand.nextInt(8);
+					sel = rand.nextInt(9);
 				switch (sel) {
 				case 0:
 					new DrawShapes(WIDTH, HEIGHT, img, g).draw(prog, wrap);
@@ -151,6 +161,9 @@ public class PictureDraw {
 				case 7:
 					new DrawPerlin(WIDTH, HEIGHT, img, g).draw(prog, wrap);
 					break;
+				case 8:
+				  new AbstractShapes(WIDTH, WIDTH, img, g).draw(prog, wrap);
+				  break;
 				case 25: 
 					new DrawPixelImg(WIDTH, HEIGHT, img, g).draw(prog, wrap);
 				}

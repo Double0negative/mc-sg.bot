@@ -40,4 +40,15 @@ public class Perm implements SubCommand {
 		return null;
 	}
 
+  @Override
+  public String getCommand() {
+    return "perm";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

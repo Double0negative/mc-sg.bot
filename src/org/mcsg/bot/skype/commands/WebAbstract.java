@@ -34,4 +34,15 @@ public class WebAbstract implements SubCommand {
 		return ".abstract <search>";
 	}
 
+  @Override
+  public String getCommand() {
+    return "abstract";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

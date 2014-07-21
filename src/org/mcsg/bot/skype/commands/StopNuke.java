@@ -29,4 +29,15 @@ public class StopNuke implements SubCommand{
 		return null;
 	}
 
+  @Override
+  public String getCommand() {
+   return "stopnuke";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

@@ -36,4 +36,15 @@ public class GetUsers implements SubCommand{
 		return ".getusers [-noid]";
 	}
 
+  @Override
+  public String getCommand() {
+    return "getusers";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

@@ -27,4 +27,14 @@ public class Hi implements SubCommand{
 		return ".hi";
 	}
 
+  @Override
+  public String getCommand() {
+   return "hi";
+  }
+
+  @Override
+  public String[] getAliases() {
+    return a("hello");
+  }
+
 }

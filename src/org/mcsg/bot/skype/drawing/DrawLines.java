@@ -37,19 +37,8 @@ class DrawLines extends Drawer{
 		prog.setMessage("lines");
 		for(int aa = 0; aa < stop; aa++){
 
-			r += rand.nextInt(7) - 3;
-			b += rand.nextInt(7) - 3;
-			gc += rand.nextInt(7) - 3;
-			a += rand.nextInt(7) - 3;
 
-			r = ImageTools.limit(r, 255, 0); 
-			b = ImageTools.limit(b, 255, 0); 
-			gc = ImageTools.limit(gc, 255, 0); 
-			a = ImageTools.limit(a, 255, 0); 
-
-
-			Color c = new Color(r, gc,b, a);
-			g.setColor(c);
+			g.setColor(incColor(g.getColor(), 7));
 
 			x1 += rand.nextInt(13) - 6;
 			x2 += rand.nextInt(13) - 6;
@@ -68,4 +57,9 @@ class DrawLines extends Drawer{
 
 	}
 
+	@Override
+	public void drawCircle(int x, int y, int size) {
+		// TODO Auto-generated method stub
+		super.drawCircle(x, y, size);
+	}
 }

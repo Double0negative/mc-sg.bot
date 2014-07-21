@@ -36,6 +36,17 @@ public class ShellWrite implements SubCommand{
 		return null;
 	}
 
+  @Override
+  public String getCommand() {
+    return "out";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 	
 	
 	

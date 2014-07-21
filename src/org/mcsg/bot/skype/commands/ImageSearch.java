@@ -47,4 +47,14 @@ public class ImageSearch implements SubCommand{
 		return ".img <search>";
 	}
 
+  @Override
+  public String getCommand() {
+   return "img";
+  }
+
+  @Override
+  public String[] getAliases() {
+    return a("image", "i");
+  }
+
 }

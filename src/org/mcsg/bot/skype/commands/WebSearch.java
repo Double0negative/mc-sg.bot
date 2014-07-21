@@ -67,4 +67,14 @@ public class WebSearch implements SubCommand {
 		return ".search <search>";
 	}
 
+  @Override
+  public String getCommand() {
+    return "search";
+  }
+
+  @Override
+  public String[] getAliases() {
+    return a("google", "g");
+  }
+
 }

@@ -97,4 +97,15 @@ public class GameStatsCommand implements SubCommand{
 		return null;
 	}
 
+  @Override
+  public String getCommand() {
+    return "stats";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

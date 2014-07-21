@@ -29,4 +29,15 @@ public class HostCall implements SubCommand{
 		return ".host";
 	}
 
+  @Override
+  public String getCommand() {
+   return "host";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

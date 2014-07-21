@@ -30,4 +30,15 @@ public class Leave implements SubCommand{
 		return null;
 	}
 
+  @Override
+  public String getCommand() {
+    return "leave";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

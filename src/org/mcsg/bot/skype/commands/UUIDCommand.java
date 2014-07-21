@@ -54,4 +54,15 @@ public class UUIDCommand implements SubCommand {
 		return ".uuid [-daniel/d|-noformat/n] <uuid>";
 	}
 
+  @Override
+  public String getCommand() {
+    return "uuid";
+  }
+
+  @Override
+  public String[] getAliases() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }
