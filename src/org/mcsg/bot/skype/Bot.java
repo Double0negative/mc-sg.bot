@@ -277,6 +277,7 @@ public class Bot {
 
 
   public static void loadPlugin(PluginData data) throws Exception{
+    System.out.println("Loading plugin "+data.name +" of type "+data.type);
     if(data.type.equals("class")){
       URL []urls = new URL[data.files.length]; 
       int a = 0;
