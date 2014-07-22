@@ -26,7 +26,7 @@ public class ChatManager {
   private static final String ERROR_PREFIX = "\0!!!";
 
   public static void printThrowable(Chat chat, Throwable t){
-    printError(chat, t.toString());
+    printError(chat, t.toString()+"\n");
     for(StackTraceElement el : t.getStackTrace())
       printError(chat, "\t" + el.toString()+"\n");
 
