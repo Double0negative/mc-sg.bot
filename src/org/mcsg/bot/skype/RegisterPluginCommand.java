@@ -69,7 +69,7 @@ public class RegisterPluginCommand implements SubCommand{
       if(contents.language.equalsIgnoreCase("Java")){
         File file = new File(dir, contents.filename);
         FileUtils.writeFile(file, contents.content);
-        ShellCommand.exec(chat, "cd "+dir.getAbsolutePath()+"; javac -classpath \"../../java_libs/*:\" "+contents.filename, 0, false, true);
+        ShellCommand.exec(chat, "cd \""+dir.getAbsolutePath()+"\"; javac -classpath \"../../java_libs/*:\" "+contents.filename, 0, false, true);
 
         int ploc = contents.content.indexOf("package");
         String packagename = (ploc > -1) ? contents.content.substring(ploc, contents.content.indexOf(";",ploc)).replace("package ", "") +"." : "";

@@ -80,7 +80,7 @@ public class ChatManager {
                     sb.append(msg.trim().startsWith("/") ? "." : "").append(msg).append("\n");
                   }
                 }
-                sb.delete(sb.length() - 1, sb.length());
+                //sb.delete(sb.length() - 1, sb.length());
                 if(chats.remove(chat).size() > Settings.Root.Bot.chat.paste){
                   try {
                     ThreadUtil.run("Creating Paste", () -> {try {chat.send("Output: "+createPaste(sb.toString())); } catch (Exception e){}});
