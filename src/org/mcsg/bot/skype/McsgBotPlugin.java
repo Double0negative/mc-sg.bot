@@ -1,10 +1,12 @@
 package org.mcsg.bot.skype;
 
-public interface McsgBotPlugin {
+import com.skype.Chat;
 
+public interface McsgBotPlugin {
+  
   public String getName();
   
-  public void onEnable() throws Exception;
+  public void onEnable(Chat chat) throws Exception;
   
   public void onDisable() throws Exception;
   

@@ -42,6 +42,7 @@ public class PluginManager {
       if(pdata.name.equals(name))
         data = pdata;
 
+    plugins.remove(name);
     pluginRegistry.data.remove(data);
     savePluginData();
   }
@@ -76,21 +77,21 @@ public class PluginManager {
     FileUtils.writeFile(pluginFile, json);
   }
 
-  protected static void registerPlugin(PluginData data) throws Exception{
+  protected static void registerPlugin(PluginData data, Chat chat) throws Exception{
     pluginRegistry.data.add(data);
     savePluginData();
-    loadPlugin(data);
+    loadPlugin(data, chat);
   }
 
 
-  protected static void loadPlugins() throws Exception{
+  protected static void loadPlugins(Chat chat) throws Exception{
     String regs = FileUtils.readFile(pluginFile);
     pluginRegistry = gson.fromJson(regs, PluginRegistry.class);
 
     if(pluginRegistry != null)
       for(PluginData data : pluginRegistry.data){
         try {
-          loadPlugin(data);}
+          loadPlugin(data, chat);}
         catch (Exception e){}
       }
     else 
@@ -99,7 +100,7 @@ public class PluginManager {
 
 
 
-  public static void loadPlugin(PluginData data) throws Exception {
+  public static void loadPlugin(PluginData data, Chat chat) throws Exception {
     if(plugins.containsKey(data.name)) 
       throw new RuntimeException("Plugin already loaded!"); 
     System.out.println("Loading Plugin ");
@@ -108,10 +109,9 @@ public class PluginManager {
     McsgBotPlugin plugin  = clazz.asSubclass(McsgBotPlugin.class).newInstance();
 
     plugins.put(data.name, plugin);
-    Chat chat = Bot.getDefaultChat();
 
     try { 
-      plugin.onEnable();
+      plugin.onEnable(chat);
     } catch (Exception e){
       if(chat != null)
         ChatManager.printThrowable(chat, e);

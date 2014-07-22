@@ -87,7 +87,7 @@ public class RegisterPluginCommand implements SubCommand{
     }
     PluginData data = PluginManager.createPlugin(mani.name, mani.main, files.toArray(new ClassFile[0]));
     PluginManager.buildPlugin(data);
-    PluginManager.registerPlugin(data);
+    PluginManager.registerPlugin(data, chat);
     
   }
   

@@ -114,7 +114,6 @@ public class Bot {
             chat.send("Accepted "+a+" new contacts.");
           }
           scanner.close();
-          f.delete();
         }
       }
       new Bot().start();
@@ -173,7 +172,7 @@ public class Bot {
     registerCommand(new RegisterPluginCommand());
 
    
-    PluginManager.loadPlugins();
+    PluginManager.loadPlugins(getDefaultChat());
     
     Skype.addChatMessageListener(new ChatMessageAdapter() {
       public void chatMessageReceived(ChatMessage received) throws SkypeException {
