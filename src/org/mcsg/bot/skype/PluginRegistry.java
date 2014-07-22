@@ -13,8 +13,7 @@ public class PluginRegistry {
   public static class PluginData {
     String name;
     String mainclass;
-    String type;
-    
+    String jarLocation;
     ClassFile[] files;
     
     public static class ClassFile{

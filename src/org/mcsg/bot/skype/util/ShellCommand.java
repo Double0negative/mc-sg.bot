@@ -32,6 +32,11 @@ public class ShellCommand {
 	}
 	
 	public static int exec(final Chat chat, String args, long limit,  boolean displayCommand){
+	  return exec(chat, args, limit, displayCommand, false);
+	}
+	
+	 public static int exec(final Chat chat, String args, long limit,  boolean displayCommand, boolean wait){
+
 		int id = getId();
 		try{
 			String name = "files/temp"+System.currentTimeMillis()+".sh";
@@ -41,7 +46,7 @@ public class ShellCommand {
 			pw.flush();
 			if(displayCommand) ChatManager.chat(chat, "Running command: \""+ args +"\" ID: "+id);
 			final Process proc = Runtime.getRuntime().exec("bash "+name);
-
+			if(wait) proc.waitFor();
 			procs.put(id, proc);
 			chats.put(id, new ArrayList<Chat>());
 			readToChat(chat, id);

@@ -9,6 +9,7 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -71,8 +72,9 @@ public class Bot {
       new HashMap<>();
   private static HashMap<String, SubCommand> aliases = 
       new HashMap<>();
-  private static HashMap<String, McsgBotPlugin> plugins = 
+  private static HashMap<SubCommand, McsgBotPlugin> plug_comand =
       new HashMap<>();
+
 
   public static boolean killnuke = false;
 
@@ -170,8 +172,9 @@ public class Bot {
     registerCommand(new GitHubListener());
     registerCommand(new RegisterPluginCommand());
 
-    loadPlugins();
-
+   
+    PluginManager.loadPlugins();
+    
     Skype.addChatMessageListener(new ChatMessageAdapter() {
       public void chatMessageReceived(ChatMessage received) throws SkypeException {
         int count = (messageCount.containsKey(received.getChat()) ? messageCount.get(received.getChat()) : 0);
@@ -223,7 +226,26 @@ public class Bot {
     } else return null;
   }
 
-  public static void registerCommand(SubCommand command){
+  public static void unregisterCommands(McsgBotPlugin plugin){
+    for(Entry <SubCommand, McsgBotPlugin> entry : plug_comand.entrySet()){
+      if(entry.getValue() == plugin){
+        unregisterCommand(entry.getKey());
+      }
+    }
+  }
+  
+  public static void unregisterCommand(SubCommand command){
+    commands.remove(command.getCommand());
+    if(command.getAliases() != null)
+      for(String alias : command.getAliases())
+        aliases.remove(alias);
+  }
+  
+  private static void registerCommand(SubCommand command){
+    registerCommand(command, null);
+  }
+  
+  public static void registerCommand(SubCommand command, McsgBotPlugin plugin){
     if(commands.containsKey(command.getCommand())){
       ChatManager.printThrowable(getDefaultChat(), new RuntimeException("Cannot register command: "+command.getCommand()+". Command already exist"));
     } else {
@@ -238,81 +260,14 @@ public class Bot {
         }
       }
     }
+    plug_comand.put(command, plugin);
   }
 
   public static Chat getDefaultChat(){
     return defaultChat;
   }
 
-  protected static PluginData createPlugin(String name,  String mainClass, String type, ClassFile ... files){
-    PluginData data = new PluginData();
-    data.mainclass = mainClass;
-    data.name = name;
-    data.type = type;
 
-    data.files = files;
-    return data;
-  }
-
-
-  protected static void registerPlugin(PluginData data) throws Exception{
-    pluginRegistry.data.add(data);
-    String json = gson.toJson(pluginRegistry);
-    FileUtils.writeFile(pluginFile, json);
-    loadPlugin(data);
-  }
-
-  private static PluginRegistry pluginRegistry;
-  private static File pluginFile = new File("plugins.json");
-  private void loadPlugins() throws Exception{
-    String regs = FileUtils.readFile(pluginFile);
-    pluginRegistry = gson.fromJson(regs, PluginRegistry.class);
-
-    if(pluginRegistry != null)
-      for(PluginData data : pluginRegistry.data)
-        loadPlugin(data);
-
-  }
-
-
-
-  public static void loadPlugin(PluginData data) throws Exception{
-    System.out.println("Loading plugin "+data.name +" of type "+data.type);
-    if(data.type.equals("class")){
-      URL []urls = new URL[data.files.length]; 
-      int a = 0;
-      for(ClassFile cfile : data.files){
-        File file = new File(cfile.location);
-        urls[a] = file.toURI().toURL(); 
-        a++;
-      }
-      Chat chat = getDefaultChat();
-      if(chat != null)
-        ChatManager.chat(chat,"Loading plugin: "+data.name);
-      
-      URLClassLoader loader = new URLClassLoader(urls);
-      McsgBotPlugin plugin = (McsgBotPlugin) loader.loadClass(data.mainclass).newInstance();
-      for(ClassFile cfile :data.files){
-        if(!cfile.name.equals(data.mainclass)){
-          loader.loadClass(cfile.name);
-        }
-      }
-      plugins.put(plugin.getName(), plugin);
-
-
-
-      try { 
-        plugin.onEnable();
-      } catch (Exception e){
-        if(chat != null)
-          ChatManager.printThrowable(chat, e);
-      }
-      if(chat != null)
-        ChatManager.chat(chat,"Loaded plugin: "+plugin.getName());
-      loader.close();
-    }
-
-  }
 
   public void incMessages(ChatMessage received) throws SkypeException{
 

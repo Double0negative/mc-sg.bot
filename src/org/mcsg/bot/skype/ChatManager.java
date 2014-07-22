@@ -28,13 +28,13 @@ public class ChatManager {
   public static void printThrowable(Chat chat, Throwable t){
     printError(chat, t.toString());
     for(StackTraceElement el : t.getStackTrace())
-      printError(chat, "\t" + el.toString());
+      printError(chat, "\t" + el.toString()+"\n");
 
     Throwable e1 = t.getCause();
     if(e1 != null){
       printError(chat, e1.toString());
       for(StackTraceElement el : e1.getStackTrace())
-        printError(chat, "\t" + el.toString());
+        printError(chat, "\t" + el.toString()+"\n");
     }
 
     for(int a  = 0; a < Settings.Root.Bot.chat.paste ; a++){
