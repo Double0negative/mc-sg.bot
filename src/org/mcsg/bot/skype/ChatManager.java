@@ -27,22 +27,21 @@ public class ChatManager {
 
   public static void printThrowable(Chat chat, Throwable t){
     printError(chat, t.toString()+"\n");
-    for(StackTraceElement el : t.getStackTrace())
-      printError(chat, "\t" + el.toString()+"\n");
+    printStack(chat, t.getStackTrace());
 
     Throwable e1 = t.getCause();
     if(e1 != null){
       printError(chat, e1.toString());
-      for(StackTraceElement el : e1.getStackTrace())
-        printError(chat, "\t" + el.toString()+"\n");
-    }
-
-    for(int a  = 0; a < Settings.Root.Bot.chat.paste ; a++){
-      chat(chat, "");
+      printStack(chat, e1.getStackTrace());
     }
   }
 
-  private static void printError(Chat chat, String str){
+  public static void printStack(Chat chat, StackTraceElement[] elements){
+    for(StackTraceElement el : elements)
+      printError(chat, "\t" + el.toString()+"\n");
+  }
+  
+  public static void printError(Chat chat, String str){
     ChatManager.chat(chat, ERROR_PREFIX + str);
   }
 
