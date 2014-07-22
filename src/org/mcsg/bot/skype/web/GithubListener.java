@@ -34,6 +34,7 @@ public class GithubListener {
 
 		new Thread(){
 			public void run(){
+			  this.setName("GithubListener Thread");
 				ServerSocket sskt;
 				try {
 					sskt = new ServerSocket(Settings.Root.Github.port);

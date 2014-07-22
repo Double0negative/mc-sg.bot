@@ -66,6 +66,7 @@ public class ChatManager {
   public static void start(){
     new Thread(){
       public void run(){
+        this.setName("ChatManager Thread");
         while(true){
           try{
             HashMap<Chat, List<String>> copy = new HashMap<>(chats);
