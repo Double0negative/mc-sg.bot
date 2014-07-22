@@ -15,13 +15,25 @@ public class Connect4Manager {
 	private static Connect4Manager instance = new Connect4Manager();
 	
 	private HashMap<String, ArrayList<Connect4Game>> games = new HashMap<String, ArrayList<Connect4Game>>();
-	
+	private HashMap<String, Connect4AI> c4_ai = new HashMap<>();
 	private Connect4Manager(){
-		
+		registerAI("ai", new C4MiniMaxAI());
 	}
 	
 	public static Connect4Manager getInstance(){
 		return instance;
+	}
+	
+	public void registerAI(String name, Connect4AI ai){
+	  c4_ai.put(name, ai);
+	}
+	
+	public void unregisterAI(String name){
+	  c4_ai.remove(name);
+	}
+	
+	public Connect4AI getAI(String name){
+	  return c4_ai.get(name);
 	}
 	
 	public Connect4Game createGame(Chat chat, String p1, String p2){

@@ -30,7 +30,7 @@ public class Connect4 implements SubCommand{
 			if(args[0].equalsIgnoreCase("leave")){
 				ChatManager.chat(chat, sender, "Left the game!");
 				Connect4Manager.getInstance().removeGame(chat.getId(), game);
-
+				return;
 			}
 			int col = Integer.parseInt(args[0]) -1;
 			Tile[][] pretiles = game.getTiles().clone();

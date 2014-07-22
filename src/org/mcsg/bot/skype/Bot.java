@@ -66,7 +66,7 @@ import com.skype.User;
 
 public class Bot {
 
-  public static final String version ="2.00 Plugins and more";
+  public static final String version ="2.01 More AI's";
 
   private static HashMap<String, SubCommand> commands = 
       new HashMap<>();

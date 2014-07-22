@@ -36,12 +36,7 @@ public class Connect4Game {
 		
 		
 		try{
-		if(p1.equalsIgnoreCase("ai")){ //This shouldn't be possible but whatever
-			AI = new Connect4AI(chat, p1Tile, this);
-		} else if(p2.equalsIgnoreCase("ai")){
-			AI = new Connect4AI(chat, p2Tile, this);
-		}
-		
+		  AI = Connect4Manager.getInstance().getAI(p2);
 		}catch (Exception e){
 			e.printStackTrace();
 		}
