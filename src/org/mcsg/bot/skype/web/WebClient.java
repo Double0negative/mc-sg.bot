@@ -39,7 +39,6 @@ public class WebClient {
 						}
 
 					String data = "";
-
 					for(int a = 0; a < args.length; a+=2){
 						data += URLEncoder.encode(args[a], "UTF-8") + "="+ URLEncoder.encode(args[a+1], "UTF-8") + "&";
 					}
@@ -50,15 +49,13 @@ public class WebClient {
 
 					BufferedOutputStream writer = new BufferedOutputStream(connection.getOutputStream());
 
-					byte[] bytes = data.getBytes();
+          byte[] bytes = data.getBytes();
 					prog.setMax(bytes.length);
 					prog.setMessage(UPLOAD_MESSAGE);
-					System.out.println(prog);
+					
+
 					for(int a = 0; a < bytes.length; a++){
 						writer.write(bytes[a]);
-						if(a % 1000 == 0){
-							writer.flush();
-						}
 						prog.setProgress(a);
 					}
 					writer.flush();
@@ -67,9 +64,7 @@ public class WebClient {
 					prog.setMessage(WAITING_MESSAGE);
 					BufferedReader br = new BufferedReader(new InputStreamReader(
 							connection.getInputStream()));
-					//prog.setProgress(0);
 					prog.setMax(connection.getContentLengthLong());
-
 					prog.setMessage(RESULT_MESSAGE);
 
 					StringBuilder sb = new StringBuilder();
@@ -103,8 +98,6 @@ public class WebClient {
 		ThreadUtil.run("Request", new Thread(){
 			public void run(){
 				try{
-
-
 					URL url = new URL(urls.replace(" ", "%20"));
 					URLConnection con = url.openConnection();
 					con.setRequestProperty("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/31.0");
@@ -146,7 +139,6 @@ public class WebClient {
 		ThreadUtil.run("Request", new Thread(){
 			public void run(){
 				try{
-
 					StringBuilder sb = new StringBuilder();
 
 					URL url = new URL(urls.replace(" ", "%20"));
