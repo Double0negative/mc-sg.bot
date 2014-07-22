@@ -32,8 +32,8 @@ public class Connect4Manager {
 	  c4_ai.remove(name);
 	}
 	
-	public Connect4AI getAI(String name){
-	  return c4_ai.get(name);
+	public Connect4AI getAI(String name, Chat chat, Tile side, Connect4Game game){
+	  return c4_ai.get(name).load(chat, side,  game);
 	}
 	
 	public Connect4Game createGame(Chat chat, String p1, String p2){

@@ -36,7 +36,7 @@ public class Connect4Game {
 		
 		
 		try{
-		  AI = Connect4Manager.getInstance().getAI(p2);
+		  AI = Connect4Manager.getInstance().getAI(p2, chat, p2Tile, this);
 		}catch (Exception e){
 			e.printStackTrace();
 		}
