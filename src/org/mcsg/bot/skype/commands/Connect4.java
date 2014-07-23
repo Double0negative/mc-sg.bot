@@ -146,7 +146,7 @@ public class Connect4 implements SubCommand{
 
 	@Override
 	public String getUsage() {
-		return "Start a game: .c4 <player | ai>\nMake move: .c4 <column>";
+		return "Start a game: .c4 <player | ai> \n Make move: .c4 <column>";
 	}
 
   @Override

@@ -53,6 +53,7 @@ import org.mcsg.bot.skype.commands.WebSearch;
 import org.mcsg.bot.skype.commands.WikipediaSearchCommand;
 import org.mcsg.bot.skype.message.MessagePaster;
 import org.mcsg.bot.skype.util.FileUtils;
+import org.mcsg.bot.skype.web.GistAPI;
 import org.mcsg.bot.skype.web.GithubListener;
 
 import com.google.gson.Gson;
@@ -190,15 +191,24 @@ public class Bot {
 
           if(command.equalsIgnoreCase("help") || command.equalsIgnoreCase("halp")){
             StringBuilder sb = new StringBuilder();
-            sb.append("--- [ MC-SG Bot Help ] ---");
-
+            received.getChat().send("--- [ MC-SG Bot Help ] ---");
+            sb.append("#MC-SG.BOT Commands Reference \n");
             for(String com : commands.keySet()){
               String name = commands.get(com).getUsage();
               if(name != null){
-                ChatManager.chat(received.getChat(), "\n"+commands.get(com).getUsage()+" - " + commands.get(com).getHelp());
+                try {
+                  sb.append("- `"+commands.get(com).getUsage()+"` \n  * " + commands.get(com).getHelp().replace("\n", "\n  * ") +"\n\n");
+                } catch (Exception e) {
+                  e.printStackTrace();
+                }
               }
             }
-            received.getChat().send(sb.toString());
+            try {
+              received.getChat().send("Help: " +GistAPI.paste("help.md",sb.toString()));
+            } catch (Exception e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+            }
           }
 
           SubCommand sub = getCommand(command);
