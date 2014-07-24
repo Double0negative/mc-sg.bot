@@ -54,6 +54,10 @@ public class RegisterPluginCommand implements SubCommand{
   public void loadFromGist(Chat chat, String url, boolean register, boolean update) throws Exception{
     String id = url.substring(url.lastIndexOf("/") + 1);
     GistResponse gist = GistAPI.get(id);
+    if(!gist.files.containsKey("manifest.json")) {
+      ChatManager.chat(chat, "Failed to load plugin: Cannot find manifest file.");
+      return;
+    }
     PluginManifest mani = new Gson().fromJson(gist.files.get("manifest.json").content, PluginManifest.class);
 
     File dir = new File(PluginRegistry.DIR, mani.name);
