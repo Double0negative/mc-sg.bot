@@ -33,7 +33,7 @@ public class PluginManager {
       Bot.unregisterCommands(plugin);
 
     } 
-    
+
   }
 
   protected static void unregisterPlugin(String name) throws Exception {
@@ -101,8 +101,10 @@ public class PluginManager {
 
 
   public static void loadPlugin(PluginData data, Chat chat) throws Exception {
-    if(plugins.containsKey(data.name)) 
-      throw new RuntimeException("Plugin already loaded!"); 
+    if(plugins.containsKey(data.name)) {
+      if(chat != null)
+        ChatManager.chat(chat, "Failed to load plugin \""+data.name+"\": Plugin is already loaded!");
+    }
     System.out.println("Loading Plugin ");
     URLClassLoader loader = URLClassLoader.newInstance(new URL[]{new File(data.jarLocation).toURI().toURL()});
     Class<?> clazz = Class.forName(data.mainclass, true, loader);
