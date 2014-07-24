@@ -82,6 +82,7 @@ public class ChatManager {
                   }
                 }
                 //sb.delete(sb.length() - 1, sb.length());
+                chats.remove(chat);
                 if(sb.chars().parallel().filter((c) -> c == '\n').count() > Settings.Root.Bot.chat.paste){
                   try {
                     ThreadUtil.run("Creating Paste", () -> {try {chat.send("Output: "+createPaste(sb.toString())); } catch (Exception e){}});
