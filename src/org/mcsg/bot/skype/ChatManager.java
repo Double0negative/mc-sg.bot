@@ -82,23 +82,19 @@ public class ChatManager {
                   }
                 }
                 //sb.delete(sb.length() - 1, sb.length());
-                if(chats.remove(chat).size() > Settings.Root.Bot.chat.paste){
+                if(sb.chars().parallel().filter((c) -> c == '\n').count() > Settings.Root.Bot.chat.paste){
                   try {
                     ThreadUtil.run("Creating Paste", () -> {try {chat.send("Output: "+createPaste(sb.toString())); } catch (Exception e){}});
-                    if(error.length() > 0){
-                      ThreadUtil.run("Creating Paste", () -> {try {chat.send("Error: "+createPaste(error.toString())); } catch (Exception e){}});
-                    }
                   } catch (Exception e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                   }
                 } else {
                   try { 
                     chat.send(sb.toString());
-                    if(error.length() > 0){
-                      ThreadUtil.run("Creating Paste", () -> {try {chat.send("Error: "+createPaste(error.toString())); } catch (Exception e){}});
-                    }
                   } catch (SkypeException e) { printThrowable(chat, e); }
+                }
+                if(error.length() > 0){
+                  ThreadUtil.run("Creating Paste", () -> {try {chat.send("Error: "+createPaste(error.toString())); } catch (Exception e){}});
                 }
               } catch (Exception e){
                 e.printStackTrace();
