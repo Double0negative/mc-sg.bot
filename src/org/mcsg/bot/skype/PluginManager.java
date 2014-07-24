@@ -104,6 +104,7 @@ public class PluginManager {
     if(plugins.containsKey(data.name)) {
       if(chat != null)
         ChatManager.chat(chat, "Failed to load plugin \""+data.name+"\": Plugin is already loaded!");
+      return;
     }
     System.out.println("Loading Plugin ");
     URLClassLoader loader = URLClassLoader.newInstance(new URL[]{new File(data.jarLocation).toURI().toURL()});
