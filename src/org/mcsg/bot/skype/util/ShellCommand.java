@@ -107,12 +107,16 @@ public class ShellCommand {
 			}
 		}.start();
 	}
+	
+	public static Process getProcess(int id){
+	  return procs.get(id);
+	}
 
-	public static void kill(Chat chat, int id){
+	public static void kill(int id){
 		procs.get(id).destroy();
 	}
 
-	public static void forceKill(Chat chat, int id){
+	public static void forceKill(int id){
 		procs.get(id).destroyForcibly();
 	}
 	

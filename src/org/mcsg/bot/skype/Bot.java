@@ -53,6 +53,7 @@ import org.mcsg.bot.skype.commands.WebSearch;
 import org.mcsg.bot.skype.commands.WikipediaSearchCommand;
 import org.mcsg.bot.skype.message.MessagePaster;
 import org.mcsg.bot.skype.util.FileUtils;
+import org.mcsg.bot.skype.util.ShellCommand;
 import org.mcsg.bot.skype.web.GistAPI;
 import org.mcsg.bot.skype.web.GithubListener;
 

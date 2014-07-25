@@ -14,9 +14,9 @@ public class KillProc implements SubCommand{
 			throws Exception {
 		if(Permissions.hasPermission(sender, chat, "killproc")){
 			if(args.length == 2){
-				ShellCommand.forceKill(chat, Integer.parseInt(args[0]));
+				ShellCommand.forceKill(Integer.parseInt(args[0]));
 			} else {
-				ShellCommand.kill(chat, Integer.parseInt(args[0]));
+				ShellCommand.kill( Integer.parseInt(args[0]));
 			}
 			chat.send("Killed proccess "+args[0]);
 		}
