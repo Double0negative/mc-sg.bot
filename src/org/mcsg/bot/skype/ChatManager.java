@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.mcsg.bot.skype.events.MessageSendEvent;
 import org.mcsg.bot.skype.util.FileUtils;
 import org.mcsg.bot.skype.util.ThreadUtil;
 import org.mcsg.bot.skype.web.GistAPI;
@@ -40,7 +41,7 @@ public class ChatManager {
     for(StackTraceElement el : elements)
       printError(chat, "\t" + el.toString()+"\n");
   }
-  
+
   public static void printError(Chat chat, String str){
     ChatManager.chat(chat, ERROR_PREFIX + str);
   }
@@ -75,6 +76,12 @@ public class ChatManager {
                 StringBuilder sb = new StringBuilder();
                 StringBuilder error = new StringBuilder();
                 for(String msg : chats.get(chat).toArray(new String[0])){
+                  MessageSendEvent event = new MessageSendEvent(msg);
+                  EventHandler.callEvent(event);
+                  if(event.isCancelled())
+                    continue;
+                  else 
+                    msg = event.getMessage();
                   if(msg.startsWith(ERROR_PREFIX)){
                     error.append(msg.replaceFirst(ERROR_PREFIX, ""));
                   } else {

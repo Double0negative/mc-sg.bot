@@ -51,6 +51,8 @@ import org.mcsg.bot.skype.commands.Weather;
 import org.mcsg.bot.skype.commands.WebAbstract;
 import org.mcsg.bot.skype.commands.WebSearch;
 import org.mcsg.bot.skype.commands.WikipediaSearchCommand;
+import org.mcsg.bot.skype.events.MessageReceivedEvent;
+import org.mcsg.bot.skype.events.MessageSentEvent;
 import org.mcsg.bot.skype.message.MessagePaster;
 import org.mcsg.bot.skype.util.FileUtils;
 import org.mcsg.bot.skype.util.ShellCommand;
@@ -62,13 +64,17 @@ import com.skype.Chat;
 import com.skype.ChatMessage;
 import com.skype.ChatMessageAdapter;
 import com.skype.Friend;
+import com.skype.GlobalChatListener;
 import com.skype.Skype;
 import com.skype.SkypeException;
 import com.skype.User;
+import com.skype.UserListener;
+import com.skype.User.Sex;
+import com.skype.User.Status;
 
 public class Bot {
 
-  public static final String version ="2.01 More AI's";
+  public static final String version ="2.02 Throwing events";
 
   private static HashMap<String, SubCommand> commands = 
       new HashMap<>();
@@ -176,13 +182,20 @@ public class Bot {
    
     PluginManager.loadPlugins(getDefaultChat());
     
+   
     Skype.addChatMessageListener(new ChatMessageAdapter() {
+      public void chatMessageSent(ChatMessage sent) throws SkypeException {
+        EventHandler.callEvent(new MessageSentEvent(sent, sent.getChat(), sent.getContent()));
+      }
+      
       public void chatMessageReceived(ChatMessage received) throws SkypeException {
         int count = (messageCount.containsKey(received.getChat()) ? messageCount.get(received.getChat()) : 0);
         messageCount.put(received.getChat(), count+1);
 
         //incMessages(received);
 
+        EventHandler.callEvent(new MessageReceivedEvent(received, received.getChat(), received.getSender(), received.getContent()));
+        
         if(received.getContent().startsWith(".") && received.getTime().getTime() > System.currentTimeMillis() - 300000){
           String split[] = received.getContent().split(" ");
           String command = getCommand(split);

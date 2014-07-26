@@ -22,6 +22,7 @@ public class MessagePaster {
 		prefix.put("c:", "c");
 		prefix.put("json:", "json");
 		prefix.put("lua:", "lua");
+		prefix.put("md:", "md");
 	}
 
 
