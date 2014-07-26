@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.mcsg.bot.skype.ChatManager;
@@ -110,6 +111,15 @@ public class ShellCommand {
 	
 	public static Process getProcess(int id){
 	  return procs.get(id);
+	}
+	
+	public static int getProcessID(Process process) {
+	  if (process != null) {
+	      for (Map.Entry<Integer, Process> entryProcess : procs.entrySet()) {
+	          if (entryProcess.getValue().equals(process)) return entryProcess.getKey();
+	      }
+	  }
+	  return -1;
 	}
 
 	public static void kill(int id){
