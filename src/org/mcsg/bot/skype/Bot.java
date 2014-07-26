@@ -1,11 +1,6 @@
 package org.mcsg.bot.skype;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,8 +8,6 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.mcsg.bot.skype.PluginRegistry.PluginData;
-import org.mcsg.bot.skype.PluginRegistry.PluginData.ClassFile;
 import org.mcsg.bot.skype.commands.Connect4;
 import org.mcsg.bot.skype.commands.Define;
 import org.mcsg.bot.skype.commands.GameStatsCommand;
@@ -54,8 +47,6 @@ import org.mcsg.bot.skype.commands.WikipediaSearchCommand;
 import org.mcsg.bot.skype.events.MessageReceivedEvent;
 import org.mcsg.bot.skype.events.MessageSentEvent;
 import org.mcsg.bot.skype.message.MessagePaster;
-import org.mcsg.bot.skype.util.FileUtils;
-import org.mcsg.bot.skype.util.ShellCommand;
 import org.mcsg.bot.skype.web.GistAPI;
 import org.mcsg.bot.skype.web.GithubListener;
 
@@ -64,13 +55,9 @@ import com.skype.Chat;
 import com.skype.ChatMessage;
 import com.skype.ChatMessageAdapter;
 import com.skype.Friend;
-import com.skype.GlobalChatListener;
 import com.skype.Skype;
 import com.skype.SkypeException;
 import com.skype.User;
-import com.skype.UserListener;
-import com.skype.User.Sex;
-import com.skype.User.Status;
 
 public class Bot {
 
