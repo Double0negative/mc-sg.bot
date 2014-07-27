@@ -14,7 +14,7 @@ public class ProcIn implements SubCommand {
 			throws Exception {
 		if(Permissions.hasPermission(sender, chat, "proc")){
 			if(args.length == 2){
-				ShellCommand.quiteChat(chat, Integer.parseInt(args[0]));
+				ShellCommand.quietChat(chat, Integer.parseInt(args[0]));
 			} else {
 				ShellCommand.readToChat(chat, Integer.parseInt(args[0]));
 			}

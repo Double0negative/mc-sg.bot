@@ -11,7 +11,7 @@ public class EventHandler {
   private static HashMap<Class<? extends Event>, ArrayList<Listener<? extends Event>>> listeners = 
       new HashMap<>();
 
-
+  
 
   public static void registerListener(Class<? extends Event> eventclass, Listener<? extends Event> listener){
     ArrayList<Listener<? extends Event>> list = listeners.getOrDefault(eventclass, new ArrayList<>());

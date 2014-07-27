@@ -61,7 +61,7 @@ import com.skype.User;
 
 public class Bot {
 
-  public static final String version ="2.02 Throwing events";
+  public static final String version ="2.03 Custom reading ";
 
   private static HashMap<String, SubCommand> commands = 
       new HashMap<>();
