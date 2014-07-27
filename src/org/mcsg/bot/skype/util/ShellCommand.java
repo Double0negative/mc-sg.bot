@@ -7,9 +7,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.*;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.mcsg.bot.skype.ChatManager;
@@ -36,8 +35,11 @@ public class ShellCommand {
 	  return exec(chat, args, limit, displayCommand, false);
 	}
 	
-	 public static int exec(final Chat chat, String args, long limit,  boolean displayCommand, boolean wait){
-
+	public static int exec(final Chat chat, String args, long limit,  boolean displayCommand, boolean wait) {
+		return exec(chat, args, limit, displayCommand, wait, null);
+	}
+	
+	public static int exec(final Chat chat, String args, long limit, boolean displayCommand, boolean wait, ReaderRunnable readerRunnable){
 		int id = getId();
 		try{
 			String name = "files/temp"+System.currentTimeMillis()+".sh";
@@ -45,31 +47,40 @@ public class ShellCommand {
 			PrintWriter pw = new PrintWriter(new FileWriter(file));
 			pw.println(args);
 			pw.flush();
-			if(displayCommand) ChatManager.chat(chat, "Running command: \""+ args +"\" ID: "+id);
+			if (displayCommand) ChatManager.chat(chat, "Running command: \""+ args +"\" ID: "+id);
 			final Process proc = Runtime.getRuntime().exec("bash "+name);
-			if(wait) proc.waitFor();
+			if (wait) proc.waitFor();
 			procs.put(id, proc);
 			chats.put(id, new ArrayList<Chat>());
 			readToChat(chat, id);
-			startReaders(id);
+			startReaders(id, readerRunnable);
 
-			if(limit != 0){
+			if (limit != 0) {
 				new Limiter(proc, chat, limit, id).start();
 			}
 
 			file.deleteOnExit();
 			pw.close();
-		}catch(Exception e){
-			e.printStackTrace();
+		} catch(Exception ex) {
+			ex.printStackTrace();
 		}
 		return id;
 	}
 
-	public static void startReaders(int id){
+	public static void startReaders(int id) {
+		startReaders(id, null);
+	}
+
+	public static void startReaders(int id, ReaderRunnable readerRunnable) {
 		Process proc = procs.get(id);
 
-		readStream("", id, proc.getInputStream());
-		readStream("ERROR: ", id, proc.getErrorStream());
+		if (readerRunnable == null) {
+			readStream("", id, proc.getInputStream());
+			readStream("ERROR: ", id, proc.getErrorStream());
+		} else {
+			readStream("", id, proc.getInputStream(), readerRunnable);
+			readStream("ERROR: ", id, proc.getErrorStream(), readerRunnable);
+		}
 	}
 
 	public static void readToChat(Chat chat, int id){
@@ -90,24 +101,34 @@ public class ShellCommand {
 		}.start();
 	}
 
-	private static void readStream(final String prefix, final int id,  final InputStream input){
-		new Thread(){
-			public void run(){
-				try{
-					String line = "";
-
-					BufferedReader in = new BufferedReader(
-							new InputStreamReader(input));
-					while ((line = in.readLine()) != null) {
-						for(Chat chat : chats.get(id)){
-							ChatManager.chat(chat, prefix+line);
-						}
-					}
-					in.close();
-				}catch (Exception e){}
-			}
-		}.start();
+	private static void readStream(final String prefix, final int id,  final InputStream input) {
+        ReaderRunnable readerRunnable = new ReaderRunnable() {
+            public void run() {
+            	for (String message : this.messages) {
+            		for (Chat chat : this.chats) ChatManager.chat(chat, this.prefix + message);
+            	}
+            }
+        };
+        readStream(prefix, id, input, readerRunnable);
 	}
+
+    private static void readStream(final String prefix, final int id, final InputStream input, final ReaderRunnable runnable) {
+        new Thread() {
+            public void run() {
+                try {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(input));
+                    List<String> lines = new ArrayList<String>();
+                    String line = "";
+                    while ((line = in.readLine()) != null) {
+                        lines.add(line);
+                    }
+                    runnable.setMessages(lines).setChats(chats.get(id)).setPrefix(prefix).run();
+                    in.close();
+                } catch (Exception ex) {
+                }
+            }
+        }.start();
+    }
 	
 	public static Process getProcess(int id){
 	  return procs.get(id);
@@ -155,5 +176,38 @@ public class ShellCommand {
 			}
 		}
 	}
+	
+    public abstract static class ReaderRunnable implements Runnable {
+        protected List<String> chatMessages = new ArrayList<String>();
+        protected ArrayList<Chat> chats = new ArrayList<Chat>();
+        protected String prefix = "";
+
+        public ArrayList<Chat> getChats() {
+            return this.chats;
+        }
+
+        public List<String> getMessages() {
+            return this.chatMessages;
+        }
+        
+        public String getPrefix() {
+        	return this.prefix;
+        }
+
+        public ReaderRunnable setChats(ArrayList<Chat> chats) {
+            this.chats = chats;
+            return this;
+        }
+
+        public ReaderRunnable setMessages(List<String> messages) {
+            this.chatMessages = messages;
+            return this;
+        }
+        
+        public ReaderRunnable setPrefix(String prefix) {
+        	if (prefix != null) this.prefix = prefix;
+        	return this;
+        }
+    }
 
 }
