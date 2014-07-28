@@ -98,7 +98,7 @@ public class ShellCommand {
 
       if(wait)
         proc.waitFor();
-      if(limit != 0)
+      else if(limit != 0)
         new Limiter(proc, chat, limit, id).start();
 
     }catch(Exception e){

@@ -44,6 +44,7 @@ public class PluginManager {
 
     plugins.remove(name);
     pluginRegistry.data.remove(data);
+    EventHandler.unregisterListeners(getPlugin(name));
     savePluginData();
   }
 

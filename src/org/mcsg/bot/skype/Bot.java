@@ -176,7 +176,7 @@ public class Bot {
       }
       
       public void chatMessageReceived(ChatMessage received) throws SkypeException {
-        int count = (messageCount.containsKey(received.getChat()) ? messageCount.get(received.getChat()) : 0);
+        int count =  messageCount.getOrDefault(received.getChat() , 0);
         messageCount.put(received.getChat(), count+1);
 
         //incMessages(received);
