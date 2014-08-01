@@ -55,10 +55,10 @@ public class Steam extends SubCommandHelper {
                     }.start();
                 }
             }.run();
+            return true;
         } else {
             return false;
         }
-        return true;
     }
 
     @Override
