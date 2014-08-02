@@ -9,7 +9,6 @@ import org.mcsg.bot.skype.Permissions;
 import java.util.List;
 
 public class Steam extends SubCommandHelper {
-
     @Override
     public boolean executeCommand(final Chat chat, final User sender, final String[] args) throws Exception {
         if (args.length > 1) {
@@ -24,7 +23,8 @@ public class Steam extends SubCommandHelper {
                                     if (strCommand.equalsIgnoreCase("info")) {
                                         ChatManager.chat(chat, "Name: " + steamApp.getName());
                                         ChatManager.chat(chat, "App ID: " + steamApp.getAppId());
-                                        ChatManager.chat(chat, "Price: " + steamApp.getPrice());
+                                        projects.ive.steamapi.data.Price appPrice = steamApp.getPrice();
+                                        ChatManager.chat(chat, "Price: " + (appPrice.isFreeToPlay() ? "Free" : appPrice.getFinalPrice() + appPrice.getCurrency().getDisplayName().toUpperCase() + (appPrice.getInitialPrice() != appPrice.getFinalPrice() ? " - Discount!" : "")));
                                         ChatManager.chat(chat, "Metacritic Score: " + steamApp.getMetacriticScore());
                                         ChatManager.chat(chat, "Brief Description: " + steamApp.getAboutTheGame());
                                         String strCategories = implodeList(steamApp.getCategories());
