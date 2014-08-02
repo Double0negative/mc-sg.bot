@@ -17,13 +17,13 @@ public class Steam extends SubCommandHelper {
                     new Thread(this, "Steam") {
                         public void run() {
                             try {
-                                projects.ive.steamapi.data.SteamApp steamApp = isLong(args[0]) ? getApp(Long.parseLong(args[0])) : getApp(args[0]);
+                                com.github.goive.steamapi.data.SteamApp steamApp = isLong(args[0]) ? getApp(Long.parseLong(args[0])) : getApp(args[0]);
                                 if (steamApp != null) {
                                     String strCommand = args[1];
                                     if (strCommand.equalsIgnoreCase("info")) {
                                         ChatManager.chat(chat, "Name: " + steamApp.getName());
                                         ChatManager.chat(chat, "App ID: " + steamApp.getAppId());
-                                        projects.ive.steamapi.data.Price appPrice = steamApp.getPrice();
+                                        com.github.goive.steamapi.data.Price appPrice = steamApp.getPrice();
                                         ChatManager.chat(chat, "Price: " + (appPrice.isFreeToPlay() ? "Free" : appPrice.getFinalPrice() + appPrice.getCurrency().getDisplayName().toUpperCase() + (appPrice.getInitialPrice() != appPrice.getFinalPrice() ? " - Discount!" : "")));
                                         ChatManager.chat(chat, "Metacritic Score: " + steamApp.getMetacriticScore());
                                         ChatManager.chat(chat, "Brief Description: " + steamApp.getAboutTheGame());
@@ -81,11 +81,11 @@ public class Steam extends SubCommandHelper {
         return "steam <appID|appName> <info|description>";
     }
 
-    private static projects.ive.steamapi.data.SteamApp getApp(String steamName) {
+    private static com.github.goive.steamapi.data.SteamApp getApp(String steamName) {
         String rawName = steamName.toLowerCase().trim().replaceAll(" ", "_");
         for (long appID = 0; appID < Long.MAX_VALUE; appID++) {
             try {
-                projects.ive.steamapi.data.SteamApp steamApp = projects.ive.steamapi.SteamApi.retrieveData(appID);
+                com.github.goive.steamapi.data.SteamApp steamApp = com.github.goive.steamapi.SteamApi.retrieveData(appID);
                 if (steamApp != null && steamApp.getName().toLowerCase().trim().replace(" ", "_").equalsIgnoreCase(rawName))
                     return steamApp;
             } catch (Exception ex) {
@@ -95,9 +95,9 @@ public class Steam extends SubCommandHelper {
         return null;
     }
 
-    private static projects.ive.steamapi.data.SteamApp getApp(long appID) {
+    private static com.github.goive.steamapi.data.SteamApp getApp(long appID) {
         try {
-            return projects.ive.steamapi.SteamApi.retrieveData(appID);
+            return com.github.goive.steamapi.SteamApi.retrieveData(appID);
         } catch (Exception ex) {
             return null;
         }
