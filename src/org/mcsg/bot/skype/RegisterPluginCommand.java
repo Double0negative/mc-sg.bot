@@ -73,14 +73,13 @@ public class RegisterPluginCommand implements SubCommand{
       if(contents.language.equalsIgnoreCase("Java")){
         File file = new File(dir, contents.filename);
         FileUtils.writeFile(file, contents.content);
-        ShellCommand.exec(chat, "cd \""+dir.getAbsolutePath()+"\"; javac -classpath \"../../java_libs/*:\" "+contents.filename, 0, false, true);
 
         int ploc = contents.content.indexOf("package");
         String packagename = (ploc > -1) ? contents.content.substring(ploc, contents.content.indexOf(";",ploc)).replace("package ", "") +"." : "";
 
-        String s = "public class ";
+        String s = " class ";
         int cloc = contents.content.indexOf(s) + s.length();
-        String classname = contents.content.substring(cloc, contents.content.indexOf(" ", cloc));
+        String classname = contents.content.substring(cloc, contents.content.indexOf("{", cloc)).trim();
         String name = packagename + classname;
         ClassFile cfile = new ClassFile();
 
@@ -89,6 +88,8 @@ public class RegisterPluginCommand implements SubCommand{
         files.add(cfile);
       }
     }
+    ShellCommand.exec(chat, "javac -classpath \"/home/bot/java_libs/*:\" "+dir.getAbsolutePath()+"/*.java", 0, false, true);
+
     PluginData data = PluginManager.createPlugin(mani.name, mani.main, files.toArray(new ClassFile[0]));
     PluginManager.buildPlugin(data);
     PluginManager.registerPlugin(data, chat);
