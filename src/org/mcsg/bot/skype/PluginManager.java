@@ -31,6 +31,7 @@ public class PluginManager {
       plugin.onDisable();
       plugins.remove(name);
       Bot.unregisterCommands(plugin);
+      EventHandler.unregisterListeners(plugin);
 
     } 
 
@@ -44,7 +45,6 @@ public class PluginManager {
 
     plugins.remove(name);
     pluginRegistry.data.remove(data);
-    EventHandler.unregisterListeners(getPlugin(name));
     savePluginData();
   }
 
@@ -108,7 +108,11 @@ public class PluginManager {
       return;
     }
     System.out.println("Loading Plugin ");
+
     URLClassLoader loader = URLClassLoader.newInstance(new URL[]{new File(data.jarLocation).toURI().toURL()});
+    for(ClassFile main : data.files){
+      Class.forName(main.name, true, loader);
+    }
     Class<?> clazz = Class.forName(data.mainclass, true, loader);
     McsgBotPlugin plugin  = clazz.asSubclass(McsgBotPlugin.class).newInstance();
 
