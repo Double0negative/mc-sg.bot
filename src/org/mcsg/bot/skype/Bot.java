@@ -99,7 +99,7 @@ public class Bot {
           if(chat.getId().equals(chatid)){
             defaultChat = chat;
             chat.send("Starting MC-SG.BOT version "+version);
-            chat.send("/topic MC-SG BOT  v"+version);
+            chat.send("/topic MC-SG BOT v"+version);
 
             int a = 0;
             for(Friend t : Skype.getContactList().getAllUserWaitingForAuthorization()){
@@ -165,6 +165,7 @@ public class Bot {
     registerCommand(new GenImage());
     registerCommand(new GitHubListener());
     registerCommand(new RegisterPluginCommand());
+    registerCommand(new Steam());
 
    
     PluginManager.loadPlugins(getDefaultChat());
@@ -342,5 +343,4 @@ public class Bot {
     }
   }
 }
-
 
