@@ -8,7 +8,7 @@ import org.mcsg.bot.skype.games.Connect4Game.ColumnFullException;
 import org.mcsg.bot.skype.games.Connect4Game.IllegalColumnException;
 import org.mcsg.bot.skype.games.Connect4Game.Tile;
 
-import com.skype.Chat;
+import com.samczsun.skype4j.chat.Chat;
 
 public class Connect4Manager {
 

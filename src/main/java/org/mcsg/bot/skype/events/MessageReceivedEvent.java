@@ -1,42 +1,42 @@
 package org.mcsg.bot.skype.events;
 
-import com.skype.Chat;
-import com.skype.ChatMessage;
-import com.skype.User;
+import com.samczsun.skype4j.chat.Chat;
+import com.samczsun.skype4j.chat.messages.ChatMessage;
+import com.samczsun.skype4j.user.User;
 
 /**
- * Called when a message is received. 
+ * Called when a message is received.
  * @author drew
  *
  */
 public class MessageReceivedEvent implements Event {
 
-  private Chat chat;
-  private User user;
-  private String content;
-  private ChatMessage message;
-  
-  public MessageReceivedEvent(ChatMessage message, Chat chat, User user, String content){
-    this.chat = chat;
-    this.user = user;
-    this.message = message;
-  }
+    private Chat chat;
+    private User user;
+    private String content;
+    private ChatMessage message;
 
-  public Chat getChat() {
-    return chat;
-  }
+    public MessageReceivedEvent(ChatMessage message) {
+        this.chat = message.getChat();
+        this.user = message.getSender();
+        this.message = message;
+        this.content = message.getContent().asPlaintext();
+    }
 
-  public User getUser() {
-    return user;
-  }
+    public Chat getChat() {
+        return chat;
+    }
 
-  public ChatMessage getMessage() {
-    return message;
-  }
-  
-  public String getContent(){
-    return content;
-  }
+    public User getUser() {
+        return user;
+    }
 
-  
+    public ChatMessage getMessage() {
+        return message;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
 }

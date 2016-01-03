@@ -2,7 +2,7 @@ package org.mcsg.bot.skype.games;
 
 import org.mcsg.bot.skype.games.Connect4Game.Tile;
 
-import com.skype.Chat;
+import com.samczsun.skype4j.chat.Chat;
 
 public abstract class Connect4AI {
 

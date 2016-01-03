@@ -5,18 +5,11 @@ import java.util.Base64;
 import org.mcsg.bot.skype.Settings;
 import org.mcsg.bot.skype.util.Progress;
 
-import com.skype.Chat;
+import com.samczsun.skype4j.chat.Chat;
 
 public class McsgUpload {
-
-
-
-
-	public static Progress<String> upload(Chat chat, byte [] img){
-
-		return WebClient.postArgsProgress(chat, "http://mc-sg.org/bot/upload.php",  null,"img", Base64.getEncoder().encodeToString(img), "key", Settings.Root.Image.MCSG_UPLOAD_KEY );
-
-
-	}
+    public static Progress<String> upload(Chat chat, byte[] img) {
+        return WebClient.postArgsProgress(chat, "http://mc-sg.org/bot/upload.php", null, "img", Base64.getEncoder()
+                .encodeToString(img), "key", Settings.Root.Image.MCSG_UPLOAD_KEY);
+    }
 }
-

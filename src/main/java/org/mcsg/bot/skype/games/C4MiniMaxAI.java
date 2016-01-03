@@ -12,9 +12,9 @@ import org.mcsg.bot.skype.games.Connect4Game.IllegalColumnException;
 import org.mcsg.bot.skype.games.Connect4Game.Tile;
 import org.mcsg.bot.skype.util.ArrayUtil;
 
-import com.skype.Chat;
-import com.skype.ChatMessage;
-import com.skype.SkypeException;
+import com.samczsun.skype4j.chat.Chat;
+import com.samczsun.skype4j.chat.ChatMessage;
+com.samczsun.skype4j.user.User
 
 public class C4MiniMaxAI extends Connect4AI{
 

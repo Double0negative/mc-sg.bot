@@ -1,6 +1,6 @@
 package org.mcsg.bot.skype;
 
-import com.skype.Chat;
+import com.samczsun.skype4j.chat.Chat;
 
 public interface McsgBotPlugin {
   

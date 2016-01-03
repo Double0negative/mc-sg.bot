@@ -1,22 +1,29 @@
 package org.mcsg.bot.skype.commands;
 
 import org.mcsg.bot.skype.Permissions;
-import org.mcsg.bot.skype.util.ShellCommand;
 
 import com.samczsun.skype4j.chat.Chat;
 import com.samczsun.skype4j.user.User;
 
-public class ProcIn implements SubCommand {
+public class Permission implements SubCommand {
 
     @Override
     public void execute(Chat chat, User sender, String[] args) throws Exception {
-        if (Permissions.hasPermission(sender, chat, "proc")) {
-            if (args.length == 2) {
-                ShellCommand.quietChat(chat, Integer.parseInt(args[0]));
+        if (sender.getUsername().equals("drew.foland")) {
+            if (args[0].equals("add")) {
+                Permissions.addPerm(args[1], chat.getIdentity(), args[2]);
+                chat.sendMessage("Adding permission");
+            } else if (args[0].equals("all")) {
+                for (User user : chat.getAllUsers()) {
+                    Permissions.addPerm(user, chat, args[1]);
+                }
+                chat.sendMessage("Adding permission");
             } else {
-                ShellCommand.readToChat(chat, Integer.parseInt(args[0]));
+                Permissions.removePerms(args[1], chat.getIdentity(), args[2]);
+                chat.sendMessage("Removing permission");
             }
         }
+
     }
 
     @Override
@@ -33,7 +40,7 @@ public class ProcIn implements SubCommand {
 
     @Override
     public String getCommand() {
-        return "procin";
+        return "perm";
     }
 
     @Override

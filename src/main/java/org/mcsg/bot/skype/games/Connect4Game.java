@@ -5,8 +5,8 @@ import java.util.Arrays;
 
 import org.mcsg.bot.skype.ChatManager;
 
-import com.skype.Chat;
-import com.skype.ChatMessage;
+import com.samczsun.skype4j.chat.Chat;
+import com.samczsun.skype4j.chat.ChatMessage;
 import com.skype.Skype;
 
 public class Connect4Game {

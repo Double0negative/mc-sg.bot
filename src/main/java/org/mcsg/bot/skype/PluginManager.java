@@ -13,7 +13,7 @@ import org.mcsg.bot.skype.util.FileUtils;
 import org.mcsg.bot.skype.util.JarCreator;
 
 import com.google.gson.Gson;
-import com.skype.Chat;
+import com.samczsun.skype4j.chat.Chat;
 
 public class PluginManager {
 

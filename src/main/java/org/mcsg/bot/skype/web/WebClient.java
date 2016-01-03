@@ -9,260 +9,256 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.mcsg.bot.skype.ChatManager;
 import org.mcsg.bot.skype.util.Progress;
 import org.mcsg.bot.skype.util.ThreadUtil;
 
-import com.skype.Chat;
+import com.samczsun.skype4j.chat.Chat;
 
 public class WebClient {
 
-  private static final String DOWNLOAD_MESSAGE = "Downloading";
-  private static final String UPLOAD_MESSAGE = "Uploading";
-  private static final String RESULT_MESSAGE = "Getting result";
-  private static final String WAITING_MESSAGE = "Waiting for server";
+    private static final String DOWNLOAD_MESSAGE = "Downloading";
+    private static final String UPLOAD_MESSAGE = "Uploading";
+    private static final String RESULT_MESSAGE = "Getting result";
+    private static final String WAITING_MESSAGE = "Waiting for server";
 
-  public static Progress<String> postArgsProgress(final Chat chat, final String url,final List<HttpHeader> headers, final String ... args){
-    final Progress<String> prog = new Progress<>();
-    ThreadUtil.run("Web Post Args", new Thread(){
-      public void run(){
-        try{
-          HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-          connection.setRequestMethod("POST");
+    public static Progress<String> postArgsProgress(final Chat chat, final String url, final List<HttpHeader> headers,
+            final String... args) {
+        final Progress<String> prog = new Progress<>();
+        ThreadUtil.run("Web Post Args", new Thread() {
+            public void run() {
+                try {
+                    HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+                    connection.setRequestMethod("POST");
 
-          if(headers != null)
-            for (HttpHeader header : headers) {
-              connection.setRequestProperty(header.getName(), header.getValue());
+                    if (headers != null)
+                        for (HttpHeader header : headers) {
+                            connection.setRequestProperty(header.getName(), header.getValue());
+                        }
+
+                    String data = "";
+                    for (int a = 0; a < args.length; a += 2) {
+                        data += URLEncoder.encode(args[a], "UTF-8") + "=" + URLEncoder.encode(args[a + 1], "UTF-8")
+                                + "&";
+                    }
+
+                    connection.setUseCaches(false);
+                    connection.setDoInput(true);
+                    connection.setDoOutput(true);
+
+                    BufferedOutputStream writer = new BufferedOutputStream(connection.getOutputStream());
+
+                    byte[] bytes = data.getBytes();
+                    prog.setMax(bytes.length);
+                    prog.setMessage(UPLOAD_MESSAGE);
+
+                    for (int a = 0; a < bytes.length; a++) {
+                        writer.write(bytes[a]);
+                        prog.setProgress(a);
+                    }
+                    writer.flush();
+                    writer.close();
+
+                    prog.setMessage(WAITING_MESSAGE);
+                    BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    prog.setMax(connection.getContentLengthLong());
+                    prog.setMessage(RESULT_MESSAGE);
+
+                    StringBuilder sb = new StringBuilder();
+                    char[] buff = new char[512];
+
+                    while (true) {
+                        int len = br.read(buff, 0, buff.length);
+                        prog.incProgress(len);
+                        if (len == -1) {
+                            break;
+                        }
+                        sb.append(buff, 0, len);
+                    }
+
+                    br.close();
+                    writer.close();
+                    prog.finish(sb.toString());
+                } catch (Exception e) {
+                    if (chat != null) {
+                        ChatManager.printThrowable(chat, e);
+                    }
+                }
             }
+        });
+        return prog;
+    }
 
-          String data = "";
-          for(int a = 0; a < args.length; a+=2){
-            data += URLEncoder.encode(args[a], "UTF-8") + "="+ URLEncoder.encode(args[a+1], "UTF-8") + "&";
-          }
+    public static Progress<byte[]> requestByteProgress(final Chat chat, final String urls) {
+        final Progress<byte[]> prog = new Progress<>();
+        ThreadUtil.run("Request", new Thread() {
+            public void run() {
+                try {
+                    URL url = new URL(urls.replace(" ", "%20"));
+                    URLConnection con = url.openConnection();
+                    con.setRequestProperty("User-Agent",
+                            "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/31.0");
 
-          connection.setUseCaches(false);
-          connection.setDoInput(true);
-          connection.setDoOutput(true);
+                    BufferedInputStream br = new BufferedInputStream(con.getInputStream());
 
-          BufferedOutputStream writer = new BufferedOutputStream(connection.getOutputStream());
+                    byte[] buff = new byte[512];
 
-          byte[] bytes = data.getBytes();
-          prog.setMax(bytes.length);
-          prog.setMessage(UPLOAD_MESSAGE);
+                    prog.setMax(con.getContentLengthLong());
+                    prog.setMessage(DOWNLOAD_MESSAGE);
 
+                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+                    while (true) {
+                        int len = br.read(buff, 0, buff.length);
+                        if (len == -1) {
+                            break;
+                        }
 
-          for(int a = 0; a < bytes.length; a++){
-            writer.write(bytes[a]);
-            prog.setProgress(a);
-          }
-          writer.flush();
-          writer.close();
+                        out.write(buff, 0, len);
 
-          prog.setMessage(WAITING_MESSAGE);
-          BufferedReader br = new BufferedReader(new InputStreamReader(
-              connection.getInputStream()));
-          prog.setMax(connection.getContentLengthLong());
-          prog.setMessage(RESULT_MESSAGE);
+                        prog.incProgress(len);
+                    }
+                    br.close();
 
-          StringBuilder sb = new StringBuilder();
-          char[] buff = new char[512];
+                    prog.finish(out.toByteArray());
 
-          while (true) {
-            int len = br.read(buff, 0, buff.length);
-            prog.incProgress(len);
-            if (len == -1) {
-              break;
+                } catch (Exception e) {
+                    if (chat != null) {
+                        ChatManager.printThrowable(chat, e);
+                    }
+                }
             }
-            sb.append(buff, 0, len);
-          }
+        });
+        return prog;
+    }
 
-          br.close();
-          writer.close();
-          prog.finish(sb.toString());
-        }catch (Exception e){
-          if(chat != null){
-            ChatManager.printThrowable(chat, e);
-          }
-        }
-      }
-    });
-    return prog;
-  }
+    public static Progress<String> requestProgress(final Chat chat, final String urls) {
+        final Progress<String> prog = new Progress<>();
+        ThreadUtil.run("Request", new Thread() {
+            public void run() {
+                try {
+                    StringBuilder sb = new StringBuilder();
 
+                    URL url = new URL(urls.replace(" ", "%20"));
+                    URLConnection con = url.openConnection();
+                    con.setRequestProperty("User-Agent",
+                            "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/31.0");
 
-  public static Progress<byte[]> requestByteProgress(final Chat chat, final String urls){
-    final Progress<byte[]> prog = new Progress<>();
-    ThreadUtil.run("Request", new Thread(){
-      public void run(){
-        try{
-          URL url = new URL(urls.replace(" ", "%20"));
-          URLConnection con = url.openConnection();
-          con.setRequestProperty("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/31.0");
+                    BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
-          BufferedInputStream br = new BufferedInputStream(con.getInputStream());
+                    char[] buff = new char[512];
 
-          byte[] buff = new byte[512];
+                    prog.setMax(con.getContentLengthLong());
+                    prog.setMessage(DOWNLOAD_MESSAGE);
 
-          prog.setMax(con.getContentLengthLong());
-          prog.setMessage(DOWNLOAD_MESSAGE);
+                    while (true) {
+                        int len = br.read(buff, 0, buff.length);
+                        if (len == -1) {
+                            break;
+                        }
+                        sb.append(buff, 0, len);
+                        prog.incProgress(len);
+                    }
+                    br.close();
 
-          ByteArrayOutputStream out = new ByteArrayOutputStream();
-          while (true) {
-            int len = br.read(buff, 0, buff.length);
-            if (len == -1) {
-              break;
+                    prog.finish(sb.toString());
+
+                } catch (Exception e) {
+                    if (chat != null) {
+                        ChatManager.printThrowable(chat, e);
+                    }
+                }
             }
+        });
+        return prog;
+    }
 
-            out.write(buff, 0, len);
+    public static Progress<String> postProgress(final Chat chat, final String url, final String body,
+            final List<HttpHeader> headers) {
+        final Progress<String> prog = new Progress<>();
+        ThreadUtil.run("Post", new Thread() {
+            public void run() {
+                try {
+                    HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+                    connection.setRequestMethod("POST");
 
-            prog.incProgress(len);
-          }
-          br.close();
+                    if (headers != null)
+                        for (HttpHeader header : headers) {
+                            connection.setRequestProperty(header.getName(), header.getValue());
+                        }
 
-          prog.finish(out.toByteArray());
+                    connection.setUseCaches(false);
+                    connection.setDoInput(true);
+                    connection.setDoOutput(true);
 
-        }catch (Exception e){
-          if(chat != null){
-            ChatManager.printThrowable(chat, e);
-          }
-        }
-      }
-    });
-    return prog;
-  }
+                    BufferedOutputStream writer = new BufferedOutputStream(connection.getOutputStream());
+                    byte[] bytes = body.getBytes();
+                    prog.setMax(bytes.length);
+                    prog.setMessage(UPLOAD_MESSAGE);
+                    for (int a = 0; a < bytes.length; a++) {
+                        writer.write(bytes[a]);
+                        prog.setProgress(a);
+                    }
+                    writer.flush();
 
-  public static Progress<String> requestProgress(final Chat chat, final String urls){
-    final Progress<String> prog = new Progress<>();
-    ThreadUtil.run("Request", new Thread(){
-      public void run(){
-        try{
-          StringBuilder sb = new StringBuilder();
+                    prog.setProgress(0);
+                    prog.setMax(connection.getContentLengthLong());
+                    prog.setMessage(DOWNLOAD_MESSAGE);
+                    BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
-          URL url = new URL(urls.replace(" ", "%20"));
-          URLConnection con = url.openConnection();
-          con.setRequestProperty("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/31.0");
+                    StringBuilder sb = new StringBuilder();
+                    char[] buff = new char[512];
 
-          BufferedReader br = new BufferedReader(new InputStreamReader(
-              con.getInputStream()));
+                    while (true) {
+                        int len = br.read(buff, 0, buff.length);
+                        prog.incProgress(len);
+                        if (len == -1) {
+                            break;
+                        }
+                        sb.append(buff, 0, len);
+                    }
+                    br.close();
 
-          char[] buff = new char[512];
-
-          prog.setMax(con.getContentLengthLong());
-          prog.setMessage(DOWNLOAD_MESSAGE);
-
-          while (true) {
-            int len = br.read(buff, 0, buff.length);
-            if (len == -1) {
-              break;
+                    prog.finish(sb.toString());
+                } catch (Exception e) {
+                    if (chat != null) {
+                        ChatManager.printThrowable(chat, e);
+                    }
+                }
             }
-            sb.append(buff, 0, len);
-            prog.incProgress(len);
-          }
-          br.close();
+        });
+        return prog;
+    }
 
-          prog.finish(sb.toString());
+    public static String request(String urls) {
+        return request(null, urls);
+    }
 
-        }catch (Exception e){
-          if(chat != null){
-            ChatManager.printThrowable(chat, e);
-          }
-        }
-      }
-    });
-    return prog;
-  }
+    public static String request(Chat chat, String urls) {
+        Progress<String> prog = requestProgress(chat, urls);
+        prog.waitForFinish();
+        return prog.getResult();
 
+    }
 
-  public static Progress<String> postProgress(final Chat chat, final String url, final String body, final List<HttpHeader> headers){
-    final Progress<String> prog = new Progress<>();
-    ThreadUtil.run("Post", new Thread(){
-      public void run(){
-        try{
-          HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-          connection.setRequestMethod("POST");
+    public static String postArgs(Chat chat, String url, List<HttpHeader> headers, String... args) {
+        Progress<String> prog = postArgsProgress(chat, url, headers, args);
+        prog.waitForFinish();
+        return prog.getResult();
+    }
 
-          if(headers != null)
-            for (HttpHeader header : headers) {
-              connection.setRequestProperty(header.getName(), header.getValue());
-            }
+    public static String postArgs(String url, List<HttpHeader> headers, String... args) {
+        return postArgs(null, url, headers, args);
+    }
 
-          connection.setUseCaches(false);
-          connection.setDoInput(true);
-          connection.setDoOutput(true);
+    public static String post(String url, String body, List<HttpHeader> headers) {
+        return post(null, url, body, headers);
+    }
 
-          BufferedOutputStream writer = new BufferedOutputStream(connection.getOutputStream());
-          byte[] bytes = body.getBytes();
-          prog.setMax(bytes.length);
-          prog.setMessage(UPLOAD_MESSAGE);
-          for(int a = 0; a < bytes.length; a++){
-            writer.write(bytes[a]);
-            prog.setProgress(a);
-          }
-          writer.flush();
-
-          prog.setProgress(0);
-          prog.setMax(connection.getContentLengthLong());
-          prog.setMessage(DOWNLOAD_MESSAGE);
-          BufferedReader br = new BufferedReader(new InputStreamReader(
-              connection.getInputStream()));
-
-          StringBuilder sb = new StringBuilder();
-          char[] buff = new char[512];
-
-          while (true) {
-            int len = br.read(buff, 0, buff.length);
-            prog.incProgress(len);
-            if (len == -1) {
-              break;
-            }
-            sb.append(buff, 0, len);
-          }
-          br.close();
-
-
-          prog.finish(sb.toString());
-        }catch (Exception e){
-          if(chat != null){
-            ChatManager.printThrowable(chat, e);
-          }
-        }
-      }
-    });
-    return prog;
-  }
-  public static String request(String urls){
-    return request(null, urls);
-  }
-
-  public static String request(Chat chat, String urls){
-    Progress<String> prog = requestProgress(chat, urls);
-    prog.waitForFinish();
-    return prog.getResult();
-
-  }
-
-  public static String postArgs(Chat chat, String url,List<HttpHeader> headers, String ... args) {
-    Progress<String> prog = postArgsProgress(chat, url, headers, args);
-    prog.waitForFinish();
-    return prog.getResult();
-  }
-
-  public static String postArgs(String url,List<HttpHeader> headers, String ... args){
-    return postArgs(null, url, headers, args);
-  }
-
-  public static String post(String url, String body, List<HttpHeader> headers){
-    return post(null, url, body, headers);
-  }
-
-  public static String post(Chat chat, String url, String body, List<HttpHeader> headers){
-    Progress<String> prog = postProgress(chat, url, body, headers);
-    prog.waitForFinish();
-    return prog.getResult();
-  }
+    public static String post(Chat chat, String url, String body, List<HttpHeader> headers) {
+        Progress<String> prog = postProgress(chat, url, body, headers);
+        prog.waitForFinish();
+        return prog.getResult();
+    }
 }
-
-

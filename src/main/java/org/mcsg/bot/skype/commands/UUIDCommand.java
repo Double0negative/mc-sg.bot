@@ -10,8 +10,8 @@ import org.mcsg.bot.skype.web.MinecraftUUID;
 import org.mcsg.bot.skype.web.MinecraftUUIDDaniel;
 import org.mcsg.bot.skype.web.MinecraftUUID.Profile;
 
-import com.skype.Chat;
-import com.skype.User;
+import com.samczsun.skype4j.chat.Chat;
+import com.samczsun.skype4j.user.User;
 
 public class UUIDCommand implements SubCommand {
 

@@ -7,8 +7,8 @@ import org.mcsg.bot.skype.util.StringUtils;
 import org.mcsg.bot.skype.web.Google;
 import org.mcsg.bot.skype.web.Google.GoogleResult;
 
-import com.skype.Chat;
-import com.skype.User;
+import com.samczsun.skype4j.chat.Chat;
+import com.samczsun.skype4j.user.User;
 
 public class VideoSearch implements SubCommand{
 
