@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import org.mcsg.bot.skype.commands.CodeCommand;
 import org.mcsg.bot.skype.commands.Connect4Command;
 import org.mcsg.bot.skype.commands.DefineCommand;
 import org.mcsg.bot.skype.commands.GameStatsCommand;
@@ -117,6 +118,7 @@ public class Bot {
         registerCommand(new GenImageCommand());
         registerCommand(new GitHubListenerCommand());
         registerCommand(new RegisterPluginCommand());
+        registerCommand(new CodeCommand());
 
         skype.getEventDispatcher().registerListener(new Listener() {
             @EventHandler
