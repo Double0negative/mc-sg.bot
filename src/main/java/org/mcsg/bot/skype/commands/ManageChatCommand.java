@@ -9,7 +9,7 @@ import org.mcsg.bot.skype.util.Arguments;
 import com.samczsun.skype4j.chat.Chat;
 import com.samczsun.skype4j.user.User;
 
-public class ManageChat implements SubCommand {
+public class ManageChatCommand implements SubCommand {
 
     @Override
     public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {

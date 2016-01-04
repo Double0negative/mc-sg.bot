@@ -1,27 +1,22 @@
 package org.mcsg.bot.skype.commands;
 
 import org.mcsg.bot.skype.Permissions;
+import org.mcsg.bot.skype.util.ShellCommand;
 
 import com.samczsun.skype4j.chat.Chat;
 import com.samczsun.skype4j.user.User;
 
-public class Permission implements SubCommand {
+public class KillProcCommand implements SubCommand {
 
     @Override
     public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {
-        if (sender.getUsername().equals("drew.foland")) {
-            if (args[0].equals("add")) {
-                Permissions.addPerm(args[1], chat.getIdentity(), args[2]);
-                chat.sendMessage("Adding permission");
-            } else if (args[0].equals("all")) {
-                for (User user : chat.getAllUsers()) {
-                    Permissions.addPerm(user, chat, args[1]);
-                }
-                chat.sendMessage("Adding permission");
+        if (Permissions.hasPermission(sender, chat, "killproc")) {
+            if (args.length == 2) {
+                ShellCommand.forceKill(Integer.parseInt(args[0]));
             } else {
-                Permissions.removePerms(args[1], chat.getIdentity(), args[2]);
-                chat.sendMessage("Removing permission");
+                ShellCommand.kill(Integer.parseInt(args[0]));
             }
+            chat.sendMessage("Killed proccess " + args[0]);
         }
 
     }
@@ -40,7 +35,7 @@ public class Permission implements SubCommand {
 
     @Override
     public String getCommand() {
-        return "perm";
+        return "killproc";
     }
 
     @Override

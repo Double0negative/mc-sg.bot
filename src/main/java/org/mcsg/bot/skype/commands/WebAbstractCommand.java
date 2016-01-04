@@ -8,7 +8,7 @@ import org.mcsg.bot.skype.web.DuckDuckGo.DuckDuckResult;
 import com.samczsun.skype4j.chat.Chat;
 import com.samczsun.skype4j.user.User;
 
-public class WebAbstract implements SubCommand {
+public class WebAbstractCommand implements SubCommand {
 
     @Override
     public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {

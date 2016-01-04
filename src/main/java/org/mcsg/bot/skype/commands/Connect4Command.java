@@ -19,7 +19,7 @@ import com.samczsun.skype4j.exceptions.SkypeException;
 import com.samczsun.skype4j.formatting.Message;
 import com.samczsun.skype4j.user.User;
 
-public class Connect4 implements SubCommand {
+public class Connect4Command implements SubCommand {
 
     private HashMap<String, Connect4Game> games = new HashMap<String, Connect4Game>();
 

@@ -6,7 +6,7 @@ import org.mcsg.bot.skype.util.ShellCommand;
 import com.samczsun.skype4j.chat.Chat;
 import com.samczsun.skype4j.user.User;
 
-public class ProcIn implements SubCommand {
+public class ProcInCommand implements SubCommand {
 
     @Override
     public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {

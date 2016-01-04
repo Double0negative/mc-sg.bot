@@ -19,7 +19,7 @@ import org.mcsg.bot.skype.web.WeatherUnderground.WeatherConditions.CurrentObserv
 import com.samczsun.skype4j.chat.Chat;
 import com.samczsun.skype4j.user.User;
 
-public class Weather implements SubCommand {
+public class WeatherCommand implements SubCommand {
 
     private static final String CONDITIONS_FORMAT = "Current weather in {0}. {1}F/{2}C, {3}, Wind from {4} at {5}mph/{6}kph gusting to {7}mph/{8}kpm. Humidity, {9}. Feels like {10}F/{11}C";
     private static final String CONDITIONS_SHORT = "Current weather in {0}. {1}F/{2}C, {3}, Wind from {4} at {5}mph/{6}kph. Humidity, {7}";

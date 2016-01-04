@@ -1,28 +1,26 @@
 package org.mcsg.bot.skype.commands;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import org.mcsg.bot.skype.Permissions;
-import org.mcsg.bot.skype.Settings;
 
 import com.samczsun.skype4j.chat.Chat;
 import com.samczsun.skype4j.user.User;
 
-public class GitHubListener implements SubCommand {
+public class PermissionCommand implements SubCommand {
 
     @Override
     public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {
-        if (Permissions.hasPermission(sender, chat, "github_hook")) {
-            if (args.length > 0) {
-                HashMap<String, List<String>> map = Settings.Root.Github.github_update_chat;
-                List<String> list = map.getOrDefault(args[0], new ArrayList<String>());
-                list.add(chat.getIdentity());
-                map.put(args[0], list);
-
-                Settings.save();
-                chat.sendMessage("Added chat to Github Listener");
+        if (sender.getUsername().equals("drew.foland")) {
+            if (args[0].equals("add")) {
+                Permissions.addPerm(args[1], chat.getIdentity(), args[2]);
+                chat.sendMessage("Adding permission");
+            } else if (args[0].equals("all")) {
+                for (User user : chat.getAllUsers()) {
+                    Permissions.addPerm(user, chat, args[1]);
+                }
+                chat.sendMessage("Adding permission");
+            } else {
+                Permissions.removePerms(args[1], chat.getIdentity(), args[2]);
+                chat.sendMessage("Removing permission");
             }
         }
 
@@ -42,7 +40,7 @@ public class GitHubListener implements SubCommand {
 
     @Override
     public String getCommand() {
-        return "github";
+        return "perm";
     }
 
     @Override

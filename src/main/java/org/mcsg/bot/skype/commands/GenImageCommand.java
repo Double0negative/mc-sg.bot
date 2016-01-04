@@ -19,12 +19,12 @@ import org.mcsg.bot.skype.web.WebClient;
 import com.samczsun.skype4j.chat.Chat;
 import com.samczsun.skype4j.user.User;
 
-public class GenImage implements SubCommand {
+public class GenImageCommand implements SubCommand {
 
     HashMap<String, Integer> gens = new HashMap<String, Integer>();
     HashMap<String, String> res = new HashMap<String, String>();
 
-    public GenImage() {
+    public GenImageCommand() {
         gens.put("shapes", 0);
         gens.put("lines", 1);
         gens.put("circles", 2);

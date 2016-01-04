@@ -10,7 +10,7 @@ import org.mcsg.bot.skype.web.MinecraftUUID.Profile;
 import com.samczsun.skype4j.chat.Chat;
 import com.samczsun.skype4j.user.User;
 
-public class UUIDCommand implements SubCommand {
+public class UUIDCommandCommand implements SubCommand {
 
     @Override
     public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {

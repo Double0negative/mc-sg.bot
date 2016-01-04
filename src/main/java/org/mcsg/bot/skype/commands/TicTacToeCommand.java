@@ -15,7 +15,7 @@ import com.samczsun.skype4j.chat.Chat;
 import com.samczsun.skype4j.exceptions.SkypeException;
 import com.samczsun.skype4j.user.User;
 
-public class TicTacToe implements SubCommand {
+public class TicTacToeCommand implements SubCommand {
     private HashMap<String, TicTacToeGame> games = new HashMap<String, TicTacToeGame>();
     private HashMap<String, Integer> rowMap = new HashMap<String, Integer>();
     {

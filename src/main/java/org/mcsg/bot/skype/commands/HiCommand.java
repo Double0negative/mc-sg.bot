@@ -1,37 +1,37 @@
 package org.mcsg.bot.skype.commands;
 
-import org.mcsg.bot.skype.Bot;
+import java.util.Random;
 
 import com.samczsun.skype4j.chat.Chat;
 import com.samczsun.skype4j.user.User;
 
-public class Version implements SubCommand {
+public class HiCommand implements SubCommand {
+
+    String[] msg = { "Hi", "Hello", "How are you", "Greetings", "Pickles", "Whats up?", "Hi person" };
 
     @Override
     public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {
-        chat.sendMessage("MC-SG.BOT Version " + Bot.version);
+        chat.sendMessage(msg[new Random().nextInt(msg.length)]);
     }
 
     @Override
     public String getHelp() {
-        // TODO Auto-generated method stub
-        return null;
+        return "Greetings";
     }
 
     @Override
     public String getUsage() {
-        // TODO Auto-generated method stub
-        return null;
+        return ".hi";
     }
 
     @Override
     public String getCommand() {
-        return "version";
+        return "hi";
     }
 
     @Override
     public String[] getAliases() {
-        return null;
+        return a("hello");
     }
 
 }

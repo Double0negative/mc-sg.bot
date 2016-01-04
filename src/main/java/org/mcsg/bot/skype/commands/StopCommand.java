@@ -6,7 +6,7 @@ import org.mcsg.bot.skype.Settings;
 import com.samczsun.skype4j.chat.Chat;
 import com.samczsun.skype4j.user.User;
 
-public class Stop implements SubCommand {
+public class StopCommand implements SubCommand {
 
     @Override
     public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {
