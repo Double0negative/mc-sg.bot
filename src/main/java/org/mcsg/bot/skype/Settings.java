@@ -61,6 +61,7 @@ public class Settings {
             }
             save();
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -69,6 +70,8 @@ public class Settings {
             String json = gson.toJson(Root, Root.class);
             FileUtils.writeFile(file, json);
         } catch (Exception e) {
+            e.printStackTrace();
+
         }
     }
 

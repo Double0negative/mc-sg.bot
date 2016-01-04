@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.mcsg.bot.skype.Bot;
 import org.mcsg.bot.skype.ChatManager;
+import org.mcsg.bot.skype.Settings;
 import org.mcsg.bot.skype.games.Connect4Game;
 import org.mcsg.bot.skype.games.Connect4Game.BoardFullException;
 import org.mcsg.bot.skype.games.Connect4Game.ColumnFullException;
@@ -12,10 +13,10 @@ import org.mcsg.bot.skype.games.Connect4Game.Tile;
 import org.mcsg.bot.skype.games.Connect4Manager;
 import org.mcsg.bot.skype.games.GameStatsManager;
 
-import com.samczsun.skype4j.Skype;
 import com.samczsun.skype4j.chat.Chat;
-import com.samczsun.skype4j.chat.messages.ChatMessage;
+import com.samczsun.skype4j.chat.messages.SentMessage;
 import com.samczsun.skype4j.exceptions.SkypeException;
+import com.samczsun.skype4j.formatting.Message;
 import com.samczsun.skype4j.user.User;
 
 public class Connect4 implements SubCommand {
@@ -63,10 +64,10 @@ public class Connect4 implements SubCommand {
                 pretiles = game.getTiles();
                 int aiStatus = game.doAiMove();
                 if (aiStatus != -1) {
-                    animateGame(chat, pretiles, game, Skype.getProfile().getId(), aiStatus == 1);
+                    animateGame(chat, pretiles, game, Settings.Root.Bot.username, aiStatus == 1);
                     if (aiStatus == 1) {
                         GameStatsManager.addGameResult("connect4", chat.getIdentity(), game.getPlayer1(),
-                                game.getPlayer2(), Skype.getProfile().getId());
+                                game.getPlayer2(), Settings.Root.Bot.username);
                         Connect4Manager.getInstance().removeGame(chat.getIdentity(), game);
                     }
                 }
@@ -138,14 +139,14 @@ public class Connect4 implements SubCommand {
         else
             sb.append("WINNER: " + game.getMover());
 
-        ChatMessage msg = game.getMsg();
+        SentMessage msg = (SentMessage) game.getMsg();
         int lastMessage = game.getLastMessage();
 
         if (msg != null && lastMessage + 10 > Bot.messageCount.get(chat)) {
-            msg.setContent(sb.toString());
+            msg.edit(Message.fromHtml(sb.toString()));
         } else {
             if (msg != null) {
-                msg.setContent("");
+                msg.edit(Message.fromHtml(""));
             }
             game.setMsg(chat.sendMessage(sb.toString()));
             game.setLastMessage(Bot.messageCount.get(chat));

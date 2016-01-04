@@ -26,6 +26,7 @@ public class ImageSearch implements SubCommand {
             search = StringUtils.implode(args);
         }
         GoogleResult result = Google.search("images", search, start);
+        System.out.println(result.responseData);
         org.mcsg.bot.skype.web.Google.Results[] results = result.responseData.results;
         if (results != null && results.length > 0) {
             ChatManager.chat(chat, sender, start + 1 + ". " + results[0].unescapedUrl);

@@ -79,7 +79,7 @@ public class GithubListener {
     public static void sendMessageToChats(String type, GitHubMessage data) throws ConnectionException {
         System.out.println(type);
         List<String> chats = Settings.Root.Github.github_update_chat.get(data.repository.url);
-        System.out.println(chats);
+        System.out.println(data.repository.url + "=" + Settings.Root.Github.github_update_chat);
         for (String chatid : chats) {
             Chat chat = Bot.getChat(chatid);
             if (type.equalsIgnoreCase("push")) {

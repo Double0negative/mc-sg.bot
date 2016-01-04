@@ -112,8 +112,7 @@ public class TicTacToe implements SubCommand {
 
     @Override
     public String getUsage() {
-        // TODO Auto-generated method stub
-        return null;
+        return ".t3 player, .t3 move";
     }
 
     @Override

@@ -61,6 +61,7 @@ public class Bot {
     private static HashMap<String, SubCommand> aliases = new HashMap<>();
     private static HashMap<SubCommand, McsgBotPlugin> plug_comand = new HashMap<>();
 
+    public static final HashMap<Chat, Integer> messageCount = new HashMap<Chat, Integer>();
     private static Skype skype;
 
     private static String defaultChat;
@@ -76,6 +77,8 @@ public class Bot {
 
     public void start() throws Exception {
         Settings.load();
+
+        System.out.println("Logging in...");
 
         skype = new SkypeBuilder(Settings.Root.Bot.username, Settings.Root.Bot.password).withAllResources().build();
         skype.login();
@@ -131,10 +134,12 @@ public class Bot {
         skype.getEventDispatcher().registerListener(new Listener() {
             @EventHandler
             public void onMessage(MessageReceivedEvent e) {
-                System.out.println(e.getMessage().getContent().asPlaintext());
 
                 ChatMessage recieved = e.getMessage();
                 String text = recieved.getContent().asPlaintext();
+
+                int count = messageCount.getOrDefault(recieved.getChat(), 0);
+                messageCount.put(recieved.getChat(), count + 1);
 
                 // org.mcsg.bot.skype.EventHandler.callEvent(new
                 // org.mcsg.bot.skype.events.MessageReceivedEvent(recieved));

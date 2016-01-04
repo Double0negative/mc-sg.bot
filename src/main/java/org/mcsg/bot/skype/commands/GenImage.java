@@ -6,7 +6,6 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-import org.mcsg.bot.skype.ChatManager;
 import org.mcsg.bot.skype.Settings;
 import org.mcsg.bot.skype.drawing.PictureDraw;
 import org.mcsg.bot.skype.util.Arguments;
@@ -80,7 +79,7 @@ public class GenImage implements SubCommand {
             progmsg.setProgress(prog).doWait("@" + sender.getUsername() + " genimg - ");
             bar.finish(prog.getResult());
         } else {
-            ChatManager.chat(chat, ImgurUpload.upload(chat, draw.getBytes()));
+            bar.finish(ImgurUpload.upload(chat, draw.getBytes()));
         }
 
     }
