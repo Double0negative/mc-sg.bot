@@ -3,13 +3,12 @@ package org.mcsg.bot.skype.commands;
 import java.util.Random;
 
 import com.samczsun.skype4j.chat.Chat;
-import com.samczsun.skype4j.exceptions.SkypeException;
 import com.samczsun.skype4j.user.User;
 
 public class RandomNumber implements SubCommand {
 
     @Override
-    public void execute(Chat chat, User sender, String[] args) throws SkypeException {
+    public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {
         if (args.length == 0) {
             chat.sendMessage(new Random().nextInt() + "");
         } else if (args.length == 1) {

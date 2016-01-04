@@ -22,7 +22,7 @@ import com.samczsun.skype4j.user.User;
 public class RegisterPluginCommand implements SubCommand {
 
     @Override
-    public void execute(Chat chat, User sender, String[] args) throws Exception {
+    public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {
         if (Permissions.hasPermission(sender, chat, "plugin")) {
             Arguments arge = new Arguments(args, "register", "update", "unregister");
             args = arge.getArgs();

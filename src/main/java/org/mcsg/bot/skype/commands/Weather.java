@@ -31,7 +31,7 @@ public class Weather implements SubCommand {
     private static Rate rate;
 
     @Override
-    public void execute(Chat chat, User sender, String[] args) throws Exception {
+    public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {
         if (rate == null) {
             rate = new Rate(); // simple rate limiting. 10 queries per minute.
             rate.start(); // Limit to 10 per 2 minutes to make sure we dont

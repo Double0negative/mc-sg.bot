@@ -9,7 +9,7 @@ import com.samczsun.skype4j.user.User;
 public class GetUsers implements SubCommand {
 
     @Override
-    public void execute(Chat chat, User sender, String[] args) throws Exception {
+    public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {
         if (Permissions.hasPermission(sender, chat, "getusers")) {
             StringBuilder sb = new StringBuilder();
             for (User user : chat.getAllUsers()) {

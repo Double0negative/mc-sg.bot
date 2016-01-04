@@ -42,7 +42,6 @@ import org.mcsg.bot.skype.message.MessagePaster;
 import org.mcsg.bot.skype.web.GistAPI;
 import org.mcsg.bot.skype.web.GithubListener;
 
-import com.google.gson.Gson;
 import com.samczsun.skype4j.Skype;
 import com.samczsun.skype4j.SkypeBuilder;
 import com.samczsun.skype4j.chat.Chat;
@@ -55,21 +54,18 @@ import com.samczsun.skype4j.user.User;
 
 public class Bot {
 
-    public static final String version = "2.03 Custom reading ";
+    public static final String version = "3.00 Fluffy Clouds ";
+
+    private static Skype skype;
 
     private static HashMap<String, SubCommand> commands = new HashMap<>();
     private static HashMap<String, SubCommand> aliases = new HashMap<>();
     private static HashMap<SubCommand, McsgBotPlugin> plug_comand = new HashMap<>();
 
     public static final HashMap<Chat, Integer> messageCount = new HashMap<Chat, Integer>();
-    private static Skype skype;
-
-    private static String defaultChat;
-    public static final String LAST_FILE = "lastchat";
-
-    private static final Gson gson = new Gson();
 
     public static void main(String[] args) throws Exception {
+        System.out.println("Starting MC-SG.bot version " + version);
 
         new Bot().start();
 
@@ -78,12 +74,12 @@ public class Bot {
     public void start() throws Exception {
         Settings.load();
 
-        System.out.println("Logging in...");
+        System.out.println("Logging in to skype account...");
 
         skype = new SkypeBuilder(Settings.Root.Bot.username, Settings.Root.Bot.password).withAllResources().build();
         skype.login();
 
-        System.out.println("Logged in");
+        System.out.println("Log in successful. Starting bot.");
 
         ChatManager.start();
         GithubListener.listen();
@@ -122,15 +118,6 @@ public class Bot {
         registerCommand(new GitHubListener());
         registerCommand(new RegisterPluginCommand());
 
-        // PluginManager.loadPlugins(getDefaultChat());
-
-        /*
-         * skype.getEventDispatcher().registerListener(new Listener() {
-         * @EventHandler public void onMessage(MessageReceivedEvent e) {
-         * System.out.println("Got message: " + e.getMessage().getContent()); }
-         * });
-         */
-
         skype.getEventDispatcher().registerListener(new Listener() {
             @EventHandler
             public void onMessage(MessageReceivedEvent e) {
@@ -168,12 +155,12 @@ public class Bot {
                         try {
                             recieved.getChat().sendMessage("Help: " + GistAPI.paste("help.md", sb.toString()));
                         } catch (Exception ex) { // TODO Auto-generated catch
-                                                 // block e.printStackTrace();
+                            // block e.printStackTrace();
                         }
                     }
                     SubCommand sub = getCommand(command);
                     if (sub != null) {
-                        executeAsync(sub, recieved.getChat(), recieved.getSender(), args);
+                        executeAsync(sub, getCommand(split), recieved.getChat(), recieved.getSender(), args);
                     }
                 } else {
                     try {
@@ -187,7 +174,15 @@ public class Bot {
         });
 
         skype.subscribe();
-        System.out.println("subscripted");
+        System.out.println("Bot active, listening for commands.");
+        if (Settings.Root.Bot.lastchat != null && Settings.Root.Bot.lastchat.length() > 0) {
+            Chat chat = skype.getOrLoadChat(Settings.Root.Bot.lastchat);
+            if (chat != null) {
+                chat.sendMessage("Bot version " + version + " has started.");
+            }
+            Settings.Root.Bot.lastchat = "";
+            Settings.save();
+        }
     }
 
     public static SubCommand getCommand(String command) {
@@ -244,11 +239,12 @@ public class Bot {
         return null;
     }
 
-    public void executeAsync(final SubCommand sub, final Chat chat, final User sender, final String[] args) {
+    public void executeAsync(final SubCommand sub, final String cmd, final Chat chat, final User sender,
+            final String[] args) {
         new Thread() {
             public void run() {
                 try {
-                    sub.execute(chat, sender, args);
+                    sub.execute(cmd, chat, sender, args);
                 } catch (Exception e) {
                     ChatManager.printThrowable(chat, e);
                 }

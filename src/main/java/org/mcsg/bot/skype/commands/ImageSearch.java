@@ -13,7 +13,7 @@ import com.samczsun.skype4j.user.User;
 public class ImageSearch implements SubCommand {
 
     @Override
-    public void execute(Chat chat, User sender, String[] args) throws Exception {
+    public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {
         String search = "";
         int start = 0;
         if (args[0].equals("-rand")) {

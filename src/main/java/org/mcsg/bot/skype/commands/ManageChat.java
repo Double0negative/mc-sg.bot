@@ -12,7 +12,7 @@ import com.samczsun.skype4j.user.User;
 public class ManageChat implements SubCommand {
 
     @Override
-    public void execute(Chat chat, User sender, String[] args) throws Exception {
+    public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {
         Arguments arge = new Arguments(args, "seconds/sec/time/t args", "paste/amount/a args",
                 "pastemethod/method/m args");
         HashMap<String, String> swi = arge.getSwitches();

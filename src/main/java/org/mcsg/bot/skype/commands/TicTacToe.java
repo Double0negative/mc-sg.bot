@@ -28,7 +28,7 @@ public class TicTacToe implements SubCommand {
     }
 
     @Override
-    public void execute(Chat chat, User sender, String[] args) throws Exception {
+    public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {
         TicTacToeGame game = TicTacToeManager.getInstance().getGame(chat.getIdentity(), sender.getUsername());
         if (game != null) {
             int col = Integer.parseInt(args[1]) - 1;

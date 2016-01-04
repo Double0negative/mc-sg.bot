@@ -8,7 +8,7 @@ import com.samczsun.skype4j.user.User;
 public class Permission implements SubCommand {
 
     @Override
-    public void execute(Chat chat, User sender, String[] args) throws Exception {
+    public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {
         if (sender.getUsername().equals("drew.foland")) {
             if (args[0].equals("add")) {
                 Permissions.addPerm(args[1], chat.getIdentity(), args[2]);

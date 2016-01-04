@@ -24,7 +24,7 @@ public class Connect4 implements SubCommand {
     private HashMap<String, Connect4Game> games = new HashMap<String, Connect4Game>();
 
     @Override
-    public void execute(Chat chat, User sender, String[] args) throws Exception {
+    public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {
         Connect4Game game = Connect4Manager.getInstance().getGame(chat.getIdentity(), sender.getUsername());
         if (game != null) {
             if (args[0].equalsIgnoreCase("leave")) {

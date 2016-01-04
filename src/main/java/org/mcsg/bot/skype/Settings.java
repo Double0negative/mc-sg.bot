@@ -27,6 +27,7 @@ public class Settings {
         public String Owner = "drew.foland";
         public String username = "";
         public String password = "";
+        public String lastchat = "";
         public Chat chat = new Chat();
 
         public static class Chat {

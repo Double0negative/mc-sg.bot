@@ -17,7 +17,7 @@ import com.samczsun.skype4j.user.User;
 public class WebSearch implements SubCommand {
 
     @Override
-    public void execute(Chat chat, User sender, String[] args) throws Exception {
+    public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {
         if (args[0].equalsIgnoreCase("-duck") || args[0].equalsIgnoreCase("-duckduckgo")) {
             DuckDuckResult result = DuckDuckGo.search(StringUtils.implode(args));
             Results[] results = result.Results;

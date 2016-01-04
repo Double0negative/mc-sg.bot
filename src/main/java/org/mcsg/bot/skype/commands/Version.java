@@ -8,7 +8,7 @@ import com.samczsun.skype4j.user.User;
 public class Version implements SubCommand {
 
     @Override
-    public void execute(Chat chat, User sender, String[] args) throws Exception {
+    public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {
         chat.sendMessage("MC-SG.BOT Version " + Bot.version);
     }
 

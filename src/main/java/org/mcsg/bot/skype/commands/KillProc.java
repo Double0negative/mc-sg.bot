@@ -9,7 +9,7 @@ import com.samczsun.skype4j.user.User;
 public class KillProc implements SubCommand {
 
     @Override
-    public void execute(Chat chat, User sender, String[] args) throws Exception {
+    public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception {
         if (Permissions.hasPermission(sender, chat, "killproc")) {
             if (args.length == 2) {
                 ShellCommand.forceKill(Integer.parseInt(args[0]));

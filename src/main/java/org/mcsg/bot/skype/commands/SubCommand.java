@@ -12,7 +12,7 @@ public interface SubCommand {
      * @param args
      * @throws Exception
      */
-    public void execute(Chat chat, User sender, String[] args) throws Exception;
+    public void execute(String cmd, Chat chat, User sender, String[] args) throws Exception;
 
     /**
      * Get the command name, this is what will be used as the command
